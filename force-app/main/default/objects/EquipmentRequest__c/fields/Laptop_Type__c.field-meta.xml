@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Laptop_Type__c</fullName>
+    <label>Laptop Type</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>MacBook Air</fullName>
+                <default>false</default>
+                <label>MacBook Air</label>
+            </value>
+            <value>
+                <fullName>MacBook Pro</fullName>
+                <default>false</default>
+                <label>MacBook Pro</label>
+            </value>
+            <value>
+                <fullName>Windows Laptop</fullName>
+                <default>false</default>
+                <label>Windows Laptop</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

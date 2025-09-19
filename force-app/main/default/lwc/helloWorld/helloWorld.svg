@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background Circle -->
+  <circle cx="250" cy="250" r="240" fill="#202945" />
+  <circle cx="250" cy="250" r="220" fill="#111827" />
+  
+  <!-- Stylized PS Letters -->
+  <path d="M140,160 C140,160 210,160 250,160 C290,160 340,190 340,240 C340,290 290,320 250,320 L180,320" 
+        fill="none" stroke="#7161EF" stroke-width="30" stroke-linecap="round" />
+  
+  <path d="M180,320 L180,380 C180,380 230,380 270,380 C310,380 360,350 360,300" 
+        fill="none" stroke="#7161EF" stroke-width="30" stroke-linecap="round" />
+  
+  <!-- Panther Ear Accent -->
+  <path d="M120,130 L140,80 L170,105 Z" fill="#7161EF" />
+  <path d="M365,130 L345,80 L315,105 Z" fill="#7161EF" />
+  
+  <!-- Panther Eye Accents -->
+  <circle cx="170" cy="210" r="10" fill="#7161EF" />
+  <circle cx="330" cy="210" r="10" fill="#7161EF" />
+  
+  <!-- Claw Marks -->
+  <path d="M390,360 L420,335 M380,380 L410,355 M370,400 L400,375" 
+        stroke="#7161EF" stroke-width="6" stroke-linecap="round" />
+  
+  <!-- Inner Glow Effect -->
+  <circle cx="250" cy="250" r="190" fill="none" stroke="#5D4ED3" stroke-width="2" opacity="0.6" />
+  <circle cx="250" cy="250" r="180" fill="none" stroke="#5D4ED3" stroke-width="1" opacity="0.4" />
+  
+  <!-- Subtle Panther Silhouette Suggestion Behind Letters -->
+  <path d="M150,300 C150,260 150,220 180,200 C210,180 290,180 320,200 C350,220 350,260 350,300 C325,320 280,330 250,330 C220,330 175,320 150,300 Z" 
+        fill="#262B44" opacity="0.5" />
+</svg>

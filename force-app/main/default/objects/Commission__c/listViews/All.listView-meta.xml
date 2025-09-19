@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All</fullName>
+    <columns>NAME</columns>
+    <columns>CommissionPercentage__c</columns>
+    <columns>Commission_amount__c</columns>
+    <columns>Final_sale_price_of_the_property__c</columns>
+    <columns>Payment_status__c</columns>
+    <columns>Commission_Paid_Date__c</columns>
+    <filterScope>Everything</filterScope>
+    <label>All Records</label>
+</ListView>

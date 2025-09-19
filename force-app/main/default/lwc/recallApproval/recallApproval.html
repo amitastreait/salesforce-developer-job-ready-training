@@ -1,0 +1,31 @@
+<template>
+    <lightning-card variant="Narrow"  title="Recall Approval" icon-name="standard:approval">
+        <lightning-spinner if:true={isLoading} alternative-text="Processing..." size="medium" variant="brand"></lightning-spinner>
+        <div class="slds-p-around_medium">
+            <lightning-textarea 
+              max-length="255"
+              name="comment" 
+              label="Recall Comment" 
+              placeholder="type here..."
+              value={comment}
+              variant="standard"
+              onchange={handleCommentChange}
+              required
+            ></lightning-textarea>
+            <span if:true={commentError} class="slds-required"> {commentError} </span>
+            <div class="slds-m-top_medium">
+                <lightning-button 
+                    variant="brand"
+                    label="Recall Approval"
+                    title="Recall Approval"
+                    onclick={handleRecallApproval}
+                    disabled={isLoading}
+                    class="slds-m-right_x-small">
+                </lightning-button>
+            </div>
+        </div>
+        <div slot="footer">
+            Recall Approval process
+        </div>
+    </lightning-card>
+</template>

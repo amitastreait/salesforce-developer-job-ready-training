@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>License_Number_Format</fullName>
+    <active>true</active>
+    <description>Ensures license number follows standard format</description>
+    <errorConditionFormula>AND(
+  NOT(ISBLANK( Licence_Number__c )),
+  NOT(REGEX(Licence_Number__c, &quot;^RE[0-9]{9}$&quot;))
+)</errorConditionFormula>
+    <errorDisplayField>Licence_Number__c</errorDisplayField>
+    <errorMessage>License number must be in format RE123456789</errorMessage>
+</ValidationRule>

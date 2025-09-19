@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Required_Location_Fields</fullName>
+    <active>true</active>
+    <description>Ensures all critical location fields are populated</description>
+    <errorConditionFormula>OR(
+  ISBLANK(City__c),
+  ISBLANK(TEXT(State__c)),
+  ISBLANK(TEXT(County__c))
+)</errorConditionFormula>
+    <errorMessage>Name, City, State, and County are required fields</errorMessage>
+</ValidationRule>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Valid_Years_of_Experience</fullName>
+    <active>true</active>
+    <description>Ensures reasonable experience range</description>
+    <errorConditionFormula>AND(
+  NOT(ISBLANK(Years_of_Experience__c)),
+  OR(
+    Years_of_Experience__c &lt; 0,
+    Years_of_Experience__c &gt; 50
+  )
+)</errorConditionFormula>
+    <errorDisplayField>Years_of_Experience__c</errorDisplayField>
+    <errorMessage>Years of experience must be between 0 and 50</errorMessage>
+</ValidationRule>

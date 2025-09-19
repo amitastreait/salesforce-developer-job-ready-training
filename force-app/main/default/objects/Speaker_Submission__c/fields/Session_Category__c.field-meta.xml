@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Session_Category__c</fullName>
+    <label>Session Category</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Architecture &amp; Design</fullName>
+                <default>false</default>
+                <label>Architecture &amp; Design</label>
+            </value>
+            <value>
+                <fullName>Development &amp; Coding</fullName>
+                <default>false</default>
+                <label>Development &amp; Coding</label>
+            </value>
+            <value>
+                <fullName>Integration &amp; APIs</fullName>
+                <default>false</default>
+                <label>Integration &amp; APIs</label>
+            </value>
+            <value>
+                <fullName>AI &amp; Einstein</fullName>
+                <default>false</default>
+                <label>AI &amp; Einstein</label>
+            </value>
+            <value>
+                <fullName>Data &amp; Analytics</fullName>
+                <default>false</default>
+                <label>Data &amp; Analytics</label>
+            </value>
+            <value>
+                <fullName>Security &amp; Compliance</fullName>
+                <default>false</default>
+                <label>Security &amp; Compliance</label>
+            </value>
+            <value>
+                <fullName>Career Development</fullName>
+                <default>false</default>
+                <label>Career Development</label>
+            </value>
+            <value>
+                <fullName>Leadership &amp; Management</fullName>
+                <default>false</default>
+                <label>Leadership &amp; Management</label>
+            </value>
+            <value>
+                <fullName>Women in Tech</fullName>
+                <default>false</default>
+                <label>Women in Tech</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

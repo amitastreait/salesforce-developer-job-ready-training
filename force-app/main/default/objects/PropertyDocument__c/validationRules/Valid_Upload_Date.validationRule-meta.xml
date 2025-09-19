@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Valid_Upload_Date</fullName>
+    <active>true</active>
+    <description>Ensures upload date is not in the future</description>
+    <errorConditionFormula>AND(
+  NOT(ISBLANK(Upload_Date__c)),
+  Upload_Date__c &gt; TODAY()
+)</errorConditionFormula>
+    <errorDisplayField>Upload_Date__c</errorDisplayField>
+    <errorMessage>Upload date cannot be in the future</errorMessage>
+</ValidationRule>

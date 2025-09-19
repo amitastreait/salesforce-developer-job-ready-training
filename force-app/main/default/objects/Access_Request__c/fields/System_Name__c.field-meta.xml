@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>System_Name__c</fullName>
+    <label>System Name</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Email/Office 365</fullName>
+                <default>false</default>
+                <label>Email/Office 365</label>
+            </value>
+            <value>
+                <fullName>Marketing Automation</fullName>
+                <default>false</default>
+                <label>Marketing Automation</label>
+            </value>
+            <value>
+                <fullName>GitHub</fullName>
+                <default>false</default>
+                <label>GitHub</label>
+            </value>
+            <value>
+                <fullName>Sales Navigator</fullName>
+                <default>false</default>
+                <label>Sales Navigator</label>
+            </value>
+            <value>
+                <fullName>Docker Hub</fullName>
+                <default>false</default>
+                <label>Docker Hub</label>
+            </value>
+            <value>
+                <fullName>ZoomInfo</fullName>
+                <default>false</default>
+                <label>ZoomInfo</label>
+            </value>
+            <value>
+                <fullName>Salesforce CRM</fullName>
+                <default>false</default>
+                <label>Salesforce CRM</label>
+            </value>
+            <value>
+                <fullName>VPN Access</fullName>
+                <default>false</default>
+                <label>VPN Access</label>
+            </value>
+            <value>
+                <fullName>AWS Console</fullName>
+                <default>false</default>
+                <label>AWS Console</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

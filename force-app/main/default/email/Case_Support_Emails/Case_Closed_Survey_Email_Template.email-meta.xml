@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Case Closed Survey Email Template</name>
+    <style>none</style>
+    <subject>Your case has been successfully resolved - {!Case.CaseNumber}</subject>
+    <textOnly>We&apos;d Love Your Feedback
+
+Thank You!
+
+Your case has been successfully resolved
+
+Case Details
+
+Case Number: {!Case.CaseNumber}
+
+Subject: {!Case.Subject}
+
+Resolved By: {!Case.OwnerFullName}
+
+Resolution Date: {!Case.ClosedDate}
+
+How was your experience?
+
+We&apos;re committed to providing exceptional service. Your feedback helps us improve and ensures we continue to meet your expectations. Please take a moment to share your experience with us.
+
+Rate your overall satisfaction:
+Additional Comments (Optional):
+Submit Feedback
+Excellent Good Average Poor Very Poor
+{{Company.Name}}
+
+{{Company.Address}}
+
+Phone: {{Company.Phone}} | Email: {{Company.SupportEmail}}
+
+📘 🐦 💼 🌐
+
+You received this email because your support case was recently resolved. Unsubscribe</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

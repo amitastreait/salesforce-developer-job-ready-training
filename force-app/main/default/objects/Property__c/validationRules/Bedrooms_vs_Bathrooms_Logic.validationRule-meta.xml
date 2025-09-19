@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Bedrooms_vs_Bathrooms_Logic</fullName>
+    <active>true</active>
+    <description>Ensures reasonable bathroom count relative to bedrooms</description>
+    <errorConditionFormula>AND(
+  NOT(ISBLANK(Bedrooms__c)),
+  NOT(ISBLANK(Bathrooms__c)),
+  Bedrooms__c &gt; 0,
+  Bathrooms__c &gt; (Bedrooms__c + 2)
+)</errorConditionFormula>
+    <errorDisplayField>Bathrooms__c</errorDisplayField>
+    <errorMessage>Number of bathrooms seems excessive for the number of bedrooms</errorMessage>
+</ValidationRule>

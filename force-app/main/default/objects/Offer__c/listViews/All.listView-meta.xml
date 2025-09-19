@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All</fullName>
+    <columns>NAME</columns>
+    <columns>Offered_purchase_price__c</columns>
+    <columns>Offer_Date__c</columns>
+    <columns>Expiration_date__c</columns>
+    <columns>Status__c</columns>
+    <columns>Deposit_Amount__c</columns>
+    <columns>Financing_contingency_included__c</columns>
+    <columns>Inspection_contingency_included__c</columns>
+    <columns>Proposed_date_for_closing__c</columns>
+    <columns>Special_terms_and_conditions__c</columns>
+    <filterScope>Everything</filterScope>
+    <label>All Records</label>
+</ListView>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>64.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>Manages execution order of opportunity-related flows</description>
+    <environments>Default</environments>
+    <interviewLabel>Opportunity_Management_Orchestrator {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Opportunity Management Orchestrator</label>
+    <orchestratedStages>
+        <description>Territory and ownership assignment</description>
+        <name>After_Save_Phase_1</name>
+        <label>After Save Phase 1</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>After_Save_Phase_2</targetReference>
+        </connector>
+        <exitConditionLogic>and</exitConditionLogic>
+    </orchestratedStages>
+    <orchestratedStages>
+        <description>After Phase 1 completion</description>
+        <name>After_Save_Phase_2</name>
+        <label>After Save Phase 2</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>After_Save_Phase_3</targetReference>
+        </connector>
+        <exitConditionLogic>and</exitConditionLogic>
+    </orchestratedStages>
+    <orchestratedStages>
+        <description>Notifications and integrations</description>
+        <name>After_Save_Phase_3</name>
+        <label>After Save Phase 3</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <exitConditionLogic>and</exitConditionLogic>
+    </orchestratedStages>
+    <orchestratedStages>
+        <description>- Purpose: Data validation and enrichment
+- Timing: Before record is saved to database</description>
+        <name>Before_Save_Stage</name>
+        <label>Before Save Stage</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>After_Save_Phase_1</targetReference>
+        </connector>
+        <exitConditionLogic>and</exitConditionLogic>
+    </orchestratedStages>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Orchestrator</processType>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Before_Save_Stage</targetReference>
+        </connector>
+        <filterFormula>{!$Setup.OrgSettings__c.Enable_Flows__c}</filterFormula>
+        <object>Opportunity</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Draft</status>
+</Flow>

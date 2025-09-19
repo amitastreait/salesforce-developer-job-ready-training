@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Valid_Expiration_Date</fullName>
+    <active>true</active>
+    <description>Ensures expiration date is in the future and logical</description>
+    <errorConditionFormula>AND(
+  NOT(ISBLANK(Expiration_Date__c)),
+  OR(
+    Expiration_Date__c &lt;= TODAY(),
+    Expiration_Date__c &gt; (TODAY() + 3650)
+  )
+)</errorConditionFormula>
+    <errorDisplayField>Expiration_Date__c</errorDisplayField>
+    <errorMessage>Expiration date must be in the future but within 10 years</errorMessage>
+</ValidationRule>

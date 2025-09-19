@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>We'd Love Your Feedback</title>
+    <style>
+        /* Reset styles for email clients */
+        body, table, td, p, a, li, blockquote {
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+        table, td {
+            mso-table-lspace: 0pt;
+            mso-table-rspace: 0pt;
+        }
+        img {
+            -ms-interpolation-mode: bicubic;
+            border: 0;
+            height: auto;
+            line-height: 100%;
+            outline: none;
+            text-decoration: none;
+        }
+        
+        /* Main styles */
+        body {
+            height: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            width: 100% !important;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6f9;
+        }
+        
+        .email-container {
+            max-width: 850px;
+            margin: 0 auto;
+            background-color: #ffffff;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            color: #ffffff;
+            margin: 0;
+            font-size: 28px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+        
+        .header p {
+            color: #e8eaf6;
+            margin: 10px 0 0 0;
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 40px 30px;
+        }
+        
+        .case-info {
+            background-color: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .case-info h3 {
+            margin: 0 0 10px 0;
+            color: #333333;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .case-info p {
+            margin: 5px 0;
+            color: #666666;
+            font-size: 14px;
+        }
+        
+        .case-info strong {
+            color: #333333;
+        }
+        
+        .review-section {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .review-section h2 {
+            color: #333333;
+            font-size: 24px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .review-text {
+            color: #666666;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+        
+        .rating-container {
+            margin: 30px 0;
+        }
+        
+        .rating-label {
+            display: block;
+            color: #333333;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .stars {
+            display: inline-block;
+            font-size: 0;
+        }
+        
+        .star {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            margin: 0 3px;
+            background-color: #e0e0e0;
+            border-radius: 50%;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .star:before {
+            content: "★";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 24px;
+            color: #ffffff;
+        }
+        
+        .star:hover,
+        .star.active {
+            background-color: #ffc107;
+            transform: scale(1.1);
+        }
+        
+        .feedback-text {
+            margin: 30px 0;
+            text-align: left;
+        }
+        
+        .feedback-text label {
+            display: block;
+            color: #333333;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .feedback-text textarea {
+            width: 100%;
+            min-height: 100px;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 14px;
+            resize: vertical;
+            box-sizing: border-box;
+        }
+        
+        .feedback-text textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .cta-container {
+            text-align: center;
+            margin: 40px 0 30px 0;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #ffffff;
+            text-decoration: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        .alternative-links {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .alternative-links a {
+            color: #667eea;
+            text-decoration: none;
+            font-size: 14px;
+            margin: 0 15px;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.2s ease;
+        }
+        
+        .alternative-links a:hover {
+            border-bottom-color: #667eea;
+        }
+        
+        .footer {
+            background-color: #333333;
+            color: #ffffff;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .footer h4 {
+            margin: 0 0 15px 0;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .footer p {
+            margin: 5px 0;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        
+        .footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        
+        .social-links {
+            margin: 20px 0;
+        }
+        
+        .social-links a {
+            display: inline-block;
+            margin: 0 10px;
+            color: #ffffff;
+            font-size: 20px;
+            text-decoration: none;
+            opacity: 0.7;
+            transition: opacity 0.2s ease;
+        }
+        
+        .social-links a:hover {
+            opacity: 1;
+        }
+        
+        /* Mobile responsiveness */
+        @media screen and (max-width: 600px) {
+            .email-container {
+                width: 100% !important;
+            }
+            
+            .header,
+            .content,
+            .footer {
+                padding: 20px !important;
+            }
+            
+            .header h1 {
+                font-size: 24px !important;
+            }
+            
+            .case-info {
+                padding: 15px !important;
+            }
+            
+            .star {
+                width: 35px;
+                height: 35px;
+                margin: 0 2px;
+            }
+            
+            .star:before {
+                font-size: 20px;
+            }
+            
+            .cta-button {
+                padding: 12px 30px !important;
+                font-size: 14px !important;
+            }
+            
+            .alternative-links a {
+                display: block;
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <!-- Header -->
+        <div class="header">
+            <h1>Thank You!</h1>
+            <p>Your case has been successfully resolved</p>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="content">
+            <!-- Case Information -->
+            <div class="case-info">
+                <h3>Case Details</h3>
+                <p><strong>Case Number:</strong> {!Case.CaseNumber}</p>
+                <p><strong>Subject:</strong> {!Case.Subject}</p>
+                <p><strong>Resolved By:</strong> {!Case.OwnerFullName}</p>
+                <p><strong>Resolution Date:</strong> {!Case.ClosedDate}</p>
+            </div>
+            
+            <!-- Review Request -->
+            <div class="review-section">
+                <h2>How was your experience?</h2>
+                <p class="review-text">
+                    We're committed to providing exceptional service. Your feedback helps us improve and ensures we continue to meet your expectations. Please take a moment to share your experience with us.
+                </p>
+                
+                <!-- Rating System -->
+                <div class="rating-container">
+                    <label class="rating-label">Rate your overall satisfaction:</label>
+                    <div class="stars">
+                        <span class="star" data-rating="1"></span>
+                        <span class="star" data-rating="2"></span>
+                        <span class="star" data-rating="3"></span>
+                        <span class="star" data-rating="4"></span>
+                        <span class="star" data-rating="5"></span>
+                    </div>
+                </div>
+                
+                <!-- Feedback Text Area -->
+                <div class="feedback-text">
+                    <label for="feedback">Additional Comments (Optional):</label>
+                    <textarea id="feedback" placeholder="Tell us more about your experience. What did we do well? How can we improve?"></textarea>
+                </div>
+                
+                <!-- CTA Button -->
+                <div class="cta-container">
+                    <a href="{{Survey.Link}}" class="cta-button">Submit Feedback</a>
+                </div>
+                
+                <!-- Alternative Links -->
+                <div class="alternative-links">
+                    <a href="{{Survey.Link}}?rating=5">Excellent</a>
+                    <a href="{{Survey.Link}}?rating=4">Good</a>
+                    <a href="{{Survey.Link}}?rating=3">Average</a>
+                    <a href="{{Survey.Link}}?rating=2">Poor</a>
+                    <a href="{{Survey.Link}}?rating=1">Very Poor</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer">
+            <h4>{{Company.Name}}</h4>
+            <p>{{Company.Address}}</p>
+            <p>Phone: {{Company.Phone}} | Email: <a href="mailto:{{Company.SupportEmail}}">{{Company.SupportEmail}}</a></p>
+            
+            <!-- Social Links -->
+            <div class="social-links">
+                <a href="{{Company.Facebook}}">📘</a>
+                <a href="{{Company.Twitter}}">🐦</a>
+                <a href="{{Company.LinkedIn}}">💼</a>
+                <a href="{{Company.Website}}">🌐</a>
+            </div>
+            
+            <p style="font-size: 12px; margin-top: 20px; opacity: 0.6;">
+                You received this email because your support case was recently resolved. 
+                <a href="{{Unsubscribe.Link}}" style="color: #667eea;">Unsubscribe</a>
+            </p>
+        </div>
+    </div>
+    
+    <!-- JavaScript for Interactive Elements -->
+    <script>
+        // Star rating interaction
+        document.addEventListener('DOMContentLoaded', function() {
+            const stars = document.querySelectorAll('.star');
+            let selectedRating = 0;
+            
+            stars.forEach((star, index) => {
+                star.addEventListener('mouseover', function() {
+                    highlightStars(index + 1);
+                });
+                
+                star.addEventListener('mouseout', function() {
+                    highlightStars(selectedRating);
+                });
+                
+                star.addEventListener('click', function() {
+                    selectedRating = index + 1;
+                    highlightStars(selectedRating);
+                    
+                    // Update survey links with rating
+                    updateSurveyLinks(selectedRating);
+                });
+            });
+            
+            function highlightStars(rating) {
+                stars.forEach((star, index) => {
+                    if (index < rating) {
+                        star.classList.add('active');
+                    } else {
+                        star.classList.remove('active');
+                    }
+                });
+            }
+            
+            function updateSurveyLinks(rating) {
+                const ctaButton = document.querySelector('.cta-button');
+                const currentHref = ctaButton.getAttribute('href');
+                const separator = currentHref.includes('?') ? '&' : '?';
+                ctaButton.setAttribute('href', currentHref + separator + 'rating=' + rating);
+                
+                // Update feedback text with rating
+                const feedbackText = document.getElementById('feedback');
+                if (rating > 0) {
+                    feedbackText.placeholder = `You rated us ${rating} star${rating > 1 ? 's' : ''}. Tell us more about your experience...`;
+                }
+            }
+        });
+    </script>
+</body>
+</html>

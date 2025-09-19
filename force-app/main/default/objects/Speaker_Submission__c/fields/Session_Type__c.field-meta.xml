@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Session_Type__c</fullName>
+    <label>Session Type</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Technical Presentation</fullName>
+                <default>false</default>
+                <label>Technical Presentation</label>
+            </value>
+            <value>
+                <fullName>Hands-on Workshop</fullName>
+                <default>false</default>
+                <label>Hands-on Workshop</label>
+            </value>
+            <value>
+                <fullName>Lightning Talk (15 min)</fullName>
+                <default>false</default>
+                <label>Lightning Talk (15 min)</label>
+            </value>
+            <value>
+                <fullName>Demo/Product Showcase</fullName>
+                <default>false</default>
+                <label>Demo/Product Showcase</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

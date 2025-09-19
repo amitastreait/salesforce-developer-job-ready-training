@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Valid_Construction_Year</fullName>
+    <active>true</active>
+    <description>Ensures year built is reasonable</description>
+    <errorConditionFormula>AND(
+  NOT(ISBLANK(Built_Year__c)),
+  OR(
+    Built_Year__c &lt; 1800,
+    Built_Year__c &gt; YEAR(TODAY()) + 2
+  )
+)</errorConditionFormula>
+    <errorDisplayField>Built_Year__c</errorDisplayField>
+    <errorMessage>Year built must be between 1800 and 2 years from current year</errorMessage>
+</ValidationRule>

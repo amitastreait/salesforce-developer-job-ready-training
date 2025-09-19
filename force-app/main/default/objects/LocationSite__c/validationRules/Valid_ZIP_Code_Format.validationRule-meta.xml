@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Valid_ZIP_Code_Format</fullName>
+    <active>true</active>
+    <description>Ensures ZIP code follows proper format (5 digits or 5+4 format)</description>
+    <errorConditionFormula>AND(
+  NOT(ISBLANK(ZIPPostal_code__c)),
+  NOT(
+    OR(
+      REGEX(ZIPPostal_code__c, &quot;^[0-9]{5}$&quot;),
+      REGEX(ZIPPostal_code__c, &quot;^[0-9]{5}-[0-9]{4}$&quot;)
+    )
+  )
+)</errorConditionFormula>
+    <errorDisplayField>ZIPPostal_code__c</errorDisplayField>
+    <errorMessage>ZIP Code must be in format 12345 or 12345-6789</errorMessage>
+</ValidationRule>

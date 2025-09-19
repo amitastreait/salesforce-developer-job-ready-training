@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Valid_Commission_Rate</fullName>
+    <active>true</active>
+    <description>Ensures commission rate is within reasonable range</description>
+    <errorConditionFormula>AND(
+  NOT(ISBLANK(CommissionPercentage__c)),
+  OR(
+    CommissionPercentage__c &lt;= 0,
+    CommissionPercentage__c &gt; 0.10
+  )
+)</errorConditionFormula>
+    <errorDisplayField>CommissionPercentage__c</errorDisplayField>
+    <errorMessage>Commission rate must be between 0.1% and 10%</errorMessage>
+</ValidationRule>

@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case Resolution Notification</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+        .email-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+        }
+        .email-header {
+            background: linear-gradient(135deg, #38a169 0%, #2f855a 100%);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+        }
+        .email-header h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: 300;
+        }
+        .email-header p {
+            margin: 10px 0 0 0;
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        .success-banner {
+            background: #c6f6d5;
+            color: #2f855a;
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 16px;
+            border-bottom: 3px solid #38a169;
+        }
+        .email-body {
+            padding: 30px 20px;
+            line-height: 1.6;
+            color: #333333;
+        }
+        .case-details {
+            background: #f0fff4;
+            border-left: 4px solid #38a169;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 0 6px 6px 0;
+        }
+        .case-details h3 {
+            margin: 0 0 15px 0;
+            color: #38a169;
+            font-size: 18px;
+        }
+        .case-detail-row {
+            margin: 8px 0;
+            display: flex;
+            align-items: center;
+        }
+        .case-detail-label {
+            font-weight: bold;
+            min-width: 140px;
+            color: #555;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+            background: #c6f6d5;
+            color: #2f855a;
+        }
+        .resolution-summary {
+            background: #f7fafc;
+            border: 1px solid #cbd5e0;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 25px 0;
+        }
+        .resolution-summary h4 {
+            margin: 0 0 15px 0;
+            color: #2d3748;
+            font-size: 16px;
+        }
+        .resolution-text {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+            padding: 15px;
+            color: #4a5568;
+            line-height: 1.5;
+        }
+        .next-steps {
+            background: #fff9db;
+            border: 1px solid #f6e05e;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 25px 0;
+        }
+        .next-steps h4 {
+            margin: 0 0 15px 0;
+            color: #d69e2e;
+            font-size: 16px;
+        }
+        .next-steps ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        .next-steps li {
+            margin: 8px 0;
+        }
+        .btn {
+            display: inline-block;
+            padding: 14px 28px;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+            margin: 10px 5px;
+            transition: all 0.3s;
+        }
+        .btn-survey {
+            background: #38a169;
+        }
+        .btn-survey:hover {
+            background: #2f855a;
+        }
+        .btn-history {
+            background: #4a5568;
+        }
+        .btn-history:hover {
+            background: #2d3748;
+        }
+        .btn-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+        .satisfaction-section {
+            background: #ebf4ff;
+            border: 1px solid #3182ce;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 25px 0;
+            text-align: center;
+        }
+        .satisfaction-section h4 {
+            margin: 0 0 15px 0;
+            color: #2b6cb0;
+            font-size: 16px;
+        }
+        .star-rating {
+            font-size: 24px;
+            margin: 10px 0;
+        }
+        .star-rating a {
+            text-decoration: none;
+            margin: 0 2px;
+        }
+        .performance-stats {
+            display: flex;
+            justify-content: space-around;
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .stat-item {
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #38a169;
+        }
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+            text-transform: uppercase;
+        }
+        .signature {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e1e8ed;
+        }
+        .email-footer {
+            background: #f8f9fa;
+            color: #666666;
+            padding: 20px;
+            text-align: center;
+            font-size: 12px;
+            line-height: 1.4;
+        }
+        .success-icon {
+            font-size: 20px;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="success-banner">
+            ✅ CASE RESOLVED SUCCESSFULLY - Thank you for your patience!
+        </div>
+        
+        <div class="email-header">
+            <h1>Case Resolved</h1>
+            <p>Your support request has been completed successfully</p>
+        </div>
+        
+        <div class="email-body">
+            <p>Dear {!Case.SuppliedName},</p>
+            
+            <p>Great news! We have successfully resolved your support case. Thank you for your patience throughout the resolution process, and we hope our solution meets your expectations.</p>
+            
+            <div class="case-details">
+                <h3><span class="success-icon">✅</span>Resolution Summary</h3>
+                <div class="case-detail-row">
+                    <span class="case-detail-label">Case Number:</span>
+                    <span><strong>{!Case.CaseNumber}</strong></span>
+                </div>
+                <div class="case-detail-row">
+                    <span class="case-detail-label">Subject:</span>
+                    <span>{!Case.Subject}</span>
+                </div>
+                <div class="case-detail-row">
+                    <span class="case-detail-label">Final Status:</span>
+                    <span class="status-badge">{!Case.Status}</span>
+                </div>
+                <div class="case-detail-row">
+                    <span class="case-detail-label">Resolution Date:</span>
+                    <span>{!Case.ClosedDate}</span>
+                </div>
+                <div class="case-detail-row">
+                    <span class="case-detail-label">Resolved by:</span>
+                    <span><strong>{!Case.OwnerName}</strong></span>
+                </div>
+            </div>
+            
+            <div class="performance-stats">
+                <div class="stat-item">
+                    <div class="stat-number">{!Case.Priority}</div>
+                    <div class="stat-label">Priority Level</div>
+                </div>
+            </div>
+            
+            <div class="resolution-summary">
+                <h4>🔧 Detailed Resolution Information</h4>
+                <div class="resolution-text">
+                    {!Case.Resolution_Summary__c}
+                </div>
+            </div>
+            
+            <div class="next-steps">
+                <h4>📋 Important Next Steps</h4>
+                <ul>
+                    <li><strong>Test the Solution:</strong> Please verify that the implemented solution works as expected</li>
+                    <li><strong>7-Day Response Window:</strong> If you encounter any issues, reply to this email within 7 days</li>
+                    <li><strong>Auto-Close Policy:</strong> This case will be automatically closed after 7 days if no response is received</li>
+                    <li><strong>Follow-up Support:</strong> We're here if you need any clarification or additional assistance</li>
+                </ul>
+            </div>
+            
+            <div class="satisfaction-section">
+                <h4>⭐ How was your support experience?</h4>
+                <p>Your feedback helps us continuously improve our service quality</p>
+                <div class="star-rating">
+                    <a href="{!Case.Satisfaction_Survey_URL__c}?rating=5" title="Excellent">⭐</a>
+                    <a href="{!Case.Satisfaction_Survey_URL__c}?rating=4" title="Good">⭐</a>
+                    <a href="{!Case.Satisfaction_Survey_URL__c}?rating=3" title="Average">⭐</a>
+                    <a href="{!Case.Satisfaction_Survey_URL__c}?rating=2" title="Poor">⭐</a>
+                    <a href="{!Case.Satisfaction_Survey_URL__c}?rating=1" title="Very Poor">⭐</a>
+                </div>
+                <p><small>Click on a star to rate your experience</small></p>
+            </div>
+            
+            
+            </div>
+            
+            <p>We hope we've exceeded your expectations with our support service. Your satisfaction is our top priority, and we're always looking for ways to improve.</p>
+            
+            <p><strong>Need help with something else?</strong> Don't hesitate to reach out to our support team anytime. We're here to help!</p>
+            
+            <div class="signature">
+                <p>Thank you for choosing our support services!<br><br>
+                Best regards,<br>
+                <strong>{!Case.OwnerName}</strong><br>
+                Customer Success Team<br>
+            </div>
+        </div>
+        
+        <div class="email-footer">
+            <p><strong>© 2025 Your Company Name. Case resolved successfully.</strong><br>
+            Need help with something else? <a href="mailto:support@company.com" style="color: #3182ce;">Contact Support</a><br>
+            Resolution Confirmation ID: {!Case.CaseNumber}</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Case Escalated Template</name>
+    <style>none</style>
+    <subject>Case Escalated - Reference # {!Case.CaseNumber}</subject>
+    <textOnly>Case Escalation Notice
+
+⚠️ CASE ESCALATED - Enhanced Priority Support Activated
+Case Escalated
+
+Your case has been elevated for priority handling
+
+Dear {!Case.SuppliedName},
+
+Your support case has been escalated to our senior support team to ensure prompt and effective resolution. This escalation activates enhanced priority support with additional resources and management oversight.
+
+📈Escalation Details
+Case Number: {!Case.CaseNumber}
+Subject: {!Case.Subject}
+Current Status: {!Case.Status}
+New Case Owner: {!Case.OwnerName}
+🔍 Why was your case escalated?
+
+Escalation Reason: {!Case.Escalation_Reason__c}
+
+Cases are escalated when they meet certain criteria such as extended resolution time, technical complexity, customer priority level, or when additional expertise is required. This ensures you receive the appropriate level of attention and specialized knowledge.
+
+✅ What to expect with escalated support:
+
+Enhanced Priority Status: Faster response times and priority queue placement
+Senior Technical Specialists: Assignment to experienced senior engineers
+Management Oversight: Direct involvement from escalation management
+Regular Updates: More frequent progress communications
+Additional Resources: Access to specialized tools and expertise
+Cross-functional Support: Involvement of multiple teams if needed
+
+👥 Your Escalated Support Team
+Senior Engineer: {!Case.OwnerName}
+
+We appreciate your patience and are committed to resolving your issue as quickly as possible. The escalation process ensures that your case receives the attention and expertise it deserves.
+
+If you have any questions about the escalation or need immediate assistance, please don&apos;t hesitate to contact your escalation manager directly.
+
+© 2025 Your Company Name. Escalation Support Services
+Escalation Tracking ID: {!Case.CaseNumber}
+Your case is now under enhanced monitoring and support
+
+{!Case.Thread_Token}</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Listing_Price_vs_Market_Value</fullName>
+    <active>true</active>
+    <description>Ensures listing price is reasonable compared to market value</description>
+    <errorConditionFormula>AND(
+  NOT(ISBLANK(Listing_price__c)),
+  NOT(ISBLANK(Market_value__c)),
+  OR(
+    Listing_price__c &gt; (Market_value__c * 1.5),
+    Listing_price__c &lt; (Market_value__c * 0.5)
+  )
+)</errorConditionFormula>
+    <errorDisplayField>Listing_price__c</errorDisplayField>
+    <errorMessage>Listing price should be within 50% of market value. Please verify pricing.</errorMessage>
+</ValidationRule>

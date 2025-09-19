@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>sObject_Trigger_Setting__c</fullName>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <inlineHelpText>Object Name for which the trigger handler is</inlineHelpText>
+    <label>sObject Trigger Setting</label>
+    <referenceTo>sObjectTriggerSetting__mdt</referenceTo>
+    <relationshipLabel>sObject Trigger Actions</relationshipLabel>
+    <relationshipName>sObject_Trigger_Actions</relationshipName>
+    <required>true</required>
+    <type>MetadataRelationship</type>
+    <unique>false</unique>
+</CustomField>

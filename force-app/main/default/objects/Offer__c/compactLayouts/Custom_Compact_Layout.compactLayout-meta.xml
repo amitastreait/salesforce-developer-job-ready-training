@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CompactLayout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Custom_Compact_Layout</fullName>
+    <fields>Name</fields>
+    <fields>Offered_purchase_price__c</fields>
+    <fields>Offer_Date__c</fields>
+    <fields>Expiration_date__c</fields>
+    <fields>Deposit_Amount__c</fields>
+    <fields>Financing_contingency_included__c</fields>
+    <fields>Inspection_contingency_included__c</fields>
+    <fields>Proposed_date_for_closing__c</fields>
+    <label>Custom Compact Layout</label>
+</CompactLayout>

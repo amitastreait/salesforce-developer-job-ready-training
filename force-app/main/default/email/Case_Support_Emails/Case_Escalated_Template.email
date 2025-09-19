@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case Escalation Notice</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+        .email-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+        }
+        .email-header {
+            background: linear-gradient(135deg, #dd6b20 0%, #c05621 100%);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+        }
+        .email-header h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: 300;
+        }
+        .email-header p {
+            margin: 10px 0 0 0;
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        .escalation-banner {
+            background: #feebc8;
+            color: #c05621;
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 16px;
+            border-bottom: 3px solid #dd6b20;
+        }
+        .email-body {
+            padding: 30px 20px;
+            line-height: 1.6;
+            color: #333333;
+        }
+        .case-details {
+            background: #fffaf0;
+            border-left: 4px solid #dd6b20;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 0 6px 6px 0;
+        }
+        .case-details h3 {
+            margin: 0 0 15px 0;
+            color: #dd6b20;
+            font-size: 18px;
+        }
+        .case-detail-row {
+            margin: 8px 0;
+            display: flex;
+            align-items: center;
+        }
+        .case-detail-label {
+            font-weight: bold;
+            min-width: 140px;
+            color: #555;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+            background: #feebc8;
+            color: #c05621;
+        }
+        .escalation-reason {
+            background: #f0f9ff;
+            border: 1px solid #0ea5e9;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 25px 0;
+        }
+        .escalation-reason h4 {
+            margin: 0 0 15px 0;
+            color: #0369a1;
+            font-size: 16px;
+        }
+        .what-to-expect {
+            background: #f0fff4;
+            border: 1px solid #38a169;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 25px 0;
+        }
+        .what-to-expect h4 {
+            margin: 0 0 15px 0;
+            color: #2f855a;
+            font-size: 16px;
+        }
+        .what-to-expect ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        .what-to-expect li {
+            margin: 8px 0;
+            color: #2d3748;
+        }
+        .btn {
+            display: inline-block;
+            padding: 14px 28px;
+            background: #dd6b20;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+            margin: 20px 0;
+            transition: background-color 0.3s;
+        }
+        .btn:hover {
+            background: #c05621;
+        }
+        .btn-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+        .escalation-team {
+            background: #fafafa;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 25px 0;
+        }
+        .escalation-team h4 {
+            margin: 0 0 15px 0;
+            color: #2d3748;
+            font-size: 16px;
+        }
+        .team-member {
+            margin: 10px 0;
+            padding: 10px;
+            background: white;
+            border-radius: 4px;
+            border-left: 3px solid #dd6b20;
+        }
+        .signature {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e1e8ed;
+        }
+        .email-footer {
+            background: #f8f9fa;
+            color: #666666;
+            padding: 20px;
+            text-align: center;
+            font-size: 12px;
+            line-height: 1.4;
+        }
+        .escalation-icon {
+            font-size: 20px;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="escalation-banner">
+            ⚠️ CASE ESCALATED - Enhanced Priority Support Activated
+        </div>
+        
+        <div class="email-header">
+            <h1>Case Escalated</h1>
+            <p>Your case has been elevated for priority handling</p>
+        </div>
+        
+        <div class="email-body">
+            <p>Dear {!Case.SuppliedName},</p>
+            
+            <p>Your support case has been escalated to our senior support team to ensure prompt and effective resolution. This escalation activates enhanced priority support with additional resources and management oversight.</p>
+            
+            <div class="case-details">
+                <h3><span class="escalation-icon">📈</span>Escalation Details</h3>
+                <div class="case-detail-row">
+                    <span class="case-detail-label">Case Number:</span>
+                    <span><strong>{!Case.CaseNumber}</strong></span>
+                </div>
+                <div class="case-detail-row">
+                    <span class="case-detail-label">Subject:</span>
+                    <span>{!Case.Subject}</span>
+                </div>
+                <div class="case-detail-row">
+                    <span class="case-detail-label">Current Status:</span>
+                    <span class="status-badge">{!Case.Status}</span>
+                </div>
+                <div class="case-detail-row">
+                    <span class="case-detail-label">New Case Owner:</span>
+                    <span><strong>{!Case.OwnerName}</strong></span>
+                </div>
+                
+            </div>
+            
+            <div class="escalation-reason">
+                <h4>🔍 Why was your case escalated?</h4>
+                <p><strong>Escalation Reason:</strong> {!Case.Escalation_Reason__c}</p>
+                <p>Cases are escalated when they meet certain criteria such as extended resolution time, technical complexity, customer priority level, or when additional expertise is required. This ensures you receive the appropriate level of attention and specialized knowledge.</p>
+            </div>
+            
+            <div class="what-to-expect">
+                <h4>✅ What to expect with escalated support:</h4>
+                <ul>
+                    <li><strong>Enhanced Priority Status:</strong> Faster response times and priority queue placement</li>
+                    <li><strong>Senior Technical Specialists:</strong> Assignment to experienced senior engineers</li>
+                    <li><strong>Management Oversight:</strong> Direct involvement from escalation management</li>
+                    <li><strong>Regular Updates:</strong> More frequent progress communications</li>
+                    <li><strong>Additional Resources:</strong> Access to specialized tools and expertise</li>
+                    <li><strong>Cross-functional Support:</strong> Involvement of multiple teams if needed</li>
+                </ul>
+            </div>
+            
+            <div class="escalation-team">
+                <h4>👥 Your Escalated Support Team</h4>
+                <div class="team-member">
+                    <strong>Senior Engineer:</strong> {!Case.OwnerName}
+                </div>
+                
+            </div>
+            
+            
+            <p>We appreciate your patience and are committed to resolving your issue as quickly as possible. The escalation process ensures that your case receives the attention and expertise it deserves.</p>
+            
+            <p>If you have any questions about the escalation or need immediate assistance, please don't hesitate to contact your escalation manager directly.</p>
+            
+        </div>
+        
+        <div class="email-footer">
+            <p><strong>© 2025 Your Company Name. Escalation Support Services</strong><br>
+            Escalation Tracking ID: {!Case.CaseNumber}<br>
+            Your case is now under enhanced monitoring and support</p>
+           {!Case.Thread_Token}
+        </div>
+    </div>
+</body>
+</html>

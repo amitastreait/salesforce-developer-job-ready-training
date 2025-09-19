@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discount Approval Rejected</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .email-container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+            border: 1px solid #e0e0e0;
+        }
+        .header {
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            color: white;
+            padding: 25px 30px;
+            text-align: center;
+            position: relative;
+        }
+        .header::before {
+            content: "❌";
+            position: absolute;
+            left: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 24px;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 22px;
+            font-weight: 600;
+        }
+        .status-banner {
+            background-color: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 12px 20px;
+            margin: 0;
+            text-align: center;
+            font-weight: 600;
+            color: #721c24;
+        }
+        .content {
+            padding: 30px;
+        }
+        .greeting {
+            font-size: 16px;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+        .rejection-summary {
+            background: linear-gradient(135deg, #ffebee 0%, #fce4ec 100%);
+            border: 1px solid #f8bbd9;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            position: relative;
+        }
+        .rejection-summary::before {
+            content: "🚫";
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 20px;
+        }
+        .rejection-summary h3 {
+            margin-top: 0;
+            color: #c62828;
+            font-size: 18px;
+        }
+        .opportunity-details {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        .details-header {
+            background-color: #6c757d;
+            color: white;
+            padding: 15px 20px;
+            font-weight: 600;
+            font-size: 16px;
+        }
+        .details-grid {
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .detail-item {
+            border-bottom: 1px solid #e9ecef;
+            padding-bottom: 10px;
+        }
+        .detail-item:last-child,
+        .detail-item:nth-last-child(2) {
+            border-bottom: none;
+        }
+        .detail-label {
+            font-weight: 600;
+            color: #495057;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        .detail-value {
+            color: #212529;
+            font-size: 15px;
+        }
+        .rejected-discount {
+            background: linear-gradient(45deg, #dc3545, #c82333);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .decision-details {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .decision-details h3 {
+            margin-top: 0;
+            color: #856404;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .decision-info {
+            background-color: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+        .rejection-reason {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .rejection-reason h3 {
+            margin-top: 0;
+            color: #721c24;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .reason-text {
+            background-color: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            padding: 15px;
+            font-style: italic;
+            color: #424242;
+            min-height: 40px;
+        }
+        .next-steps {
+            background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+            border: 2px solid #2196f3;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+        .next-steps h3 {
+            margin-top: 0;
+            color: #1565c0;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .steps-list {
+            list-style: none;
+            padding: 0;
+            counter-reset: step-counter;
+        }
+        .steps-list li {
+            counter-increment: step-counter;
+            margin: 15px 0;
+            padding: 15px 0 15px 50px;
+            position: relative;
+            color: #495057;
+            border-bottom: 1px solid #e3f2fd;
+        }
+        .steps-list li:last-child {
+            border-bottom: none;
+        }
+        .steps-list li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 15px;
+            background: #2196f3;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            color: white;
+        }
+        .btn-secondary {
+            background: linear-gradient(135deg, #6c757d, #495057);
+            color: white;
+        }
+        .contact-info {
+            background-color: #d1ecf1;
+            border: 1px solid #bee5eb;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .contact-info a {
+            color: #0c5460;
+            text-decoration: none;
+        }
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+        .footer {
+            background-color: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            font-size: 12px;
+            color: #6c757d;
+            border-top: 1px solid #dee2e6;
+        }
+        .signature {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #e9ecef;
+            color: #495057;
+        }
+        .highlight-box {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 6px 6px 0;
+        }
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            .content {
+                padding: 20px;
+            }
+            .details-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            .btn {
+                width: 100%;
+                max-width: 200px;
+            }
+            .steps-list li {
+                padding-left: 40px;
+            }
+            .steps-list li::before {
+                width: 25px;
+                height: 25px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="header">
+            <h1>Discount Request Rejected</h1>
+        </div>
+        
+        <div class="status-banner">
+            🚫 Discount approval has been declined - Review feedback and next steps below
+        </div>
+        
+        <div class="content">
+            <div class="greeting">
+                Dear <strong>{!Opportunity.OwnerFullName}</strong>,
+            </div>
+            
+            <div class="rejection-summary">
+                <h3>Rejection Notification</h3>
+                <p>Your discount request for <strong>{!Opportunity.Name}</strong> has been reviewed and unfortunately <strong>rejected</strong> by your manager. Please review the feedback below and consider the recommended next steps.</p>
+            </div>
+            
+            <div class="opportunity-details">
+                <div class="details-header">
+                    📋 Rejected Request Details
+                </div>
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <div class="detail-label">Opportunity Name</div>
+                        <div class="detail-value"><strong>{!Opportunity.Name}</strong></div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Account</div>
+                        <div class="detail-value">{!Opportunity.Account}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Original Amount</div>
+                        <div class="detail-value">{!Opportunity.Amount}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Requested Discount</div>
+                        <div class="detail-value"><span class="rejected-discount">{!Opportunity.Discount_Percent__c}%</span></div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Expected Close Date</div>
+                        <div class="detail-value">{!Opportunity.CloseDate}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Current Stage</div>
+                        <div class="detail-value">{!Opportunity.StageName}</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="highlight-box">
+                <strong>⚠️ Important:</strong> Your opportunity is now unlocked and available for editing. Consider the feedback provided and explore alternative approaches to move this deal forward.
+            </div>
+            
+            <div class="next-steps">
+                <h3>🎯 Recommended Next Steps</h3>
+                <ol class="steps-list">
+                    <li><strong>Review the rejection feedback carefully</strong> and understand the specific concerns raised by your manager</li>
+                    <li><strong>Explore alternative solutions</strong> such as:
+                        <ul style="margin-top: 10px;">
+                            <li>Adjusting the discount percentage to acceptable levels</li>
+                            <li>Offering additional value through services or extended terms</li>
+                            <li>Restructuring the deal timeline or payment terms</li>
+                            <li>Seeking competitive differentiation instead of price reduction</li>
+                        </ul>
+                    </li>
+                    <li><strong>Discuss with your manager</strong> to understand what discount level might be acceptable or what additional justification is needed</li>
+                    <li><strong>Engage with the customer</strong> to explore win-win alternatives that don't require steep discounts</li>
+                    <li><strong>Resubmit if appropriate</strong> with revised terms and stronger business justification</li>
+                </ol>
+            </div>
+            
+            <div class="action-buttons">
+                <a href="{!Opportunity.Link}" class="btn btn-primary">📝 Edit Opportunity</a>
+                
+            </div>
+            
+            <div class="highlight-box">
+                <strong>💡 Pro Tip:</strong> Consider scheduling a brief call with your manager to discuss alternative approaches before making significant changes to your proposal.
+            </div>
+            
+            <div class="signature">
+                <p><strong>Best regards,</strong><br>
+                Sales Operations Team<br>
+                {!Organization.Name}</p>
+                
+                <p><small><em>Remember: Every rejection is an opportunity to find a better solution. Stay focused on creating value for both the customer and our organization.</em></small></p>
+            </div>
+        </div>
+        
+        <div class="footer">
+            This notification was automatically generated by Salesforce on {!TODAY()}<br>
+            Opportunity Status: Unlocked and ready for editing | Approval Process: Completed
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Minimum_Square_Footage</fullName>
+    <active>true</active>
+    <description>Ensures reasonable square footage based on property type</description>
+    <errorConditionFormula>AND(
+  NOT(ISBLANK(Square_footage__c)),
+  OR(
+    AND(TEXT(Property_Type__c) = &quot;Single Family&quot;, Square_footage__c &lt; 500),
+    AND(TEXT(Property_Type__c) = &quot;Condo&quot;, Square_footage__c &lt; 300),
+    AND(TEXT(Property_Type__c) = &quot;Commercial&quot;, Square_footage__c &lt; 1000)
+  )
+)</errorConditionFormula>
+    <errorDisplayField>Square_footage__c</errorDisplayField>
+    <errorMessage>Square footage seems too small for the selected property type</errorMessage>
+</ValidationRule>

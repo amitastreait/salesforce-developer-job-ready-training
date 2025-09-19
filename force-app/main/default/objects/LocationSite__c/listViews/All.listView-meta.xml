@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All</fullName>
+    <columns>NAME</columns>
+    <columns>City__c</columns>
+    <columns>State__c</columns>
+    <columns>ZIPPostal_code__c</columns>
+    <columns>County__c</columns>
+    <columns>School_district__c</columns>
+    <columns>Average_home_price_in_area__c</columns>
+    <columns>Safetycrime_rating__c</columns>
+    <columns>Walkability_score_1_100__c</columns>
+    <columns>Public_transportation_available__c</columns>
+    <filterScope>Everything</filterScope>
+    <label>All Records</label>
+</ListView>

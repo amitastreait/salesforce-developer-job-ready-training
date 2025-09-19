@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Thank You for Your Submission</name>
+    <style>none</style>
+    <subject>Speaker Submission Confirmation - {!Speaker_Submission__c.Session_Title__c}</subject>
+    <textOnly>Speaker Submission Confirmation - Salesforce Gurugram
+
+🎤
+Speaker Submission Confirmed!
+
+Salesforce Gurugram Architect + WIT Groups
+
+Dear {!Speaker_Submission__c.Full_Name__c},
+Thank you for submitting your speaker proposal for the Salesforce Gurugram Architect + WIT Groups! We&apos;re excited to review your session and appreciate your willingness to share your expertise with our community.
+📋
+Submission Details
+Session Title:
+{!Speaker_Submission__c.Session_Title__c}
+Session Type:
+{!Speaker_Submission__c.Session_Type__c}
+Duration:
+{!Speaker_Submission__c.Session_Duration__c} minutes
+Audience Level:
+{!Speaker_Submission__c.Audience_Level__c}
+Category:
+{!Speaker_Submission__c.Session_Category__c}
+Submission ID:
+{!Speaker_Submission__c.Name}
+Submitted On:
+{!Speaker_Submission__c.CreatedDate}
+📅
+What Happens Next?
+
+Review Process: Our review committee will carefully evaluate your submission against our session criteria and community needs.
+Feedback Timeline: You&apos;ll receive detailed feedback and our decision within 5-7 business days.
+Session Scheduling: If approved, we&apos;ll contact you within 2 business days to coordinate your session date and logistics.
+Speaker Preparation: Once scheduled, we&apos;ll provide you with speaker guidelines, technical requirements, and promotional support.
+
+Questions or Need Help?
+We&apos;re here to support you! Reach out to our community team:
+gurugram-in-architect@trailblazercgl.com
+We truly appreciate your contribution to the Salesforce Gurugram community. Your expertise and insights help make our events valuable learning experiences for everyone.
+Keep an eye on your inbox for updates, and don&apos;t hesitate to reach out if you have any questions!
+Salesforce Gurugram Community Team
+Architect Group • Women in Technology (WIT) Group
+This is an automated message. Please do not reply directly to this email.
+© 2025 Salesforce Gurugram Community. All rights reserved.</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

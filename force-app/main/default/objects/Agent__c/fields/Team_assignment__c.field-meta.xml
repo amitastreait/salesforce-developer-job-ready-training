@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Team_assignment__c</fullName>
+    <label>Team assignment</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Manhattan Elite Team</fullName>
+                <default>false</default>
+                <label>Manhattan Elite Team</label>
+            </value>
+            <value>
+                <fullName>Commercial Division</fullName>
+                <default>false</default>
+                <label>Commercial Division</label>
+            </value>
+            <value>
+                <fullName>Luxury Properties Group</fullName>
+                <default>false</default>
+                <label>Luxury Properties Group</label>
+            </value>
+            <value>
+                <fullName>Chelsea Residential Team</fullName>
+                <default>false</default>
+                <label>Chelsea Residential Team</label>
+            </value>
+            <value>
+                <fullName>South Austin Team</fullName>
+                <default>false</default>
+                <label>South Austin Team</label>
+            </value>
+            <value>
+                <fullName>Denver Metro Group</fullName>
+                <default>false</default>
+                <label>Denver Metro Group</label>
+            </value>
+            <value>
+                <fullName>Miami Beach Specialists</fullName>
+                <default>false</default>
+                <label>Miami Beach Specialists</label>
+            </value>
+            <value>
+                <fullName>Pearl District Team</fullName>
+                <default>false</default>
+                <label>Pearl District Team</label>
+            </value>
+            <value>
+                <fullName>Nashville Residential</fullName>
+                <default>false</default>
+                <label>Nashville Residential</label>
+            </value>
+            <value>
+                <fullName>Waterfront Properties</fullName>
+                <default>false</default>
+                <label>Waterfront Properties</label>
+            </value>
+            <value>
+                <fullName>Scottsdale Luxury Team</fullName>
+                <default>false</default>
+                <label>Scottsdale Luxury Team</label>
+            </value>
+            <value>
+                <fullName>Back Bay Specialists</fullName>
+                <default>false</default>
+                <label>Back Bay Specialists</label>
+            </value>
+            <value>
+                <fullName>SouthPark Team</fullName>
+                <default>false</default>
+                <label>SouthPark Team</label>
+            </value>
+            <value>
+                <fullName>Strip Properties Group</fullName>
+                <default>false</default>
+                <label>Strip Properties Group</label>
+            </value>
+            <value>
+                <fullName>Telegraph Hill Team</fullName>
+                <default>false</default>
+                <label>Telegraph Hill Team</label>
+            </value>
+            <value>
+                <fullName>Bayshore Properties</fullName>
+                <default>false</default>
+                <label>Bayshore Properties</label>
+            </value>
+            <value>
+                <fullName>Buckhead Elite</fullName>
+                <default>false</default>
+                <label>Buckhead Elite</label>
+            </value>
+            <value>
+                <fullName>Gold Coast Team</fullName>
+                <default>false</default>
+                <label>Gold Coast Team</label>
+            </value>
+            <value>
+                <fullName>Heights Residential</fullName>
+                <default>false</default>
+                <label>Heights Residential</label>
+            </value>
+            <value>
+                <fullName>Uptown Specialists</fullName>
+                <default>false</default>
+                <label>Uptown Specialists</label>
+            </value>
+            <value>
+                <fullName>La Jolla Luxury Group</fullName>
+                <default>false</default>
+                <label>La Jolla Luxury Group</label>
+            </value>
+            <value>
+                <fullName>Northwest Heights Team</fullName>
+                <default>false</default>
+                <label>Northwest Heights Team</label>
+            </value>
+            <value>
+                <fullName>Ahwatukee Team</fullName>
+                <default>false</default>
+                <label>Ahwatukee Team</label>
+            </value>
+            <value>
+                <fullName>Highland Park Elite</fullName>
+                <default>false</default>
+                <label>Highland Park Elite</label>
+            </value>
+            <value>
+                <fullName>Oceanfront Properties</fullName>
+                <default>false</default>
+                <label>Oceanfront Properties</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

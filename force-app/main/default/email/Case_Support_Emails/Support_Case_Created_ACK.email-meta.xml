@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Support Case Created ACK</name>
+    <style>none</style>
+    <subject>Support Case Created - Reference # {!Case.CaseNumber} - {!Case.Thread_Token}</subject>
+    <textOnly>Case Creation Acknowledgment
+
+Support Case Created
+
+We&apos;ve received your request and are here to help
+
+Dear {!Case.Contact},
+
+Thank you for contacting our support team. We have successfully created a case for your request and our team will review it shortly.
+
+📋 Case Details
+Case Number: {!Case.CaseNumber}
+Subject: {!Case.Subject}
+Priority: {!Case.Priority}
+Created Date: {!Case.CreatedDate}
+Case Owner: {!Case.OwnerFullName}
+⏱️ Expected Response Times
+
+High Priority: Within 2 hours
+Medium Priority: Within 8 hours
+Low Priority: Within 24 hours
+
+You can track the progress of your case using the case number above. Our team is committed to providing you with excellent support and will keep you updated throughout the resolution process.
+
+Best regards,
+{!Case.OwnerFullName}}
+Customer Support Team
+📧 {!Case.OwnerEmail}
+📞 +1-800-SUPPORT
+
+© 2025 Your Company Name. All rights reserved.
+This is an automated message. Please do not reply directly to this email.
+For urgent matters, call our support hotline: +1-800-SUPPORT</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

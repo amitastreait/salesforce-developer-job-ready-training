@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Payment_Date_Logic</fullName>
+    <active>true</active>
+    <description>Ensures payment date is only set when status is &quot;Paid&quot;</description>
+    <errorConditionFormula>OR(
+  AND(ISPICKVAL(Payment_status__c, &quot;Paid&quot;), ISBLANK(Commission_Paid_Date__c)),
+  AND(NOT(ISPICKVAL(Payment_status__c, &quot;Paid&quot;)), NOT(ISBLANK(Commission_Paid_Date__c)))
+)</errorConditionFormula>
+    <errorDisplayField>Commission_Paid_Date__c</errorDisplayField>
+    <errorMessage>Payment date should only be set when status is &apos;Paid&apos; and must be set when status is &apos;Paid&apos;</errorMessage>
+</ValidationRule>

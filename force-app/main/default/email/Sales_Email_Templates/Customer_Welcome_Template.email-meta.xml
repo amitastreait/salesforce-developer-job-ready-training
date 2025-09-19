@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Customer Welcome Template</name>
+    <style>none</style>
+    <subject>Welcome to {!Organization.Name}!</subject>
+    <textOnly>Welcome Email Template
+
+Welcome to {!Organization.Name}!
+Dear {!Contact.FirstName},
+
+Welcome to {!Account.Name}! We&apos;re excited to have you as a customer and look forward to building a successful partnership together.
+
+📋 Your Account Details
+Account Name: {!Account.Name}
+Account Number: {!Account.AccountNumber}
+Account Manager: {!Account.Owner}
+Email: {!Account.Owner}
+Phone: {!Account.Owner}
+
+Your account manager will reach out within 24 hours to help you get started with our services and answer any questions you may have.
+
+🚀 Next Steps
+
+Complete your profile setup in our customer portal
+Review our comprehensive getting started guide
+Schedule an onboarding call with your account manager
+
+Need immediate assistance?
+Don&apos;t hesitate to contact our support team at support@{!Organization.Name}
+
+Best regards,
+The {!Organization.Name} Team
+
+This email was sent from Salesforce on {!TODAY()}</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

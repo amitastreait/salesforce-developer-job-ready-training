@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case Creation Acknowledgment</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+        .email-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #ffffff;
+        }
+        .email-header {
+            background: linear-gradient(135deg, #0176d3 0%, #0d47a1 100%);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+        }
+        .email-header h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: 300;
+        }
+        .email-header p {
+            margin: 10px 0 0 0;
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        .email-body {
+            padding: 30px 20px;
+            line-height: 1.6;
+            color: #333333;
+        }
+        .case-details {
+            background: #f8f9fa;
+            border-left: 4px solid #0176d3;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 0 6px 6px 0;
+        }
+        .case-details h3 {
+            margin: 0 0 15px 0;
+            color: #0176d3;
+            font-size: 18px;
+        }
+        .case-detail-row {
+            margin: 8px 0;
+            display: flex;
+            align-items: center;
+        }
+        .case-detail-label {
+            font-weight: bold;
+            min-width: 120px;
+            color: #555;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+            background: #bee3f8;
+            color: #2b6cb0;
+        }
+        .response-times {
+            background: #f0f9ff;
+            border: 1px solid #0ea5e9;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .response-times h4 {
+            margin: 0 0 15px 0;
+            color: #0369a1;
+        }
+        .response-times ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        .response-times li {
+            margin: 8px 0;
+        }
+        .btn {
+            display: inline-block;
+            padding: 14px 28px;
+            background: #0176d3;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+            margin: 20px 0;
+            transition: background-color 0.3s;
+        }
+        .btn:hover {
+            background: #0d47a1;
+        }
+        .btn-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+        .signature {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e1e8ed;
+        }
+        .email-footer {
+            background: #f8f9fa;
+            color: #666666;
+            padding: 20px;
+            text-align: center;
+            font-size: 12px;
+            line-height: 1.4;
+        }
+        .company-logo {
+            height: 40px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="email-header">
+            <h1>Support Case Created</h1>
+            <p>We've received your request and are here to help</p>
+        </div>
+        
+        <div class="email-body">
+            <p>Dear {!Case.Contact},</p>
+            
+            <p>Thank you for contacting our support team. We have successfully created a case for your request and our team will review it shortly.</p>
+            
+            <div class="case-details">
+                <h3>📋 Case Details</h3>
+                <div class="case-detail-row">
+                    <span class="case-detail-label">Case Number:</span>
+                    <span><strong>{!Case.CaseNumber}</strong></span>
+                </div>
+                <div class="case-detail-row">
+                    <span class="case-detail-label">Subject:</span>
+                    <span>{!Case.Subject}</span>
+                </div>
+                <div class="case-detail-row">
+                    <span class="case-detail-label">Priority:</span>
+                    <span class="status-badge">{!Case.Priority}</span>
+                </div>
+                <div class="case-detail-row">
+                    <span class="case-detail-label">Created Date:</span>
+                    <span>{!Case.CreatedDate}</span>
+                </div>
+                <div class="case-detail-row">
+                    <span class="case-detail-label">Case Owner:</span>
+                    <span>{!Case.OwnerFullName}</span>
+                </div>
+            </div>
+            
+            <div class="response-times">
+                <h4>⏱️ Expected Response Times</h4>
+                <ul>
+                    <li><strong>High Priority:</strong> Within 2 hours</li>
+                    <li><strong>Medium Priority:</strong> Within 8 hours</li>
+                    <li><strong>Low Priority:</strong> Within 24 hours</li>
+                </ul>
+            </div>
+            
+            <p>You can track the progress of your case using the case number above. Our team is committed to providing you with excellent support and will keep you updated throughout the resolution process.</p>
+            
+            <div class="signature">
+                <p>Best regards,<br>
+                <strong>{!Case.OwnerFullName}}</strong><br>
+                Customer Support Team<br>
+                📧 {!Case.OwnerEmail}<br>
+                📞 +1-800-SUPPORT</p>
+            </div>
+        </div>
+        
+        <div class="email-footer">
+            <p><strong>© 2025 Your Company Name. All rights reserved.</strong><br>
+            This is an automated message. Please do not reply directly to this email.<br>
+            For urgent matters, call our support hotline: +1-800-SUPPORT</p>
+        </div>
+       {!Case.Thread_Token}
+    </div>
+</body>
+</html>

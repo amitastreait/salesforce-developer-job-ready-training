@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Commission_Amount_Validation</fullName>
+    <active>true</active>
+    <description>Ensures commission amount matches rate calculation</description>
+    <errorConditionFormula>AND(
+  NOT(ISBLANK(Commission_amount__c)),
+  NOT(ISBLANK(Opportunity__r.Amount)),
+  NOT(ISBLANK(CommissionPercentage__c)),
+  ABS(Commission_amount__c - (Opportunity__r.Amount * CommissionPercentage__c)) &gt; 1
+)</errorConditionFormula>
+    <errorDisplayField>Commission_amount__c</errorDisplayField>
+    <errorMessage>Commission amount should equal Sale Price × Commission Rate</errorMessage>
+</ValidationRule>

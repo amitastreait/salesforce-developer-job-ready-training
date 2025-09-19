@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Experience_Level__c</fullName>
+    <description>Categorizes agent by experience level</description>
+    <externalId>false</externalId>
+    <formula>IF(OR(ISBLANK(Years_of_Experience__c), Years_of_Experience__c = 0), &quot;Unknown&quot;,
+  IF(Years_of_Experience__c &lt; 2, &quot;New Agent&quot;,
+    IF(Years_of_Experience__c &lt; 5, &quot;Junior Agent&quot;,
+      IF(Years_of_Experience__c &lt; 10, &quot;Experienced Agent&quot;,
+        IF(Years_of_Experience__c &lt; 20, &quot;Senior Agent&quot;, &quot;Veteran Agent&quot;)
+      )
+    )
+  )
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Experience Level</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

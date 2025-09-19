@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discount Approval Request</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .email-container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+            border: 1px solid #e0e0e0;
+        }
+        .header {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            color: white;
+            padding: 25px 30px;
+            text-align: center;
+            position: relative;
+        }
+        .header::before {
+            content: "⚠️";
+            position: absolute;
+            left: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 24px;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 22px;
+            font-weight: 600;
+        }
+        .urgency-banner {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 12px 20px;
+            margin: 0;
+            text-align: center;
+            font-weight: 600;
+            color: #856404;
+        }
+        .content {
+            padding: 30px;
+        }
+        .greeting {
+            font-size: 16px;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+        .request-summary {
+            background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+            border: 1px solid #bbdefb;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            position: relative;
+        }
+        .request-summary::before {
+            content: "📊";
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 20px;
+        }
+        .request-summary h3 {
+            margin-top: 0;
+            color: #1565c0;
+            font-size: 18px;
+        }
+        .opportunity-details {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        .details-header {
+            background-color: #007bff;
+            color: white;
+            padding: 15px 20px;
+            font-weight: 600;
+            font-size: 16px;
+        }
+        .details-grid {
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .detail-item {
+            border-bottom: 1px solid #e9ecef;
+            padding-bottom: 10px;
+        }
+        .detail-item:last-child,
+        .detail-item:nth-last-child(2) {
+            border-bottom: none;
+        }
+        .detail-label {
+            font-weight: 600;
+            color: #495057;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        .detail-value {
+            color: #212529;
+            font-size: 15px;
+        }
+        .amount-highlight {
+            background: linear-gradient(45deg, #28a745, #20c997);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .discount-highlight {
+            background: linear-gradient(45deg, #dc3545, #fd7e14);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .justification-section {
+            background-color: #fff8e1;
+            border: 1px solid #ffecb3;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .justification-section h3 {
+            margin-top: 0;
+            color: #f57f17;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .justification-text {
+            background-color: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            padding: 15px;
+            font-style: italic;
+            color: #424242;
+            min-height: 60px;
+        }
+        .approval-actions {
+            background: linear-gradient(135deg, #e8f5e8 0%, #f0f8ff 100%);
+            border: 2px solid #28a745;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 25px 0;
+            text-align: center;
+        }
+        .approval-actions h3 {
+            margin-top: 0;
+            color: #155724;
+            font-size: 18px;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .btn-approve {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+        }
+        .btn-reject {
+            background: linear-gradient(135deg, #dc3545, #fd7e14);
+            color: white;
+        }
+        .btn-review {
+            background: linear-gradient(135deg, #007bff, #6610f2);
+            color: white;
+        }
+        .deadline-warning {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        .deadline-warning strong {
+            color: #721c24;
+            font-size: 16px;
+        }
+        .submitter-info {
+            background-color: #e7f3ff;
+            border-left: 4px solid #007bff;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 0 6px 6px 0;
+        }
+        .footer {
+            background-color: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            font-size: 12px;
+            color: #6c757d;
+            border-top: 1px solid #dee2e6;
+        }
+        .signature {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #e9ecef;
+            color: #495057;
+        }
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            .content {
+                padding: 20px;
+            }
+            .details-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            .btn {
+                width: 100%;
+                max-width: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="header">
+            <h1>Discount Approval Required</h1>
+        </div>
+        
+        <div class="urgency-banner">
+            🕐 Action Required - Approval Deadline: {!Opportunity.CloseDate}
+        </div>
+        
+        <div class="content">
+            <div class="greeting">
+                Dear <strong>User</strong>,
+            </div>
+            
+            <div class="request-summary">
+                <h3>Approval Request Summary</h3>
+                <p><strong>{!Opportunity.OwnerFullName}</strong> has submitted the following opportunity for discount approval. Your review and decision are required to proceed with this deal.</p>
+            </div>
+            
+            <div class="opportunity-details">
+                <div class="details-header">
+                    💼 Opportunity Details
+                </div>
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <div class="detail-label">Opportunity Name</div>
+                        <div class="detail-value"><strong>{!Opportunity.Name}</strong></div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Account</div>
+                        <div class="detail-value">{!Opportunity.Account}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Original Amount</div>
+                        <div class="detail-value"><span class="amount-highlight">{!Opportunity.Amount}</span></div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Requested Discount</div>
+                        <div class="detail-value"><span class="discount-highlight">{!Opportunity.Discount_Percent__c}%</span></div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Discounted Amount</div>
+                        <div class="detail-value"><span class="amount-highlight">{!Opportunity.Discounted_Amount__c}</span></div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Expected Close Date</div>
+                        <div class="detail-value">{!Opportunity.CloseDate}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Current Stage</div>
+                        <div class="detail-value">{!Opportunity.StageName}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Lead Source</div>
+                        <div class="detail-value">{!Opportunity.LeadSource}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Competition</div>
+                        <div class="detail-value">{!Opportunity.Campaign}</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="justification-section">
+                <h3>📝 Business Justification</h3>
+                <div class="justification-text">
+                    {!Opportunity.Discount_Justification__c}
+                </div>
+            </div>
+            
+            <div class="submitter-info">
+                <strong>Submitted by:</strong> {!Opportunity.OwnerFullName}<br>
+                <strong>Email:</strong> <a href="mailto:{!Opportunity.OwnerEmail}">{!Opportunity.OwnerEmail}</a><br>
+                <strong>Phone:</strong> <a href="tel:{!Opportunity.OwnerPhone}">{!Opportunity.OwnerPhone}</a><br>
+                <strong>Submission Date:</strong> {!TODAY()}
+            </div>
+            
+            <div class="deadline-warning">
+                <strong>⏰ Approval Required By: {!Opportunity.CloseDate}</strong><br>
+                <small>Please review and provide your decision to avoid delays in the sales process.</small>
+            </div>
+            
+            <div class="approval-actions">
+                <h3>🎯 Take Action</h3>
+                <p>To approve or reject this discount request, please take one of the following actions:</p>
+                
+                <div class="action-buttons">
+                    <a href="{!Opportunity.Link}" class="btn btn-approve">✅ Approve Request</a>
+                    <a href="{!Opportunity.Link}" class="btn btn-reject">❌ Reject Request</a>
+                    <a href="{!Opportunity.Link}" class="btn btn-review">👀 Review in Salesforce</a>
+                </div>
+                
+                <p><small><strong>Note:</strong> Click "Review in Salesforce" to access the full opportunity record, add comments, or view additional details before making your decision.</small></p>
+            </div>
+            
+            <div style="background-color: #d1ecf1; border: 1px solid #bee5eb; border-radius: 6px; padding: 15px; margin: 20px 0;">
+                <p><strong>Questions or Need More Information?</strong><br>
+                Contact {!Opportunity.OwnerFullName} directly at <a href="mailto:{!Opportunity.OwnerEmail}">{!Opportunity.OwnerEmail}</a> or reach out to the Sales Operations team for assistance.</p>
+            </div>
+            
+            <div class="signature">
+                <p><strong>Best regards,</strong><br>
+                Salesforce Approval System<br>
+                {!Organization.Name}</p>
+            </div>
+        </div>
+        
+        <div class="footer">
+            This approval request was automatically generated by Salesforce on {!TODAY()}<br>
+            Please do not reply to this email directly. Use the action buttons above or contact the opportunity owner.
+        </div>
+    </div>
+</body>
+</html>

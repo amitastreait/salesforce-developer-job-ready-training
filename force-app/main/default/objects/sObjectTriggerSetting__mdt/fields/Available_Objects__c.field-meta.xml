@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Available_Objects__c</fullName>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>Available Objects</label>
+    <referenceTo>EntityDefinition</referenceTo>
+    <relationshipLabel>sObject_Trigger_Settings</relationshipLabel>
+    <relationshipName>sObject_Trigger_Settings</relationshipName>
+    <required>false</required>
+    <type>MetadataRelationship</type>
+    <unique>false</unique>
+</CustomField>

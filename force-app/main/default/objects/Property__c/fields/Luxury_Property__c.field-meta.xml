@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Luxury_Property__c</fullName>
+    <description>Automatically identifies luxury properties based on criteria</description>
+    <formula>OR(
+  Listing_price__c &gt; 1000000,
+  AND(Price_Per_SqFt__c &gt; 500, Square_footage__c &gt; 3000),
+   Have_a_pool__c  = TRUE &amp;&amp; Square_footage__c &gt; 4000,
+  Garage_spaces__c &gt;= 3 &amp;&amp; Square_footage__c &gt; 3500
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Luxury Property</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+	<types>
+		<members>*</members>
+		<name>ApexClass</name>
+	</types>
+	<types>
+		<members>*</members>
+		<name>ApexComponent</name>
+	</types>
+	<types>
+		<members>*</members>
+		<name>ApexPage</name>
+	</types>
+	<types>
+		<members>*</members>
+		<name>ApexTestSuite</name>
+	</types>
+	<types>
+		<members>*</members>
+		<name>ApexTrigger</name>
+	</types>
+	<types>
+		<members>*</members>
+		<name>ApprovalProcess</name>
+	</types>
+	<types>
+		<members>*</members>
+		<name>AuraDefinitionBundle</name>
+	</types>
+	<types>
+		<members>*</members>
+		<name>CompactLayout</name>
+	</types>
+	<types>
+		<members>Property_Management</members>
+		<name>CustomApplication</name>
+	</types>
+	<types>
+		<members>Access_Request__c</members>
+		<members>Agent_Specialisation__c</members>
+		<members>Agent__c</members>
+		<members>AnnualRevenue__mdt</members>
+		<members>Application_Log__c</members>
+		<members>Appointment__c</members>
+		<members>Commission__c</members>
+		<members>Course__c</members>
+		<members>Employee__c</members>
+		<members>EquipmentRequest__c</members>
+		<members>Invoice__c</members>
+		<members>Loan_Application__c</members>
+		<members>LocationSite__c</members>
+		<members>Offer__c</members>
+		<members>OrgConfiguration__c</members>
+		<members>OrgSettings__c</members>
+		<members>Places__c</members>
+		<members>PropertyDocument__c</members>
+		<members>Property_Listing__c</members>
+		<members>Property__c</members>
+		<members>Purchase_Order_Line__c</members>
+		<members>Purchase_Order__c</members>
+		<members>Scheduled_Course__c</members>
+		<members>Speaker_Submission__c</members>
+		<members>Specialisation__c</members>
+		<members>System_Log__c</members>
+		<members>TAXRATES__c</members>
+		<members>Tax_Rate__mdt</members>
+		<members>sObjectTriggerAction__mdt</members>
+		<members>sObjectTriggerSetting__mdt</members>
+		<name>CustomObject</name>
+	</types>
+	<types>
+		<members>Access_Request__c</members>
+		<members>Agent_Specialisation__c</members>
+		<members>Agent__c</members>
+		<members>Application_Log__c</members>
+		<members>Appointment__c</members>
+		<members>Commission__c</members>
+		<members>Course__c</members>
+		<members>Employee__c</members>
+		<members>EquipmentRequest__c</members>
+		<members>Loan_Application__c</members>
+		<members>LocationSite__c</members>
+		<members>Offer__c</members>
+		<members>PropertyDocument__c</members>
+		<members>Property_Listing__c</members>
+		<members>Property__c</members>
+		<members>Purchase_Order__c</members>
+		<members>Scheduled_Course__c</members>
+		<members>Speaker_Submission__c</members>
+		<members>Specialisation__c</members>
+		<members>System_Log__c</members>
+		<members>Territory__c</members>
+		<name>CustomTab</name>
+	</types>
+	<types>
+		<members>Case_Support_Emails/Case_Closed_Survey_Email_Template</members>
+		<members>Case_Support_Emails/Case_Closed_Template</members>
+		<members>Case_Support_Emails/Case_Escalated_Template</members>
+		<members>Case_Support_Emails/Support_Case_Created_ACK</members>
+		<members>Sales_Email_Templates/Customer_Welcome_Email_Template</members>
+		<members>Sales_Email_Templates/Customer_Welcome_Template</members>
+		<members>Sales_Email_Templates/Opportunity_Discount_Approval</members>
+		<members>Sales_Email_Templates/Opportunity_Discount_Rejection</members>
+		<members>Submission_Portal/Thank_You_for_Your_Submission</members>
+		<name>EmailTemplate</name>
+	</types>
+	<types>
+		<members>Agent_Record_Page</members>
+		<members>Appointment_Record_Page</members>
+		<members>Commission_Record_Page</members>
+		<members>Property_Document_Record_Page</members>
+		<members>Property_Listing_Record_Page</members>
+		<members>Property_Management</members>
+		<members>Property_Management_UtilityBar</members>
+		<members>Property_Record_Page</members>
+		<members>Purchase_Order_Record_Page</members>
+		<members>Purchase_Order_Record_Page1</members>
+		<name>FlexiPage</name>
+	</types>
+	<types>
+		<members>*</members>
+		<name>Flow</name>
+	</types>
+	<types>
+		<members>Access_Request__c-Access Request Layout</members>
+		<members>Agent_Specialisation__c-Agent Specialisation Layout</members>
+		<members>Agent__c-Agent Layout</members>
+		<members>Application_Log__c-Application Log Layout</members>
+		<members>Appointment__c-Appointment Layout</members>
+		<members>Commission__c-Commission Layout</members>
+		<members>Course__c-Course Layout</members>
+		<members>Employee__c-Employee Layout</members>
+		<members>EquipmentRequest__c-Equipment Request Layout</members>
+		<members>Invoice__c-Invoice Layout</members>
+		<members>Loan_Application__c-Loan Application Layout</members>
+		<members>LocationSite__c-Location Site Layout</members>
+		<members>Offer__c-Offer Layout</members>
+		<members>Places__c-Places Layout</members>
+		<members>PropertyDocument__c-Property Document Layout</members>
+		<members>Property_Listing__c-Property Listing Layout</members>
+		<members>Property__c-Property Admin Layout</members>
+		<members>Property__c-Property Layout</members>
+		<members>Purchase_Order_Line__c-Purchase Order Line Layout</members>
+		<members>Purchase_Order__c-Purchase Order Layout</members>
+		<members>Scheduled_Course__c-Scheduled Course Layout</members>
+		<members>Speaker_Submission__c-Custom Compact Layout</members>
+		<members>Speaker_Submission__c-Speaker Submission Layout</members>
+		<members>Specialisation__c-Specialisation Layout</members>
+		<members>System_Log__c-System Log Layout</members>
+		<members>Territory__c-Territory Layout</members>
+		<members>University__c-University Layout</members>
+		<name>Layout</name>
+	</types>
+	<types>
+		<members>*</members>
+		<name>LightningComponentBundle</name>
+	</types>
+	<types>
+		<members>*</members>
+		<name>StaticResource</name>
+	</types>
+	<version>64.0</version>
+</Package>
