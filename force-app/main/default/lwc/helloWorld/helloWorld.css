@@ -1,6 +1,15 @@
-body{
-    font-family: 'Courier New', Courier, monospace;
+.main-div {
+    background : maroon;
+    color: white;
+    padding: 5px;
+    font-family: cursive;
+    font-size: large;
+    border: 10px solid maroon;
+    border-radius: 10px;
+    margin: 2px;
 }
-h1 {
+
+.heading {
     font-size: 20px;
+    color: darkturquoise;
 }

@@ -1,3 +1,24 @@
 <template>
-    <h1>Hello World! This is my first LWC</h1>
+    <div class="main-div">
+        <h1 class="heading"> {welcomeMessage} </h1>
+        <h2> {heading} </h2>
+        <p> {modernMesage} </p>
+    </div>
+    <div class="main-div">
+        <h1> {website} </h1>
+    </div>
+    <div class="main-div">
+        <p>{person.name}</p>
+        <p>{person.age}</p>
+        <p>{person.isAdmin}</p>
+        <p>{person.salary}</p>
+        <p>{person.hobbies}</p>
+        <p>{person.address.city}</p>
+        <p>{person.address.state}</p>
+        <p>{person.address.country}</p>
+    </div>
+    <div class="main-div">
+        <p>{employees}</p>
+        <p>{fruits}</p>
+    </div>
 </template>
