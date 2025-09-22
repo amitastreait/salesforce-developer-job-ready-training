@@ -1,24 +1,59 @@
 <template>
-    <div class="main-div">
-        <h1 class="heading"> {welcomeMessage} </h1>
-        <h2> {heading} </h2>
-        <p> {modernMesage} </p>
-    </div>
-    <div class="main-div">
-        <h1> {website} </h1>
-    </div>
-    <div class="main-div">
-        <p>{person.name}</p>
-        <p>{person.age}</p>
-        <p>{person.isAdmin}</p>
-        <p>{person.salary}</p>
-        <p>{person.hobbies}</p>
-        <p>{person.address.city}</p>
-        <p>{person.address.state}</p>
-        <p>{person.address.country}</p>
-    </div>
-    <div class="main-div">
-        <p>{employees}</p>
-        <p>{fruits}</p>
-    </div>
+    <lightning-card variant="Narrow" title="Lightning Web Component Turotials" icon-name="standard:account">
+        <div class="slds-p-horizontal_small">
+            <div class="main-div">
+                <img lwc:if={showTom} src={images.tom} alt="Tom" />
+                <img lwc:elseif={showJerry} src={images.jerry} alt="Jerry" />
+                <img lwc:else src={images.both} alt="Tom & Jerry" />
+            </div>
+            <div class="main-div">
+                <h1 class="heading"> {welcomeMessage} </h1>
+                <h2> {heading} </h2>
+                <p> {modernMesage} </p>
+            </div>
+            <div class="main-div">
+                <h1> {website} </h1>
+            </div>
+            <div class="main-div" if:true={person} >
+                <p>{person.name}</p>
+                <p>{person.age}</p>
+                <p>{person.isAdmin}</p>
+                <p>{person.salary}</p>
+                <div lwc:if={person.address}>
+                    <p lwc:if={person.address} >
+                        {person.address.city}
+                    </p>
+                    <p lwc:if={person.address}>
+                        {person.address.state}
+                    </p>
+                    <p lwc:if={person.address}>
+                        {person.address.country}
+                    </p>
+                </div>
+            </div>
+            <div class="main-div">
+                <p>{employees}</p>
+                <p>{fruits}</p>
+            </div>
+            <div class="main-div" lwc:if={employees}>
+                <template lwc:if={employees} for:each={employees} for:item="employee" for:index="index">
+                    <p key={employee.id}>{index} - {employee.name} - {employee.age}</p>
+                    <p key={employee.id}>
+                        <br/>
+                    </p>
+                </template>
+                <!-- <template if:true={employees} iterator:contacts={employees}>
+                    <li key={iteratorName.value.id}>
+                        <div if:true={iteratorName.first} class="list-first"></div>
+                            <!- -{iteratorName.value.propertyName}- ->
+                            {iteratorName.value.name}
+                        <div if:true={iteratorName.last} class="list-last"></div>
+                    </li>
+                </template>
+                <div for:each={employees} for:item="employee" for:index="index">
+                </div> -->
+            </div>
+        </div>
+        <div slot="footer">Card Footer</div>
+    </lightning-card>
 </template>
