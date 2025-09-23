@@ -1,3 +1,8 @@
+:host {
+    --primary-color: #0176d3;
+    --secondary-color: #f4f6f9;
+    --border-radius: 4px;
+}
 .main-div {
     background : maroon;
     color: white;

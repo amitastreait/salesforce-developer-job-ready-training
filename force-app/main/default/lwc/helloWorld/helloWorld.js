@@ -18,7 +18,7 @@ export default class HelloWorld extends LightningElement {
      * Upper Case -  WELCOME_MESSAGE
      * Kebab Case
      * Lower Case - welcome_message
-     */
+    */
     welcomeMessage = 'Hello World! This is my first LWC';
     modernMessage = `The modern UI standard for Salesforce` 
     name = 'Amit Singh';

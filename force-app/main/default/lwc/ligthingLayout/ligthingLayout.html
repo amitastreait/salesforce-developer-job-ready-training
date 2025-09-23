@@ -1,0 +1,55 @@
+<template>
+   <lightning-card variant="Narrow" title="Lightning Layout" icon-name="custom:custom64">
+      <div class="slds-p-horizontal_small">
+         <lightning-layout multiple-rows>
+            <lightning-layout-item size="12" padding="around-small" small-device-size="12" medium-device-size="6"
+               large-device-size="4">
+               <div class="custom-box">
+                  <lightning-record-picker name="AccountId" variant="standard" label="Account"
+                     placeholder="Search Account..." required object-api-name="Account">
+                  </lightning-record-picker>
+               </div>
+            </lightning-layout-item>
+            <lightning-layout-item size="12" padding="around-small" small-device-size="12" medium-device-size="6"
+               large-device-size="4">
+               <div class="custom-box">
+                  <lightning-input type="text" variant="standard" name="FirstName"
+                     label="First Name" placeholder="type first name here..." required
+                     onchange={handleFirstName}>
+                  </lightning-input>
+               </div>
+            </lightning-layout-item>
+            <lightning-layout-item size="12" padding="around-small" small-device-size="12" medium-device-size="6"
+               large-device-size="4">
+               <div class="custom-box">
+                  <lightning-input type="text" variant="standard" name="LastName"
+                     label="Last Name" placeholder="type last name here..." required onchange={handleLastName}>
+                  </lightning-input>
+               </div>
+            </lightning-layout-item>
+            <lightning-layout-item size="12" padding="around-small" small-device-size="12" medium-device-size="6"
+               large-device-size="4">
+               <div class="custom-box">
+                  <lightning-input type="email" variant="standard" name="Email" label="Email"
+                     placeholder="type email here..." required onchange={handleEmail}>
+                  </lightning-input>
+               </div>
+            </lightning-layout-item>
+            <lightning-layout-item size="12" padding="around-small" small-device-size="12" medium-device-size="6"
+               large-device-size="4">
+               <div class="custom-box">
+                  <lightning-input type="phone" variant="standard" name="Phone" label="Phone"
+                     placeholder="type phone here..." required onchange={handlePhone}>
+                  </lightning-input>
+               </div>
+            </lightning-layout-item>
+         </lightning-layout>
+         <div>
+            <lightning-button variant="brand" label="Create Contact"
+               title="Create Contact" onclick={handleCreateContact}>
+            </lightning-button>
+         </div>
+      </div>
+      <div slot="footer">Card Footer</div>
+   </lightning-card>
+</template>
