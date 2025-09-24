@@ -1,0 +1,22 @@
+<template>
+    <lightning-card variant="Narrow" title="Contact List" icon-name="standard:contact">
+        <lightning-button variant="success" label="Success" title="Success" slot="actions" ></lightning-button>
+        <div class="slds-p-horizontal_small">
+            <!-- cebab case -->
+            <!-- contactCard -->
+            
+            <template if:true={contacts} for:each={contacts} for:item="con" for:index="index">
+               <c-contact-card key={con.Id} contact-information={con} wlecomemessage="All Lower Case" ></c-contact-card>
+            </template>
+            <c-display-account-l-w-c>
+                <h1 slot="footer">
+                    I am inside display account component
+                </h1>
+                <h2 slot="main-content">
+                    this is some random text
+                </h2>
+                <lightning-input slot="header" type="date" variant="standard" name="name" label="label" placeholder="type here..."></lightning-input>
+            </c-display-account-l-w-c>
+        </div>
+    </lightning-card>
+</template>
