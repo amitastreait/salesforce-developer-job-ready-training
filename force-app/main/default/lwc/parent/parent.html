@@ -1,0 +1,14 @@
+<template>
+    <lightning-card  variant="Narrow" title="LWC Lifecycle Hook" icon-name="custom:custom56">
+        <lightning-button variant="brand" 
+            label="Show/Hide Child" 
+            title="Show/Hide Child" 
+            onclick={handleClick}>
+        </lightning-button>
+        <div class="slds-p-horizontal_small">
+            <h1>Parent Component</h1>
+            <c-child if:true={showHide} message="Message from Parent Component" ></c-child>
+        </div>
+        <div slot="footer">Card Footer</div>
+    </lightning-card>
+</template>
