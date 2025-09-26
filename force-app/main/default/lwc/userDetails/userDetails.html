@@ -1,0 +1,13 @@
+<template>
+    <lightning-card  variant="Narrow" title="Parent to Child" icon-name="custom:custom56">
+        <lightning-button variant="brand" label="Update Profile" title="Update Profile" 
+            onclick={handleUpdateProfile}>
+        </lightning-button>
+        <div lwc:ref="containerDiv" class="slds-p-horizontal_small">
+            <h1>User Details</h1>
+            <c-profile-card lwc:ref="profileCard" lwc:spread={userInformation} ></c-profile-card>
+            <c-update-profile lwc:ref="updateProfile" ></c-update-profile>
+        </div>
+        <div slot="footer">Card Footer</div>
+    </lightning-card>
+</template>

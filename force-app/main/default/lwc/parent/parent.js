@@ -3,6 +3,7 @@ import { LightningElement } from 'lwc';
 export default class Parent extends LightningElement {
     message;
     showHide = true;
+    isRendered = false;
 
     constructor() {
         super();
@@ -22,7 +23,20 @@ export default class Parent extends LightningElement {
 
     handleClick(event){
         this.showHide = !this.showHide;
+        this.message = Math.random();
         // true ~= false
         // false ~= true
+    }
+
+    renderedCallback(){
+        if(this.isRendered){
+            return;
+        }
+        this.isRendered = true;
+        console.log('Parent renderedCallback');
+        this.loadThirdPartyLibrary();
+    }
+    loadThirdPartyLibrary(){
+        console.log('Parent loadThirdPartyLibrary');
     }
 }
