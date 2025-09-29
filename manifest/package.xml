@@ -38,6 +38,7 @@
 	</types>
 	<types>
 		<members>Access_Request__c</members>
+		<members>Batch_Chain_Configuration__mdt</members>
 		<members>Agent_Specialisation__c</members>
 		<members>Agent__c</members>
 		<members>AnnualRevenue__mdt</members>

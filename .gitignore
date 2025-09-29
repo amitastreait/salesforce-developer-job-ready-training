@@ -14,7 +14,17 @@ deploy-options.json
 # LWC Jest coverage reports
 coverage/
 docs/
+force-app/main/default/classes/Batch*.cls
+force-app/main/default/classes/Batch*.cls-meta.xml
+force-app/main/default/classes/IBatchChainable*.cls
+force-app/main/default/classes/IBatchChainable*.cls-meta.xml
+force-app/main/default/classes/SampleBatch*.cls
+force-app/main/default/classes/SampleBatch*.cls-meta.xml
 
+force-app/main/default/classes/Queueable*.cls
+force-app/main/default/classes/Queueable*.cls-meta.xml
+force-app/main/default/classes/IQueueable*.cls
+force-app/main/default/classes/IQueueable*.cls-meta.xml
 # Logs
 logs
 *.log

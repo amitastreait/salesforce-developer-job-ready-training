@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>64.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>JS Meta XML File</masterLabel>
+    <description>this is the explanation of the XML file</description>
+    <targets>
+        <target>lightning__AppPage</target>
+        <target>lightning__RecordPage</target>
+        <target>lightning__Tab</target>
+        <target>lightning__FlowScreen</target>
+        <target>lightning__Inbox</target>
+    </targets>
+
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage">
+            <property name="recordId" type="String" description="This will hold the value for record Id" label="Record Id" required="true" default="02434" />
+            <property name="message" type="String" description="This will hold the message" label="Banner message" required="true" default="Meta XML" />
+            <property name="strName" type="String" default="Salesforce Code Crack" label="Enter the Employee Name"/>
+            <property name="showDetails" type="Boolean" default="true" label="Do you want to Show Details ?"/>
+            <property name="empName" type="String" default="" label="Enter Employee Name"/>
+            <property name="empDepartment" type="String" default="" label="Enter Employee Department"/>
+            <property name="empLocation" type="String" label="Enter Employee Location" datasource="Hyderabad, Delhi, Pune, Noida"/>
+            <property name="empAge" type="Integer" label="Enter Employee Age"/>
+            <property name="empGender" type="String" label="Enter Employee Gender" datasource="Male, Female"/>
+
+            <objects>
+                <object>Account</object>
+                <object>Course__c</object>
+                <object>Contact</object>
+            </objects>
+        </targetConfig>
+        <targetConfig targets="lightning__FlowScreen">
+            <property name="objectApiName" type="String" description="This will hold the value for object Api Name" label="Object API Name" required="true" default="Account" />
+            <property name="recordLimit" type="Integer" description="Limit" label="Limit" required="true" default="10" />
+        </targetConfig>
+    </targetConfigs>
+
+</LightningComponentBundle>

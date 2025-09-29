@@ -21,6 +21,12 @@
                 <identifier>home_topDealsContainer</identifier>
             </componentInstance>
         </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>contactList</componentName>
+                <identifier>c_contactList</identifier>
+            </componentInstance>
+        </itemInstances>
         <name>top</name>
         <type>Region</type>
     </flexiPageRegions>

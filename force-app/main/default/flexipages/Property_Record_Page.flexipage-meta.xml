@@ -1276,6 +1276,12 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentName>helloWorld</componentName>
+                <identifier>c_helloWorld</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentInstanceProperties>
                     <name>lookupFieldName</name>
                     <value>Property__c.PrimaryAgent__c</value>
