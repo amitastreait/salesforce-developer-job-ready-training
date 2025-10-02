@@ -1,7 +1,12 @@
 <template>
     <lightning-card variant="Narrow"  title="Property List" icon-name="custom:custom43">
         <div class="slds-p-horizontal_small">
-            <c-property-detail-component ondatachange={handleDataChange} ></c-property-detail-component>
+            <div ondatachange={handleDataChange}>
+                <template for:each={properties} for:item="property" for:index="index">
+                    <c-property-detail-component key={property.id} property={property} >
+                    </c-property-detail-component>
+                </template>
+            </div>
         </div>
         <div slot="footer">Card Footer</div>
     </lightning-card>

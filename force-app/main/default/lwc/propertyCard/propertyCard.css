@@ -1,0 +1,229 @@
+/**
+ * Property Card Styles
+ * Modern, responsive card design with hover effects and smooth transitions
+ */
+
+/* Card Container */
+.property-card {
+    background: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.property-card:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    transform: translateY(-4px);
+}
+
+/* Image Section */
+.property-image-container {
+    position: relative;
+    width: 100%;
+    height: 240px;
+    overflow: hidden;
+    background: #f0f0f0;
+}
+
+.property-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.property-card:hover .property-image {
+    transform: scale(1.05);
+}
+
+/* Featured Badge */
+.featured-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #ffffff;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    z-index: 2;
+}
+
+/* Status Badge */
+.status-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    z-index: 2;
+}
+
+.status-sale {
+    background: #10b981;
+    color: #ffffff;
+}
+
+.status-rent {
+    background: #3b82f6;
+    color: #ffffff;
+}
+
+.status-sold {
+    background: #ef4444;
+    color: #ffffff;
+}
+
+.status-pending {
+    background: #f59e0b;
+    color: #ffffff;
+}
+
+/* Property Details Section */
+.property-details {
+    padding: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Price */
+.property-price {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 8px;
+}
+
+.price-period {
+    font-size: 1rem;
+    font-weight: 400;
+    color: #64748b;
+}
+
+/* Title & Address */
+.property-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #334155;
+    margin: 0 0 8px 0;
+    line-height: 1.4;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.property-address {
+    font-size: 0.875rem;
+    color: #64748b;
+    margin: 0 0 16px 0;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* Features Section */
+.property-features {
+    display: flex;
+    justify-content: space-around;
+    padding: 16px 0;
+    margin-bottom: 12px;
+    border-top: 1px solid #e2e8f0;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.feature-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.feature-value {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.feature-label {
+    font-size: 0.75rem;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Property Meta */
+.property-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.875rem;
+    color: #64748b;
+    margin-bottom: 16px;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.meta-separator {
+    color: #cbd5e1;
+}
+
+/* Action Buttons */
+.property-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: auto;
+}
+
+.action-button {
+    flex: 1;
+}
+
+.favorite-button,
+.share-button {
+    flex-shrink: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .property-card {
+        border-radius: 8px;
+    }
+    
+    .property-image-container {
+        height: 200px;
+    }
+    
+    .property-price {
+        font-size: 1.5rem;
+    }
+    
+    .property-title {
+        font-size: 1rem;
+    }
+}
+
+/* Accessibility - Focus States */
+.property-card:focus-within {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+}

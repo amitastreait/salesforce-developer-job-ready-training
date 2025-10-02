@@ -1,0 +1,185 @@
+<template>
+    <div class="plp-container">
+        
+        <!-- Page Header -->
+        <div class="plp-header">
+            <div class="header-content">
+                <h1 class="page-title">Property Listings</h1>
+                <p class="page-subtitle">Find your dream home from our collection</p>
+            </div>
+            
+            <!-- Results Count and View Toggle -->
+            <div class="header-actions">
+                <div class="results-count">
+                    <lightning-icon 
+                        icon-name="utility:home" 
+                        size="small">
+                    </lightning-icon>
+                    <span>{totalProperties} Properties Found</span>
+                </div>
+                
+                <!-- View Mode Toggle (Grid/List) -->
+                <lightning-button-group>
+                    <lightning-button-icon 
+                        icon-name="utility:table" 
+                        variant={gridViewVariant}
+                        alternative-text="Grid View"
+                        onclick={handleGridView}>
+                    </lightning-button-icon>
+                    <lightning-button-icon 
+                        icon-name="utility:list" 
+                        variant={listViewVariant}
+                        alternative-text="List View"
+                        onclick={handleListView}>
+                    </lightning-button-icon>
+                </lightning-button-group>
+            </div>
+        </div>
+        
+        <!-- Filters Section -->
+        <div class="filters-section">
+            <div class="filters-container">
+                
+                <!-- Search Bar -->
+                <div class="filter-item search-bar">
+                    <lightning-input 
+                        type="search"
+                        label="Search Properties"
+                        placeholder="Search by location, title..."
+                        value={searchTerm}
+                        onchange={handleSearch}>
+                    </lightning-input>
+                </div>
+                
+                <!-- Property Type Filter -->
+                <div class="filter-item">
+                    <lightning-combobox
+                        label="Property Type"
+                        value={selectedPropertyType}
+                        options={propertyTypeOptions}
+                        onchange={handlePropertyTypeChange}
+                        placeholder="All Types">
+                    </lightning-combobox>
+                </div>
+                
+                <!-- Status Filter -->
+                <div class="filter-item">
+                    <lightning-combobox
+                        label="Status"
+                        value={selectedStatus}
+                        options={statusOptions}
+                        onchange={handleStatusChange}
+                        placeholder="All Status">
+                    </lightning-combobox>
+                </div>
+                
+                <!-- Price Range -->
+                <div class="filter-item">
+                    <lightning-combobox
+                        label="Price Range"
+                        value={selectedPriceRange}
+                        options={priceRangeOptions}
+                        onchange={handlePriceRangeChange}
+                        placeholder="Any Price">
+                    </lightning-combobox>
+                </div>
+                
+                <!-- Bedrooms Filter -->
+                <div class="filter-item">
+                    <lightning-combobox
+                        label="Bedrooms"
+                        value={selectedBedrooms}
+                        options={bedroomOptions}
+                        onchange={handleBedroomsChange}
+                        placeholder="Any">
+                    </lightning-combobox>
+                </div>
+                
+                <!-- Clear Filters Button -->
+                <div class="filter-item">
+                    <lightning-button 
+                        label="Clear Filters" 
+                        variant="outline-brand"
+                        onclick={handleClearFilters}
+                        icon-name="utility:clear"
+                        class="clear-filters-btn">
+                    </lightning-button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Loading State -->
+        <template if:true={isLoading}>
+            <div class="loading-container">
+                <lightning-spinner 
+                    alternative-text="Loading properties..." 
+                    size="large">
+                </lightning-spinner>
+                <p class="loading-text">Loading properties...</p>
+            </div>
+        </template>
+        
+        <!-- Property Grid/List -->
+        <template if:false={isLoading}>
+            
+            <!-- No Results State -->
+            <template if:false={hasProperties}>
+                <div class="empty-state">
+                    <lightning-icon 
+                        icon-name="utility:search" 
+                        size="large">
+                    </lightning-icon>
+                    <h3 class="empty-title">No Properties Found</h3>
+                    <p class="empty-message">
+                        Try adjusting your filters or search criteria
+                    </p>
+                    <lightning-button 
+                        label="Clear All Filters" 
+                        variant="brand"
+                        onclick={handleClearFilters}>
+                    </lightning-button>
+                </div>
+            </template>
+            
+            <!-- Properties Grid -->
+            <template if:true={hasProperties}>
+                <div class={gridClass}>
+                    <!-- Loop through filtered properties -->
+                    <template for:each={filteredProperties} for:item="property">
+                        <c-property-card 
+                            key={property.id}
+                            property={property}
+                            onpropertyselect={handlePropertySelect}
+                            onviewdetails={handleViewDetails}
+                            onaddtofavorites={handleAddToFavorites}
+                            onshareproperty={handleShareProperty}>
+                        </c-property-card>
+                    </template>
+                </div>
+                
+                <!-- Pagination -->
+                <div class="pagination-container" if:true={showPagination}>
+                    <lightning-button 
+                        label="Previous" 
+                        icon-name="utility:chevronleft"
+                        icon-position="left"
+                        onclick={handlePrevious}
+                        disabled={isFirstPage}>
+                    </lightning-button>
+                    
+                    <span class="page-info">
+                        Page {currentPage} of {totalPages}
+                    </span>
+                    
+                    <lightning-button 
+                        label="Next" 
+                        icon-name="utility:chevronright"
+                        icon-position="right"
+                        onclick={handleNext}
+                        disabled={isLastPage}>
+                    </lightning-button>
+                </div>
+            </template>
+        </template>
+    </div>
+</template>

@@ -18,14 +18,10 @@ export default class PropertyDetailComponent extends LightningElement {
         const myEvent = new CustomEvent(
             'datachange', {
                 detail: {
-                    propertyId: this.property.Id,
-                    propertyName: this.property.name,
-                    propertyPrice: this.property.price,
-                    propertyImageUrl: this.property.imageUrl,
-                    propertyDescription: this.property.description,
-                    propertyBedrooms: this.property.bedrooms,
-                    propertyBathrooms: this.property.bathrooms
-                }
+                    propertyId: this.property.id
+                },
+                bubbles: true,
+                composed: false
             }
         );
 
