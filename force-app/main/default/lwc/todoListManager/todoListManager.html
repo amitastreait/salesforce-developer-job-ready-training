@@ -1,0 +1,253 @@
+<template>
+    <div class="todo-container">
+        
+        <!-- Header Section -->
+        <div class="todo-header">
+            <div class="header-content">
+                <h1 class="app-title">
+                    <lightning-icon 
+                        icon-name="utility:checklist" 
+                        size="medium">
+                    </lightning-icon>
+                    My To-Do List
+                </h1>
+                <p class="app-subtitle">Stay organized and get things done</p>
+            </div>
+            
+            <!-- Statistics Cards -->
+            <div class="stats-container">
+                <div class="stat-card stat-total">
+                    <div class="stat-icon">📋</div>
+                    <div class="stat-info">
+                        <div class="stat-value">{totalTasks}</div>
+                        <div class="stat-label">Total Tasks</div>
+                    </div>
+                </div>
+                
+                <div class="stat-card stat-completed">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-info">
+                        <div class="stat-value">{completedTasks}</div>
+                        <div class="stat-label">Completed</div>
+                    </div>
+                </div>
+                
+                <div class="stat-card stat-pending">
+                    <div class="stat-icon">⏳</div>
+                    <div class="stat-info">
+                        <div class="stat-value">{pendingTasks}</div>
+                        <div class="stat-label">Pending</div>
+                    </div>
+                </div>
+                
+                <div class="stat-card stat-progress">
+                    <div class="stat-icon">📊</div>
+                    <div class="stat-info">
+                        <div class="stat-value">{completionRate}%</div>
+                        <div class="stat-label">Completion</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Add/Edit Task Section -->
+        <div class="task-form-section">
+            <h2 class="section-title">
+                {formTitle}
+            </h2>
+            
+            <div class="task-form">
+                <!-- Task Title -->
+                <div class="form-row">
+                    <lightning-input 
+                        label="Task Title"
+                        placeholder="Enter task title..."
+                        value={taskTitle}
+                        onchange={handleTitleChange}
+                        required>
+                    </lightning-input>
+                </div>
+                
+                <!-- Task Description -->
+                <div class="form-row">
+                    <lightning-textarea 
+                        label="Description (Optional)"
+                        placeholder="Add task description..."
+                        value={taskDescription}
+                        onchange={handleDescriptionChange}
+                        max-length="500">
+                    </lightning-textarea>
+                </div>
+                
+                <!-- Category, Priority, Due Date -->
+                <div class="form-row-group">
+                    <div class="form-col">
+                        <lightning-combobox
+                            label="Category"
+                            value={taskCategory}
+                            options={categoryOptions}
+                            onchange={handleCategoryChange}
+                            required>
+                        </lightning-combobox>
+                    </div>
+                    
+                    <div class="form-col">
+                        <lightning-combobox
+                            label="Priority"
+                            value={taskPriority}
+                            options={priorityOptions}
+                            onchange={handlePriorityChange}
+                            required>
+                        </lightning-combobox>
+                    </div>
+                    
+                    <div class="form-col">
+                        <lightning-input 
+                            type="date"
+                            label="Due Date (Optional)"
+                            value={taskDueDate}
+                            onchange={handleDueDateChange}>
+                        </lightning-input>
+                    </div>
+                </div>
+                
+                <!-- Form Actions -->
+                <div class="form-actions">
+                    <lightning-button 
+                        label={submitButtonLabel}
+                        variant="brand"
+                        onclick={handleSubmit}
+                        disabled={isSubmitDisabled}
+                        class="submit-button">
+                    </lightning-button>
+                    
+                    <lightning-button 
+                        if:true={isEditMode}
+                        label="Cancel"
+                        variant="neutral"
+                        onclick={handleCancelEdit}>
+                    </lightning-button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Filters and Search Section -->
+        <div class="filters-section">
+            <div class="filters-container">
+                <!-- Search -->
+                <div class="filter-item search-box">
+                    <lightning-input 
+                        type="search"
+                        label="Search Tasks"
+                        placeholder="Search by title or description..."
+                        value={searchTerm}
+                        onchange={handleSearch}>
+                    </lightning-input>
+                </div>
+                
+                <!-- Status Filter -->
+                <div class="filter-item">
+                    <lightning-combobox
+                        label="Filter by Status"
+                        value={filterStatus}
+                        options={statusFilterOptions}
+                        onchange={handleStatusFilter}>
+                    </lightning-combobox>
+                </div>
+                
+                <!-- Category Filter -->
+                <div class="filter-item">
+                    <lightning-combobox
+                        label="Filter by Category"
+                        value={filterCategory}
+                        options={categoryFilterOptions}
+                        onchange={handleCategoryFilter}>
+                    </lightning-combobox>
+                </div>
+                
+                <!-- Priority Filter -->
+                <div class="filter-item">
+                    <lightning-combobox
+                        label="Filter by Priority"
+                        value={filterPriority}
+                        options={priorityFilterOptions}
+                        onchange={handlePriorityFilter}>
+                    </lightning-combobox>
+                </div>
+                
+                <!-- Clear Filters -->
+                <div class="filter-item">
+                    <lightning-button 
+                        label="Clear Filters"
+                        onclick={handleClearFilters}
+                        icon-name="utility:clear"
+                        class="clear-button">
+                    </lightning-button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Tasks List Section -->
+        <div class="tasks-section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    Tasks ({filteredTasksCount})
+                </h2>
+                
+                <!-- Sort Options -->
+                <lightning-button-menu 
+                    alternative-text="Sort options"
+                    icon-name="utility:sort"
+                    variant="border-filled">
+                    <lightning-menu-item 
+                        label="Sort by Date (Newest)"
+                        value="date-desc"
+                        onclick={handleSort}>
+                    </lightning-menu-item>
+                    <lightning-menu-item 
+                        label="Sort by Date (Oldest)"
+                        value="date-asc"
+                        onclick={handleSort}>
+                    </lightning-menu-item>
+                    <lightning-menu-item 
+                        label="Sort by Priority"
+                        value="priority"
+                        onclick={handleSort}>
+                    </lightning-menu-item>
+                    <lightning-menu-item 
+                        label="Sort by Due Date"
+                        value="duedate"
+                        onclick={handleSort}>
+                    </lightning-menu-item>
+                </lightning-button-menu>
+            </div>
+            
+            <!-- Tasks List -->
+            <template if:true={hasTasks}>
+                <div class="tasks-list">
+                    <template for:each={filteredTasks} for:item="task">
+                        <c-task-item-card 
+                            key={task.id}
+                            task={task}
+                            ontogglecomplete={handleToggleComplete}
+                            onedittask={handleEditTask}
+                            ondeletetask={handleDeleteTask}>
+                        </c-task-item-card>
+                    </template>
+                </div>
+            </template>
+            
+            <!-- Empty State -->
+            <template if:false={hasTasks}>
+                <div class="empty-state">
+                    <lightning-icon 
+                        icon-name="utility:inbox" 
+                        size="large">
+                    </lightning-icon>
+                    <h3 class="empty-title">{emptyStateTitle}</h3>
+                    <p class="empty-message">{emptyStateMessage}</p>
+                </div>
+            </template>
+        </div>
+    </div>
+</template>

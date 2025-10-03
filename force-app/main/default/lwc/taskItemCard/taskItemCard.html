@@ -1,0 +1,77 @@
+<template>
+    <!-- Task Item Card -->
+    <div class={taskCardClass} data-task-id={task.id}>
+        
+        <!-- Checkbox and Task Content -->
+        <div class="task-main">
+            <!-- Completion Checkbox -->
+            <div class="task-checkbox">
+                <input 
+                    type="checkbox" 
+                    checked={task.isCompleted}
+                    onchange={handleToggleComplete}
+                    class="custom-checkbox"
+                    id={checkboxId}
+                />
+                <label for={checkboxId}></label>
+            </div>
+            
+            <!-- Task Details -->
+            <div class="task-content">
+                <!-- Task Title -->
+                <h3 class={taskTitleClass}>{task.title}</h3>
+                
+                <!-- Task Description -->
+                <p if:true={task.description} class="task-description">
+                    {task.description}
+                </p>
+                
+                <!-- Task Meta Information -->
+                <div class="task-meta">
+                    <!-- Category Badge -->
+                    <span class={categoryBadgeClass}>
+                        <lightning-icon 
+                            icon-name={categoryIcon} 
+                            size="xx-small">
+                        </lightning-icon>
+                        {task.category}
+                    </span>
+                    
+                    <!-- Priority Badge -->
+                    <span class={priorityBadgeClass}>
+                        {task.priority}
+                    </span>
+                    
+                    <!-- Due Date -->
+                    <span if:true={task.dueDate} class={dueDateClass}>
+                        <lightning-icon 
+                            icon-name="utility:event" 
+                            size="xx-small">
+                        </lightning-icon>
+                        {formattedDueDate}
+                    </span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Action Buttons -->
+        <div class="task-actions">
+            <lightning-button-icon 
+                icon-name="utility:edit" 
+                variant="border-filled"
+                alternative-text="Edit Task"
+                onclick={handleEdit}
+                title="Edit Task">
+            </lightning-button-icon>
+            
+            <lightning-button-icon 
+                icon-name="utility:delete" 
+                variant="border-filled"
+                alternative-text="Delete Task"
+                onclick={handleDelete}
+                title="Delete Task"
+                class="delete-button">
+            </lightning-button-icon>
+        </div>
+    </div>
+</template>

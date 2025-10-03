@@ -3,6 +3,10 @@
     {
       "path": "force-app",
       "default": true
+    },
+    {
+      "path": "assignments",
+      "default": false
     }
   ],
   "name": "salesforce-developer-training",

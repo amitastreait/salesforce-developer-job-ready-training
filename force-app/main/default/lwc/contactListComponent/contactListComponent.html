@@ -1,0 +1,37 @@
+<template>
+    <lightning-card variant="Narrow" title="Contact List using Wire" icon-name="standard:contact">
+        <div class="slds-p-horizontal_small">
+            <lightning-button variant="brand" label="Change Account" title="Change Account" onclick={handleClick}></lightning-button>
+            <!-- Record Id - {recordId} <template lwc:if={contacts} for:each={contacts} for:item="con" >
+                <div key={con.Id}>
+                    <p> {con.Name} </p>
+                    <p> {con.Email} </p>
+                    <p> {con.Title} </p>
+                    <p> {con.Phone} </p>
+                    <p> {con.Account.Name} </p>
+                </div>
+            </template> -->
+
+            <template lwc:if={relatedContacts} for:each={relatedContacts} for:item="con" >
+                <div key={con.Id}>
+                    <p> {con.Name} </p>
+                    <p> {con.Email} </p>
+                    <p> {con.Title} </p>
+                    <p> {con.Phone} </p>
+                    <p> {con.Account.Name} </p>
+                </div>
+            </template>
+            <template lwc:elseif={errors}>
+                <span style="color: red;">
+                    <p>
+                        {errors}
+                    </p>
+                    <p>
+                        {errors.body.message}
+                    </p>
+                </span>
+            </template>
+        </div>
+        <div slot="footer">Contact List using Wire</div>
+    </lightning-card>
+</template>

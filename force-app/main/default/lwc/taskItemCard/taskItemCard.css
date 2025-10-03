@@ -1,0 +1,200 @@
+/* Task Card Container */
+.task-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    background: white;
+    padding: 16px;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    margin-bottom: 12px;
+    transition: all 0.3s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.task-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-color: #d1d5db;
+}
+
+.task-card.completed {
+    background: #f9fafb;
+    opacity: 0.8;
+}
+
+/* Task Main Content */
+.task-main {
+    display: flex;
+    gap: 12px;
+    flex: 1;
+}
+
+/* Custom Checkbox */
+.task-checkbox {
+    position: relative;
+    flex-shrink: 0;
+}
+
+.custom-checkbox {
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    border: 2px solid #d1d5db;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s ease;
+}
+
+.custom-checkbox:checked {
+    background: #10b981;
+    border-color: #10b981;
+}
+
+.custom-checkbox:checked::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.custom-checkbox:hover {
+    border-color: #10b981;
+}
+
+/* Task Content */
+.task-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.task-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #111827;
+    margin: 0 0 4px 0;
+    line-height: 1.4;
+}
+
+.task-title.strikethrough {
+    text-decoration: line-through;
+    color: #9ca3af;
+}
+
+.task-description {
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin: 0 0 8px 0;
+    line-height: 1.5;
+}
+
+/* Task Meta */
+.task-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+/* Badges */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+/* Category Badges */
+.category-work {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+.category-personal {
+    background: #fce7f3;
+    color: #be185d;
+}
+
+.category-shopping {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.category-health {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.category-other {
+    background: #f3f4f6;
+    color: #374151;
+}
+
+/* Priority Badges */
+.priority-high {
+    background: #fee2e2;
+    color: #991b1b;
+    font-weight: 600;
+}
+
+.priority-medium {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.priority-low {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+/* Due Date Badges */
+.due-date {
+    background: #f3f4f6;
+    color: #4b5563;
+}
+
+.due-date.overdue {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.due-date.today {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.due-date.soon {
+    background: #fef9c3;
+    color: #854d0e;
+}
+
+/* Task Actions */
+.task-actions {
+    display: flex;
+    gap: 4px;
+    flex-shrink: 0;
+}
+
+.delete-button {
+    color: #dc2626;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+    .task-card {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .task-actions {
+        align-self: flex-end;
+    }
+}

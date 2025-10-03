@@ -13,6 +13,7 @@ deploy-options.json
 
 # LWC Jest coverage reports
 coverage/
+assignments/
 docs/
 force-app/main/default/classes/Batch*.cls
 force-app/main/default/classes/Batch*.cls-meta.xml
