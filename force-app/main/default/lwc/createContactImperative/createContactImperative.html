@@ -1,0 +1,35 @@
+<template>
+    <lightning-card variant="Narrow"  title="Create Contact" icon-name="standard:contact">
+        <lightning-spinner alternative-text="Loading...." size="large" variant="brand" lwc:if={isLoading}>
+        </lightning-spinner>
+        <div lwc:if={contactCreated}>
+            <span style="color: green;">
+                Contact Created!
+            </span>
+        </div>
+        <div lwc:if={error}>
+            <span style="color: red;">
+                {error}
+            </span>
+        </div>
+        <div class="slds-p-horizontal_small">
+            <lightning-input message-when-value-missing="First Name is required" type="text" name="ContactFirstName" label="First Name" onchange={handleInputChange} required ></lightning-input>
+            <lightning-input type="text" name="LastName" label="Last Name" onchange={handleInputChange} required ></lightning-input>
+            <lightning-input type="email" name="Email" label="Email" onchange={handleInputChange} required ></lightning-input>
+            <lightning-input type="phone" name="Phone" label="Phone" onchange={handleInputChange} required ></lightning-input>
+            <lightning-input type="text" name="Title" label="Title" onchange={handleInputChange} required ></lightning-input>
+            <lightning-textarea
+              max-length="1000"
+              name="inputName" 
+              label="Textarea field with a placeholder" 
+              placeholder="type here..."
+              variant="standard"
+            ></lightning-textarea>
+        </div>
+        <div class="slds-p-horizontal_small">
+            <lightning-button variant="brand" label="Create Contact" title="Create Contact" onclick={handleSave}>
+
+            </lightning-button>
+        </div>
+    </lightning-card>
+</template>

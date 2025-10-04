@@ -26,7 +26,16 @@ public with sharing class ContactController {
     }
 
     @AuraEnabled
-    public static void createContact(Id accountId, String firstName, String lastName, String email, String title){
-
+    public static Contact createContact(String firstName, String lastName, String email, String phone, String title, String accountId){
+        Contact newContact = new Contact(
+            FirstName = firstName,
+            LastName = lastName,
+            Email = email,
+            Phone = phone,
+            Title = title,
+            AccountId = accountId
+        );
+        insert newContact;
+        return newContact;
     }
 }
