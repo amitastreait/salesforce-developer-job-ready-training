@@ -131,6 +131,7 @@
     <label>Property Management</label>
     <navType>Console</navType>
     <tabs>standard-home</tabs>
+    <tabs>Property_Explorer</tabs>
     <tabs>standard-Lead</tabs>
     <tabs>standard-Account</tabs>
     <tabs>standard-Contact</tabs>
@@ -175,6 +176,9 @@
         <mappings>
             <fieldName>Property__c</fieldName>
             <tab>PropertyDocument__c</tab>
+        </mappings>
+        <mappings>
+            <tab>Property_Explorer</tab>
         </mappings>
         <mappings>
             <fieldName>Property__c</fieldName>

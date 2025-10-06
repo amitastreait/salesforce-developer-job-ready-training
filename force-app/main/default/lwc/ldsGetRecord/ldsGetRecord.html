@@ -1,0 +1,31 @@
+<template>
+    <lightning-card  variant="Narrow"  title="LDS Get Record" icon-name="standard:account">
+        <div class="slds-p-horizontal_small">
+            <!-- Create a Record -->
+            <lightning-record-form
+                lwc:ref="accountForm"
+                object-api-name="Account"
+                mode="edit"
+                columns="2"
+                fields={fields}
+                onsubmit={handleSubmit}
+                onsuccess={handleSuccess}
+                onerror={handleError}
+            >
+            </lightning-record-form>
+        </div>
+        <!-- View a Record 
+        <div class="slds-p-horizontal_small">
+            <lightning-record-form
+                record-id={recordId}
+                object-api-name="Account"
+                mode="view"
+                columns="2"
+                fields={fields}
+            >
+            </lightning-record-form>
+        </div> -->
+        <!-- layout-type="Compact", Full -->
+        <div slot="footer">Card Footer</div>
+    </lightning-card>
+</template>

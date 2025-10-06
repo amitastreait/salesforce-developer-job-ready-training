@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Require_Email_When_Enrolled</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(ISPICKVAL(Status__c, "Enrolled"), ISBLANK(Email__c))</errorConditionFormula>
+    <errorMessage>Email is required when Status is Enrolled.</errorMessage>
+</ValidationRule>

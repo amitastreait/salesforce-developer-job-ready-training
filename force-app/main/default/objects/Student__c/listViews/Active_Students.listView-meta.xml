@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Active_Students</fullName>
+    <label>Active Students</label>
+    <filterScope>Everything</filterScope>
+    <columns>NAME</columns>
+    <columns>Program__c</columns>
+    <columns>Status__c</columns>
+    <columns>Enrollment_Date__c</columns>
+    <filters>
+        <field>Status__c</field>
+        <operation>equals</operation>
+        <value>Enrolled</value>
+    </filters>
+    <filters>
+        <field>Status__c</field>
+        <operation>equals</operation>
+        <value>In Progress</value>
+    </filters>
+</ListView>

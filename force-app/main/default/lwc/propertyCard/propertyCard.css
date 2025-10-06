@@ -1,24 +1,19 @@
-/**
- * Property Card Styles
- * Modern, responsive card design with hover effects and smooth transitions
- */
+.property-card-container {
+    height: 100%;
+}
 
-/* Card Container */
 .property-card {
-    background: #ffffff;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-    cursor: pointer;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
     height: 100%;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
+    border-radius: 0.5rem;
 }
 
 .property-card:hover {
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-    transform: translateY(-4px);
+    transform: translateY(-8px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
 }
 
 /* Image Section */
@@ -27,203 +22,200 @@
     width: 100%;
     height: 240px;
     overflow: hidden;
-    background: #f0f0f0;
+    background-color: #f3f3f3;
 }
 
 .property-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease-in-out;
 }
 
 .property-card:hover .property-image {
     transform: scale(1.05);
 }
 
-/* Featured Badge */
-.featured-badge {
+/* Status Badge Overlay */
+.status-overlay {
     position: absolute;
     top: 12px;
     left: 12px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: #ffffff;
-    padding: 6px 12px;
-    border-radius: 20px;
-    font-size: 0.75rem;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 4px;
     z-index: 2;
 }
 
-/* Status Badge */
-.status-badge {
+/* Favorite Button Overlay */
+.favorite-overlay {
     position: absolute;
     top: 12px;
     right: 12px;
-    padding: 6px 12px;
-    border-radius: 6px;
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
     z-index: 2;
 }
 
-.status-sale {
-    background: #10b981;
-    color: #ffffff;
+.favorite-button {
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-.status-rent {
-    background: #3b82f6;
-    color: #ffffff;
+.favorite-button:hover {
+    background-color: #ffffff;
+    transform: scale(1.1);
 }
 
-.status-sold {
-    background: #ef4444;
+/* Content Section */
+.property-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.property-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.property-name {
+    font-weight: 700;
+    color: #080707;
+    line-height: 1.3;
+}
+
+.property-price {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #0176d3;
+    line-height: 1.2;
+}
+
+/* Property Details */
+.property-details {
+    color: #3e3e3c;
+    font-size: 0.875rem;
+    flex: 1;
+}
+
+.detail-item {
+    display: flex;
+    align-items: center;
+}
+
+.detail-icon {
+    flex-shrink: 0;
+    color: #706e6b;
+}
+
+.detail-text {
+    color: #3e3e3c;
+    font-weight: 400;
+}
+
+.property-features {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.feature-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.375rem 0.75rem;
+    background-color: #f3f3f3;
+    border-radius: 0.25rem;
+    font-size: 0.813rem;
+    font-weight: 500;
+    color: #3e3e3c;
+}
+
+/* Status Badges */
+.status-badge {
+    display: inline-block;
+    padding: 0.375rem 0.875rem;
+    border-radius: 1.25rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.status-available {
+    background-color: #2e844a;
     color: #ffffff;
 }
 
 .status-pending {
-    background: #f59e0b;
+    background-color: #fe9339;
     color: #ffffff;
 }
 
-/* Property Details Section */
-.property-details {
-    padding: 20px;
-    flex: 1;
+.status-sold {
+    background-color: #c23934;
+    color: #ffffff;
+}
+
+/* Action Buttons Section */
+.action-buttons {
     display: flex;
     flex-direction: column;
-}
-
-/* Price */
-.property-price {
-    font-size: 1.75rem;
-    font-weight: 700;
-    color: #1e293b;
-    margin-bottom: 8px;
-}
-
-.price-period {
-    font-size: 1rem;
-    font-weight: 400;
-    color: #64748b;
-}
-
-/* Title & Address */
-.property-title {
-    font-size: 1.125rem;
-    font-weight: 600;
-    color: #334155;
-    margin: 0 0 8px 0;
-    line-height: 1.4;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-}
-
-.property-address {
-    font-size: 0.875rem;
-    color: #64748b;
-    margin: 0 0 16px 0;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-}
-
-/* Features Section */
-.property-features {
-    display: flex;
-    justify-content: space-around;
-    padding: 16px 0;
-    margin-bottom: 12px;
-    border-top: 1px solid #e2e8f0;
-    border-bottom: 1px solid #e2e8f0;
-}
-
-.feature-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-}
-
-.feature-value {
-    font-size: 1rem;
-    font-weight: 600;
-    color: #1e293b;
-}
-
-.feature-label {
-    font-size: 0.75rem;
-    color: #64748b;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-/* Property Meta */
-.property-meta {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 0.875rem;
-    color: #64748b;
-    margin-bottom: 16px;
-}
-
-.meta-item {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-}
-
-.meta-separator {
-    color: #cbd5e1;
-}
-
-/* Action Buttons */
-.property-actions {
-    display: flex;
-    align-items: center;
-    gap: 8px;
+    gap: 0.5rem;
     margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid #e5e5e5;
 }
 
-.action-button {
+.action-button-primary {
+    width: 100%;
+    font-weight: 600;
+}
+
+.secondary-actions {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.action-button-secondary {
     flex: 1;
+    font-size: 0.813rem;
 }
 
-.favorite-button,
-.share-button {
+.action-button-icon {
     flex-shrink: 0;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .property-card {
-        border-radius: 8px;
-    }
-    
     .property-image-container {
         height: 200px;
     }
-    
+
     .property-price {
         font-size: 1.5rem;
     }
-    
-    .property-title {
-        font-size: 1rem;
+
+    .secondary-actions {
+        flex-wrap: wrap;
+    }
+
+    .action-button-secondary {
+        min-width: calc(50% - 0.25rem);
     }
 }
 
-/* Accessibility - Focus States */
-.property-card:focus-within {
-    outline: 2px solid #3b82f6;
-    outline-offset: 2px;
+@media (max-width: 480px) {
+    .property-image-container {
+        height: 180px;
+    }
+
+    .property-price {
+        font-size: 1.375rem;
+    }
+
+    .feature-badge {
+        font-size: 0.75rem;
+        padding: 0.25rem 0.5rem;
+    }
 }

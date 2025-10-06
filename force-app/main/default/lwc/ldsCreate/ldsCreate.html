@@ -1,0 +1,14 @@
+<template>
+    <lightning-card  variant="Narrow" title="Create Contact" icon-name="standard:contact">
+        <div class="slds-p-horizontal_small">
+            <lightning-record-form
+              columns='2'
+              mode="edit"
+              object-api-name={objectApiName}
+              fields={fields}
+              onsubmit={handleSubmit}
+            ></lightning-record-form>
+        </div>
+        <div slot="footer">Card Footer</div>
+    </lightning-card>
+</template>

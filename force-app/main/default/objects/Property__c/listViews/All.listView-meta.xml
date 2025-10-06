@@ -2,15 +2,13 @@
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>All</fullName>
     <columns>NAME</columns>
-    <columns>Address__c</columns>
     <columns>Property_Type__c</columns>
-    <columns>Bedrooms__c</columns>
-    <columns>Bathrooms__c</columns>
     <columns>Square_footage__c</columns>
     <columns>Lot_size__c</columns>
     <columns>Built_Year__c</columns>
     <columns>Listing_price__c</columns>
     <columns>Market_value__c</columns>
+    <columns>Location_Site__c</columns>
     <filterScope>Everything</filterScope>
     <label>All Records</label>
 </ListView>

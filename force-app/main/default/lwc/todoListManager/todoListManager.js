@@ -1,45 +1,29 @@
 import { LightningElement, track } from 'lwc';
+import { getFocusedTabInfo, setTabLabel, setTabIcon } from 'lightning/platformWorkspaceApi';
 
 /**
  * To-Do List Manager Component
  * Main component for managing tasks with CRUD operations and filtering
  */
 export default class TodoListManager extends LightningElement {
-    
-    // ========================================
-    // TASK DATA
-    // ========================================
-    
+
     @track tasks = [];
     nextTaskId = 1;
-    
-    // ========================================
-    // FORM FIELDS
-    // ========================================
-    
-    @track taskTitle = '';
-    @track taskDescription = '';
-    @track taskCategory = 'Personal';
-    @track taskPriority = 'Medium';
-    @track taskDueDate = '';
-    
-    // Edit Mode
-    @track isEditMode = false;
-    @track editingTaskId = null;
-    
-    // ========================================
-    // FILTER STATES
-    // ========================================
-    
-    @track searchTerm = '';
-    @track filterStatus = 'all';
-    @track filterCategory = 'all';
-    @track filterPriority = 'all';
-    @track sortBy = 'date-desc';
-    
-    // ========================================
-    // DROPDOWN OPTIONS
-    // ========================================
+
+    taskTitle = '';
+    taskDescription = '';
+    taskCategory = 'Personal';
+    taskPriority = 'Medium';
+    taskDueDate = '';
+
+    isEditMode = false;
+    editingTaskId = null;
+
+    searchTerm = '';
+    filterStatus = 'all';
+    filterCategory = 'all';
+    filterPriority = 'all';
+    sortBy = 'date-desc';
     
     categoryOptions = [
         { label: 'Work', value: 'Work' },
@@ -76,11 +60,7 @@ export default class TodoListManager extends LightningElement {
         { label: 'Medium', value: 'Medium' },
         { label: 'Low', value: 'Low' }
     ];
-    
-    // ========================================
-    // LIFECYCLE HOOKS
-    // ========================================
-    
+
     connectedCallback() {
         // Load tasks from localStorage
         this.loadTasksFromStorage();
@@ -89,11 +69,16 @@ export default class TodoListManager extends LightningElement {
         if (this.tasks.length === 0) {
             this.addSampleTasks();
         }
+
+        // Get the current focused tab
+        getFocusedTabInfo().then(tabInfo => {
+            const tabId = tabInfo.tabId;
+            setTabLabel(tabId, 'Task Manager');
+            setTabIcon(tabId, 'standard:task', {
+                iconAlt: 'Task Manager'
+            });
+        });
     }
-    
-    // ========================================
-    // COMPUTED PROPERTIES
-    // ========================================
     
     get formTitle() {
         return this.isEditMode ? 'Edit Task' : 'Add New Task';
@@ -180,11 +165,7 @@ export default class TodoListManager extends LightningElement {
         }
         return 'Try adjusting your filters or search criteria';
     }
-    
-    // ========================================
-    // FORM HANDLERS
-    // ========================================
-    
+
     handleTitleChange(event) {
         this.taskTitle = event.target.value;
     }
@@ -218,10 +199,6 @@ export default class TodoListManager extends LightningElement {
     handleCancelEdit() {
         this.resetForm();
     }
-    
-    // ========================================
-    // TASK OPERATIONS
-    // ========================================
     
     addTask() {
         const newTask = {
@@ -299,10 +276,6 @@ export default class TodoListManager extends LightningElement {
         }
     }
     
-    // ========================================
-    // FILTER HANDLERS
-    // ========================================
-    
     handleSearch(event) {
         this.searchTerm = event.target.value;
     }
@@ -329,10 +302,6 @@ export default class TodoListManager extends LightningElement {
     handleSort(event) {
         this.sortBy = event.detail.value;
     }
-    
-    // ========================================
-    // HELPER METHODS
-    // ========================================
     
     sortTasks(tasks) {
         const sorted = [...tasks];
@@ -375,10 +344,6 @@ export default class TodoListManager extends LightningElement {
     scrollToTop() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-    
-    // ========================================
-    // LOCAL STORAGE
-    // ========================================
     
     saveTasksToStorage() {
         try {

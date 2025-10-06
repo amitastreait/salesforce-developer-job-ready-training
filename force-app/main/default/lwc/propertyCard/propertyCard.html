@@ -1,121 +1,136 @@
 <template>
-    <!-- Property Card Container -->
-    <div class="property-card" onclick={handleCardClick}>
-        
-        <!-- Property Image Section -->
-        <div class="property-image-container">
-            <img 
-                src={property.imageUrl} 
-                alt={property.title} 
-                class="property-image"
-            />
-            
-            <!-- Property Status Badge (Featured, New, Sale, etc.) -->
-            <div if:true={property.isFeatured} class="featured-badge">
-                <lightning-icon 
-                    icon-name="utility:favorite" 
-                    size="xx-small" 
-                    alternative-text="Featured">
-                </lightning-icon>
-                Featured
-            </div>
-            
-            <!-- Property Status (For Sale/For Rent) -->
-            <div class={statusBadgeClass}>
-                {property.status}
-            </div>
-        </div>
-        
-        <!-- Property Details Section -->
-        <div class="property-details">
-            
-            <!-- Property Price -->
-            <div class="property-price">
-                {formattedPrice}
-                <span if:true={isRental} class="price-period">/month</span>
-            </div>
-            
-            <!-- Property Title/Address -->
-            <h3 class="property-title">{property.title}</h3>
-            <p class="property-address">
-                <lightning-icon 
-                    icon-name="utility:location" 
-                    size="xx-small">
-                </lightning-icon>
-                {property.address}, {property.city}, {property.state}
-            </p>
-            
-            <!-- Property Features (Beds, Baths, SqFt) -->
-            <div class="property-features">
-                <!-- Bedrooms -->
-                <div class="feature-item">
-                    <lightning-icon 
-                        icon-name="custom:custom48" 
-                        size="x-small">
-                    </lightning-icon>
-                    <span class="feature-value">{property.bedrooms}</span>
-                    <span class="feature-label">Beds</span>
+    <template if:true={hasProperty}>
+        <article class="property-card-container">
+            <lightning-card class="property-card">
+                <!-- Property Image Section -->
+                <div class="property-image-container">
+                    <img 
+                        src={propertyImage} 
+                        alt={property.Name}
+                        class="property-image"
+                        onerror={handleImageError}
+                    />
+                    <!-- Status Badge Overlay on Image -->
+                    <div class="status-overlay">
+                        <span class={statusClass}>
+                            {property.Status__c}
+                        </span>
+                    </div>
+                    <!-- Save/Favorite Button Overlay -->
+                    <div class="favorite-overlay">
+                        <lightning-button-icon
+                            icon-name="utility:favorite"
+                            alternative-text="Save Property"
+                            title="Save Property"
+                            variant="border-filled"
+                            class="favorite-button"
+                            onclick={handleSaveProperty}>
+                        </lightning-button-icon>
+                    </div>
                 </div>
-                
-                <!-- Bathrooms -->
-                <div class="feature-item">
-                    <lightning-icon 
-                        icon-name="custom:custom49" 
-                        size="x-small">
-                    </lightning-icon>
-                    <span class="feature-value">{property.bathrooms}</span>
-                    <span class="feature-label">Baths</span>
+
+                <!-- Property Details Section -->
+                <div class="property-content slds-p-around_medium">
+                    <!-- Property Header: Name -->
+                    <div class="property-header">
+                        <h3 class="slds-text-heading_medium slds-truncate property-name" title={property.Name}>
+                            {property.Name}
+                        </h3>
+                    </div>
+                    
+                    <!-- Property Price -->
+                    <div class="property-price slds-m-top_x-small">
+                        <lightning-formatted-number
+                            value={property.Listing_price__c}
+                            format-style="currency"
+                            currency-code={property.CurrencyIsoCode}
+                            minimum-fraction-digits="0">
+                        </lightning-formatted-number>
+                    </div>
+
+                    <!-- Property Details -->
+                    <div class="property-details slds-m-top_small">
+                        <!-- Location -->
+                        <div class="detail-item">
+                            <lightning-icon 
+                                icon-name="utility:location" 
+                                size="x-small"
+                                class="detail-icon">
+                            </lightning-icon>
+                            <span class="slds-m-left_xx-small detail-text">
+                                {location}
+                            </span>
+                        </div>
+                        
+                        <!-- Property Type -->
+                        <div class="detail-item slds-m-top_x-small">
+                            <lightning-icon 
+                                icon-name="utility:home" 
+                                size="x-small"
+                                class="detail-icon">
+                            </lightning-icon>
+                            <span class="slds-m-left_xx-small detail-text">
+                                {property.Property_Type__c}
+                            </span>
+                        </div>
+
+                        <!-- Property Features: Beds and Baths -->
+                        <div class="property-features slds-m-top_small">
+                            <span class="feature-badge">
+                                <lightning-icon 
+                                    icon-name="utility:bed" 
+                                    size="xx-small">
+                                </lightning-icon>
+                                <span class="slds-m-left_xx-small">{property.Bedrooms__c} Beds</span>
+                            </span>
+                            <span class="feature-badge">
+                                <lightning-icon 
+                                    icon-name="utility:water" 
+                                    size="xx-small">
+                                </lightning-icon>
+                                <span class="slds-m-left_xx-small">{property.Bathrooms__c} Baths</span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons Section -->
+                    <div class="action-buttons slds-m-top_medium">
+                        <!-- Primary Action: View Details -->
+                        <lightning-button
+                            variant="brand"
+                            label="View Details"
+                            title="View full property details"
+                            onclick={handleViewDetails}
+                            class="action-button-primary">
+                        </lightning-button>
+
+                        <!-- Secondary Actions Row -->
+                        <div class="secondary-actions slds-m-top_x-small">
+                            <!-- Contact Agent -->
+                            <lightning-button
+                                variant="neutral"
+                                label="Contact"
+                                icon-name="utility:email"
+                                title="Contact agent about this property"
+                                onclick={handleContactAgent}
+                                class="action-button-secondary">
+                            </lightning-button>
+
+                            <!-- Schedule Tour - Only show if Available -->
+                            <template if:true={isAvailable}>
+                                <lightning-button
+                                    variant="neutral"
+                                    label="Tour"
+                                    icon-name="utility:event"
+                                    title="Schedule a property tour"
+                                    onclick={handleScheduleTour}
+                                    class="action-button-secondary">
+                                </lightning-button>
+                            </template>
+                        </div>
+                    </div>
                 </div>
-                
-                <!-- Square Footage -->
-                <div class="feature-item">
-                    <lightning-icon 
-                        icon-name="utility:expand_alt" 
-                        size="x-small">
-                    </lightning-icon>
-                    <span class="feature-value">{formattedSqft}</span>
-                    <span class="feature-label">SqFt</span>
-                </div>
-            </div>
-            
-            <!-- Property Type & Year Built -->
-            <div class="property-meta">
-                <span class="meta-item">
-                    <lightning-icon 
-                        icon-name="utility:home" 
-                        size="xx-small">
-                    </lightning-icon>
-                    {property.propertyType}
-                </span>
-                <span class="meta-separator">•</span>
-                <span class="meta-item">Built {property.yearBuilt}</span>
-            </div>
-            
-            <!-- Action Buttons -->
-            <div class="property-actions">
-                <lightning-button 
-                    label="View Details" 
-                    variant="brand" 
-                    onclick={handleViewDetails}
-                    class="action-button">
-                </lightning-button>
-                
-                <lightning-button-icon 
-                    icon-name="utility:favorite" 
-                    variant="border-filled" 
-                    alternative-text="Add to Favorites"
-                    onclick={handleAddToFavorites}
-                    class="favorite-button">
-                </lightning-button-icon>
-                
-                <lightning-button-icon 
-                    icon-name="utility:share" 
-                    variant="border-filled" 
-                    alternative-text="Share Property"
-                    onclick={handleShare}
-                    class="share-button">
-                </lightning-button-icon>
-            </div>
-        </div>
-    </div>
+            </lightning-card>
+        </article>
+    </template>
 </template>

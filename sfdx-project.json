@@ -7,6 +7,10 @@
     {
       "path": "assignments",
       "default": false
+    },
+    {
+      "path": "frameworks",
+      "default": false
     }
   ],
   "name": "salesforce-developer-training",

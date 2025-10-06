@@ -38,12 +38,12 @@
 	</types>
 	<types>
 		<members>Access_Request__c</members>
-		<members>Batch_Chain_Configuration__mdt</members>
 		<members>Agent_Specialisation__c</members>
 		<members>Agent__c</members>
 		<members>AnnualRevenue__mdt</members>
 		<members>Application_Log__c</members>
 		<members>Appointment__c</members>
+		<members>Batch_Chain_Configuration__mdt</members>
 		<members>Commission__c</members>
 		<members>Course__c</members>
 		<members>Employee__c</members>
@@ -60,6 +60,7 @@
 		<members>Property__c</members>
 		<members>Purchase_Order_Line__c</members>
 		<members>Purchase_Order__c</members>
+		<members>Queueable_Chain_Config__mdt</members>
 		<members>Scheduled_Course__c</members>
 		<members>Speaker_Submission__c</members>
 		<members>Specialisation__c</members>
@@ -129,6 +130,7 @@
 		<members>Agent__c-Agent Layout</members>
 		<members>Application_Log__c-Application Log Layout</members>
 		<members>Appointment__c-Appointment Layout</members>
+		<members>Batch_Chain_Configuration__mdt-Batch Chain Configuration Layout</members>
 		<members>Commission__c-Commission Layout</members>
 		<members>Course__c-Course Layout</members>
 		<members>Employee__c-Employee Layout</members>
@@ -144,6 +146,7 @@
 		<members>Property__c-Property Layout</members>
 		<members>Purchase_Order_Line__c-Purchase Order Line Layout</members>
 		<members>Purchase_Order__c-Purchase Order Layout</members>
+		<members>Queueable_Chain_Config__mdt-Queueable Chain Configuration Layout</members>
 		<members>Scheduled_Course__c-Scheduled Course Layout</members>
 		<members>Speaker_Submission__c-Custom Compact Layout</members>
 		<members>Speaker_Submission__c-Speaker Submission Layout</members>
