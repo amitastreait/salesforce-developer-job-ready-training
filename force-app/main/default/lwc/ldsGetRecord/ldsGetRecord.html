@@ -1,6 +1,10 @@
 <template>
     <lightning-card  variant="Narrow"  title="LDS Get Record" icon-name="standard:account">
         <div class="slds-p-horizontal_small">
+            {accountName} <br/>
+            {annualRevenue}
+        </div>
+        <div class="slds-p-horizontal_small">
             <!-- Create a Record -->
             <lightning-record-form
                 lwc:ref="accountForm"

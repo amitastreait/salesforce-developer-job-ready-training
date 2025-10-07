@@ -1,0 +1,9 @@
+<template>
+    <lightning-spinner alternative-text="Loading" size="large" variant="brand" lwc:if={isLoading}></lightning-spinner>
+    <lightning-card  variant="Narrow"  title="LDS Create Record" icon-name="standard:contact">
+        <div class="slds-p-horizontal_small">
+            <lightning-button variant="neutral" label="Create" title="Create" onclick={handleSave}></lightning-button>
+        </div>
+        <div slot="footer">Card Footer</div>
+    </lightning-card>
+</template>
