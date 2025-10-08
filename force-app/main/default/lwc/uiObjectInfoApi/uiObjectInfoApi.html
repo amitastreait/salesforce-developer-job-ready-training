@@ -1,0 +1,24 @@
+<template>
+    <lightning-card variant="Narrow" title="UI Objectinfo API" icon-name="custom:custom38">
+        <div class="slds-p-horizontal_small">
+            <lightning-record-picker
+                label="Accounts"
+                placeholder="Search Accounts..."
+                object-api-name="Account"
+                onchange={handleInputChange}
+                display-info={displayInfo}
+                matching-info={matchingInfo}
+                required
+                >
+            </lightning-record-picker>
+        </div>
+        <div class="slds-p-horizontal_small">
+            <lightning-combobox name="progress" label="Type" placeholder="Select Type"
+                options={typeOpions}></lightning-combobox>
+
+            <lightning-combobox name="progress" label="Status" placeholder="Select Progress"
+                options={statusOptions}></lightning-combobox>
+        </div>
+        <div slot="footer">Card Footer</div>
+    </lightning-card>
+</template>
