@@ -1,0 +1,7 @@
+@import 'c/genericStyles';
+
+.input-help-text {
+    font-size: 0.75rem;
+    color: #706e6b;
+    margin-top: 0.25rem;
+}

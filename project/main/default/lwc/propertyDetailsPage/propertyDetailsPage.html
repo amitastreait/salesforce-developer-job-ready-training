@@ -1,0 +1,254 @@
+<template>
+    <div class="property-details-container">
+        
+        <!-- Back Button -->
+        <div class="back-button-container">
+            <button class="back-button" onclick={handleBack}>
+                <svg class="back-button-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                </svg>
+                Back to Listings
+            </button>
+        </div>
+
+        <!-- Property Header -->
+        <div class="property-header">
+            <div class="property-title-section">
+                <h1 class="property-title">{property.name}</h1>
+                <p class="property-subtitle">{formattedAddress}</p>
+                <div class="slds-m-top_small">
+                    <span class={statusClass}>{property.status}</span>
+                    <span class="badge badge-info slds-m-left_small">{property.type}</span>
+                </div>
+                <p class="property-price slds-m-top_small">{formattedPrice}</p>
+            </div>
+        </div>
+
+        <!-- Image Carousel Component -->
+        <c-image-carousel
+            images={property.images}
+            height="500px"
+            show-thumbnails=true
+            show-indicators=true
+            show-counter=true
+            auto-play=true
+            onimagechange={handleImageChange}
+            onimageclick={handleImageClick}>
+        </c-image-carousel>
+
+        <!-- Rating -->
+        <div class="rating-container">
+            <div class="rating-stars rating-readonly">
+                <template for:each={ratingStars} for:item="star">
+                    <!-- ✅ Uses boolean properties directly -->
+                    <template if:true={star.isFull}>
+                        <span key={star.id} class="star star-filled">★</span>
+                    </template>
+                    <template if:true={star.isHalf}>
+                        <span key={star.id} class="star star-filled">★</span>
+                    </template>
+                    <template if:true={star.isEmpty}>
+                        <span key={star.id} class="star star-empty">★</span>
+                    </template>
+                </template>
+            </div>
+            <span class="rating-value">{property.rating}</span>
+            <span class="rating-count">({property.reviewCount} reviews)</span>
+        </div>
+
+        <!-- CTA Buttons -->
+        <div class="cta-button-group">
+            <button class="cta-button cta-primary" onclick={handleScheduleViewing}>
+                <svg class="cta-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                Schedule Viewing
+            </button>
+            <button class="cta-button cta-secondary" onclick={handleSubmitInquiry}>
+                <svg class="cta-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+                Submit Inquiry
+            </button>
+            <button class="cta-button cta-success" onclick={handleMakeOffer}>
+                <svg class="cta-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                Make Offer
+            </button>
+            <button class="cta-button cta-secondary" onclick={handleContactAgent}>
+                <svg class="cta-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                </svg>
+                Contact Agent
+            </button>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="slds-m-top_medium slds-text-align_center">
+            <button class="btn btn-outline btn-small slds-m-right_small" onclick={handleShareProperty}>
+                Share
+            </button>
+            <button class="btn btn-outline btn-small" onclick={handleSaveFavorite}>
+                Save to Favorites
+            </button>
+        </div>
+
+        <!-- Property Details Grid -->
+        <div class="card-container slds-m-top_large">
+            <div class="card-header">
+                <h2 class="card-title">Property Information</h2>
+            </div>
+            <div class="card-body">
+                <div class="property-info-grid">
+                    <div class="property-info-item">
+                        <svg class="info-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                        </svg>
+                        <span class="info-label">Bedrooms</span>
+                        <span class="info-value">{property.bedrooms}</span>
+                    </div>
+                    <div class="property-info-item">
+                        <span class="info-label">Bathrooms</span>
+                        <span class="info-value">{property.bathrooms}</span>
+                    </div>
+                    <div class="property-info-item">
+                        <span class="info-label">Square Feet</span>
+                        <span class="info-value">{property.squareFeet} sq ft</span>
+                    </div>
+                    <div class="property-info-item">
+                        <span class="info-label">Lot Size</span>
+                        <span class="info-value">{property.lotSize} sq ft</span>
+                    </div>
+                    <div class="property-info-item">
+                        <span class="info-label">Year Built</span>
+                        <span class="info-value">{property.yearBuilt}</span>
+                    </div>
+                    <div class="property-info-item">
+                        <span class="info-label">Price/Sq Ft</span>
+                        <span class="info-value">{pricePerSqFt}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Description -->
+        <div class="card-container slds-m-top_large">
+            <div class="card-header">
+                <h2 class="card-title">Description</h2>
+            </div>
+            <div class="card-body">
+                <p class="slds-text-body_regular">{property.description}</p>
+            </div>
+        </div>
+
+        <!-- Features -->
+        <div class="card-container slds-m-top_large">
+            <div class="card-header">
+                <h2 class="card-title">Key Features</h2>
+            </div>
+            <div class="card-body">
+                <div class="slds-grid slds-wrap slds-gutters_small">
+                    <template for:each={property.features} for:item="feature">
+                        <div key={feature.id} class="slds-col slds-size_1-of-2 slds-medium-size_1-of-3 slds-large-size_1-of-4">
+                            <span class="badge badge-outline badge-info slds-m-bottom_small">
+                                {feature.name}
+                            </span>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </div>
+
+        <!-- Amenities -->
+        <div class="card-container slds-m-top_large">
+            <div class="card-header">
+                <h2 class="card-title">Amenities</h2>
+            </div>
+            <div class="card-body">
+                <div class="slds-grid slds-wrap slds-gutters">
+                    <template for:each={property.amenities} for:item="amenity">
+                        <div key={amenity.id} class="slds-col slds-size_1-of-2 slds-medium-size_1-of-4">
+                            <div class="slds-m-bottom_medium">
+                                <span style="font-size: 2rem;">{amenity.icon}</span>
+                                <p class="slds-text-body_small slds-m-top_x-small">{amenity.name}</p>
+                                <template if:true={amenity.available}>
+                                    <span class="badge badge-small badge-success">Available</span>
+                                </template>
+                                <template if:false={amenity.available}>
+                                    <span class="badge badge-small badge-default">Not Available</span>
+                                </template>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </div>
+
+        <!-- Location -->
+        <div class="card-container slds-m-top_large">
+            <div class="card-header">
+                <h2 class="card-title">Location</h2>
+            </div>
+            <div class="card-body">
+                <p class="slds-text-heading_small">{formattedAddress}</p>
+                <p class="slds-text-body_small slds-text-color_weak slds-m-top_x-small">
+                    {property.city}, {property.state} {property.zipCode}, {property.country}
+                </p>
+                <div class="slds-m-top_medium" style="height: 300px; background: #f3f3f3; display: flex; align-items: center; justify-content: center; border-radius: 0.5rem;">
+                    <p class="slds-text-color_weak">Map View (Google Maps Integration)</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Agent Info -->
+        <div class="card-container slds-m-top_large slds-m-bottom_xx-large">
+            <div class="card-header">
+                <h2 class="card-title">Listing Agent</h2>
+            </div>
+            <div class="card-body">
+                <div class="slds-media">
+                    <div class="slds-media__figure">
+                        <span class="slds-avatar slds-avatar_large">
+                            <svg class="slds-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                            </svg>
+                        </span>
+                    </div>
+                    <div class="slds-media__body">
+                        <h3 class="slds-text-heading_small">{property.agent.name}</h3>
+                        <p class="slds-text-body_small slds-m-top_x-small">
+                            <strong>Phone:</strong> {property.agent.phone}
+                        </p>
+                        <p class="slds-text-body_small">
+                            <strong>Email:</strong> {property.agent.email}
+                        </p>
+                        <button class="btn btn-primary slds-m-top_small" onclick={handleContactAgent}>
+                            Contact Agent
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Schedule Viewing Modal -->
+         <template if:true={showScheduleModal}>
+            <c-schedule-viewing-modal
+                property-id={property.id}
+                property-name={property.name}
+                onclose={handleCloseScheduleModal}
+                onscheduleviewing={handleScheduleViewingSubmit}>
+            </c-schedule-viewing-modal>
+        </template>
+        
+        <!-- Inquiry Modal -->
+         <template if:true={showInquiryModal}>
+            <c-submit-inquiry-modal
+                property-id={property.id}
+                property-name={property.name}
+                onclose={handleCloseInquiryModal}
+                onsubmitinquiry={handleInquirySubmit}>
+            </c-submit-inquiry-modal>
+        </template>
+    </div>
+</template>

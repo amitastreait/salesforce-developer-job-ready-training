@@ -1,0 +1,63 @@
+<template>
+    <lightning-card title="Property Search" icon-name="custom:custom85">
+        <div class="slds-card__body slds-card__body_inner">
+            <!-- Filters Section - Child Component -->
+            <!-- Binds onfilterchange event to handle CustomEvent from child -->
+            <!-- Passes current filter values to child via attributes -->
+            <c-property-filters
+                onfilterchange={handleFilterChange}
+                city-filter={filters.city}
+                type-filter={filters.type}
+                status-filter={filters.status}
+                min-price={filters.minPrice}
+                max-price={filters.maxPrice}
+                min-bedrooms={filters.minBedrooms}>
+            </c-property-filters>
+
+            <!-- Loading Spinner -->
+            <template if:true={isLoading}>
+                <div class="slds-align_absolute-center slds-m-vertical_large">
+                    <lightning-spinner 
+                        alternative-text="Loading properties..." 
+                        size="medium">
+                    </lightning-spinner>
+                    <p class="slds-m-top_small">Loading properties...</p>
+                </div>
+            </template>
+
+            <!-- Properties Grid - Display when data available -->
+            <template if:false={isLoading}>
+                <template if:true={hasProperties}>
+                    <div class="properties-grid slds-m-top_medium">
+                        <!-- Iterate through properties and render propertyCard for each -->
+                        <template for:each={properties} for:item="property">
+                            <c-property-card
+                                key={property.Id}
+                                property={property}>
+                            </c-property-card>
+                        </template>
+                    </div>
+                </template>
+
+                <!-- No Results Message -->
+                <template if:true={noProperties}>
+                    <div class="slds-align_absolute-center slds-m-vertical_large">
+                        <div class="slds-text-align_center no-results-container">
+                            <lightning-icon 
+                                icon-name="utility:search" 
+                                size="large" 
+                                alternative-text="No results">
+                            </lightning-icon>
+                            <p class="slds-text-heading_small slds-m-top_small">
+                                No properties found
+                            </p>
+                            <p class="slds-text-color_weak">
+                                Try adjusting your filters to see more results
+                            </p>
+                        </div>
+                    </div>
+                </template>
+            </template>
+        </div>
+    </lightning-card>
+</template>

@@ -15,6 +15,10 @@
     {
       "path": "utils",
       "default": false
+    },
+    {
+      "path": "project",
+      "default": false
     }
   ],
   "name": "salesforce-developer-training",

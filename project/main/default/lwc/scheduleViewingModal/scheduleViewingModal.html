@@ -1,0 +1,76 @@
+<template>
+    <div class="modal-backdrop">
+        <div class="modal-container modal-medium">
+            <div class="modal-header">
+                <h2 class="modal-title">Schedule a Viewing</h2>
+                <button class="modal-close-button" onclick={handleCancel}>
+                    <svg class="modal-close-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            
+            <div class="modal-body">
+                <p class="slds-m-bottom_medium slds-text-body_regular">
+                    Schedule a viewing for <strong>{propertyName}</strong>
+                </p>
+
+                <div class="input-container">
+                    <label class="input-label input-label-required">Preferred Date</label>
+                    <input 
+                        type="date" 
+                        class="input-field"
+                        data-field="date"
+                        value={formData.date}
+                        onchange={handleInputChange}
+                        required>
+                </div>
+
+                <div class="input-container">
+                    <label class="input-label input-label-required">Preferred Time</label>
+                    <input 
+                        type="time" 
+                        class="input-field"
+                        data-field="time"
+                        value={formData.time}
+                        onchange={handleInputChange}
+                        required>
+                </div>
+
+                <div class="input-container">
+                    <label class="input-label input-label-required">Your Name</label>
+                    <input 
+                        type="text" 
+                        class="input-field"
+                        placeholder="Enter your full name"
+                        data-field="name"
+                        value={formData.name}
+                        onchange={handleInputChange}
+                        required>
+                </div>
+
+                <div class="input-container">
+                    <label class="input-label input-label-required">Phone Number</label>
+                    <input 
+                        type="tel" 
+                        class="input-field"
+                        placeholder="(555) 555-5555"
+                        data-field="phone"
+                        value={formData.phone}
+                        onchange={handleInputChange}
+                        required>
+                    <p class="input-help-text">We'll call you to confirm the viewing appointment</p>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-neutral" onclick={handleCancel}>
+                    Cancel
+                </button>
+                <button class="btn btn-brand" onclick={handleSubmit}>
+                    Schedule Viewing
+                </button>
+            </div>
+        </div>
+    </div>
+</template>

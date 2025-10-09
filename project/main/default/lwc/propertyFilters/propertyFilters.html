@@ -1,0 +1,122 @@
+<template>
+    <div class="filter-container">
+        <lightning-layout multiple-rows>
+            <!-- City Filter -->
+            <lightning-layout-item 
+                size="12" 
+                small-device-size="12" 
+                medium-device-size="6" 
+                large-device-size="4" 
+                padding="around-small">
+                <lightning-combobox
+                    name="city"
+                    label="City"
+                    value={cityFilter}
+                    placeholder="Select City"
+                    options={cityOptions}
+                    onchange={handleCityChange}>
+                </lightning-combobox>
+            </lightning-layout-item>
+
+            <!-- Property Type Filter -->
+            <lightning-layout-item 
+                size="12" 
+                small-device-size="12" 
+                medium-device-size="6" 
+                large-device-size="4" 
+                padding="around-small">
+                <lightning-combobox
+                    name="type"
+                    label="Property Type"
+                    value={typeFilter}
+                    placeholder="Select Type"
+                    options={propertyTypeOptions}
+                    onchange={handleTypeChange}>
+                </lightning-combobox>
+            </lightning-layout-item>
+
+            <!-- Status Filter -->
+            <lightning-layout-item 
+                size="12" 
+                small-device-size="12" 
+                medium-device-size="6" 
+                large-device-size="4" 
+                padding="around-small">
+                <lightning-combobox
+                    name="status"
+                    label="Status"
+                    value={statusFilter}
+                    placeholder="Select Status"
+                    options={statusOptions}
+                    onchange={handleStatusChange}>
+                </lightning-combobox>
+            </lightning-layout-item>
+
+            <!-- Min Price Filter -->
+            <lightning-layout-item 
+                size="12" 
+                small-device-size="12" 
+                medium-device-size="6" 
+                large-device-size="4" 
+                padding="around-small">
+                <lightning-input
+                    type="number"
+                    name="minPrice"
+                    label="Min Price"
+                    value={minPrice}
+                    formatter="currency"
+                    step="1000"
+                    placeholder="Enter minimum price"
+                    onchange={handleMinPriceChange}>
+                </lightning-input>
+            </lightning-layout-item>
+
+            <!-- Max Price Filter -->
+            <lightning-layout-item 
+                size="12" 
+                small-device-size="12" 
+                medium-device-size="6" 
+                large-device-size="4" 
+                padding="around-small">
+                <lightning-input
+                    type="number"
+                    name="maxPrice"
+                    label="Max Price"
+                    value={maxPrice}
+                    formatter="currency"
+                    step="1000"
+                    placeholder="Enter maximum price"
+                    onchange={handleMaxPriceChange}>
+                </lightning-input>
+            </lightning-layout-item>
+
+            <!-- Min Bedrooms Filter -->
+            <lightning-layout-item 
+                size="12" 
+                small-device-size="12" 
+                medium-device-size="6" 
+                large-device-size="4" 
+                padding="around-small">
+                <lightning-input
+                    type="number"
+                    name="minBedrooms"
+                    label="Min Bedrooms"
+                    value={minBedrooms}
+                    min="0"
+                    placeholder="Enter minimum bedrooms"
+                    onchange={handleMinBedroomsChange}>
+                </lightning-input>
+            </lightning-layout-item>
+        </lightning-layout>
+
+        <!-- Clear Filters Button -->
+        <div class="slds-m-top_medium slds-text-align_center">
+            <lightning-button
+                variant="neutral"
+                label="Clear All Filters"
+                onclick={handleClearFilters}
+                icon-name="utility:clear">
+            </lightning-button>
+        </div>
+    </div>
+</template>

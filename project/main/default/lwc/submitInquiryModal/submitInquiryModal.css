@@ -1,0 +1,24 @@
+@import 'c/genericStyles';
+
+.input-help-text {
+    font-size: 0.75rem;
+    color: #706e6b;
+    margin-top: 0.25rem;
+}
+
+.character-count-low {
+    font-size: 0.75rem;
+    color: #ea001e;
+    margin-top: 0.25rem;
+}
+
+.character-count-ok {
+    font-size: 0.75rem;
+    color: #2e844a;
+    margin-top: 0.25rem;
+}
+
+textarea.input-field {
+    resize: vertical;
+    font-family: inherit;
+}

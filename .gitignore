@@ -16,6 +16,8 @@ coverage/
 assignments/
 frameworks/
 docs/
+scripts/
+
 force-app/main/default/classes/Batch*.cls
 force-app/main/default/classes/Batch*.cls-meta.xml
 force-app/main/default/classes/IBatchChainable*.cls

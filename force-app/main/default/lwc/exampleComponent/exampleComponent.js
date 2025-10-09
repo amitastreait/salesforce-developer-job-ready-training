@@ -9,6 +9,9 @@ import { groupBy, sortBy } from 'c/dataUtils';
 import { executeApexWithLoading } from 'c/apexUtils';
 import { showSuccessToast, showErrorToast, showRecordDeletedToast } from 'c/toastUtils';
 
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+
+
 export default class ExampleComponent extends LightningElement {
 
     @track data = [];
@@ -89,5 +92,27 @@ export default class ExampleComponent extends LightningElement {
         } catch (error) {
             showErrorToast(this, 'Error', 'Failed to delete property');
         }
+    }
+
+    handleScheduleViewing(event){
+        const eventWithLinks = new ShowToastEvent({
+            title: 'Success!',
+            message: 'Record {0} created! See it {1}! {2} created! See it {3}!',
+            messageData: [
+                'Salesforce',
+                {
+                    url: 'http://www.salesforce.com/',
+                    label: 'here',
+                },
+                'Salesforce Two',
+                {
+                    url: 'http://www.salesforce.com/',
+                    label: 'here',
+                },
+            ],
+            variant: 'success',
+            mode: 'sticky'
+        });
+        this.dispatchEvent(eventWithLinks);
     }
 }

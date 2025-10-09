@@ -1,7 +1,8 @@
 import { api, LightningElement } from 'lwc';
 import createContact from '@salesforce/apex/ContactController.createContact'
 
-import { executeApexWithLoading } from 'c/ldsUtils';
+import { executeApexWithLoading } from 'c/apexUtils';
+import { showRecordCreatedToast } from 'c/toastUtils';
 export default class CreateContactImperative extends LightningElement {
 
     @api recordId;
@@ -44,7 +45,7 @@ export default class CreateContactImperative extends LightningElement {
         this.title = event.target.value;
     }
 
-    handleSave(){
+    async handleSave(){
 
         console.log(this.contact);
         console.log(this.recordId);
@@ -55,7 +56,22 @@ export default class CreateContactImperative extends LightningElement {
 
         // let result = executeApexWithLoading(this, createContact, {});
 
-        this.isLoading = true;
+        let contact = await executeApexWithLoading(
+            createContact, {
+                firstName: this.contact.ContactFirstName,
+                lastName: this.contact.LastName,
+                email: this.contact.Email,
+                phone: this.contact.Phone,
+                title: this.contact.Title,
+                accountId: this.recordId
+            },
+            this,
+            'isLoading'
+        );
+        console.log('Contact Created ', contact);
+        console.log('Contact Id ', contact.Id)
+        showRecordCreatedToast(this, contact.Id || contact.id, 'Contact');
+        /* this.isLoading = true;
         createContact({
             firstName: this.contact.ContactFirstName,
             lastName: this.contact.LastName,
@@ -77,7 +93,8 @@ export default class CreateContactImperative extends LightningElement {
         .finally(() => {
             console.log('Finally Executed!');
             this.isLoading = false;
-        })
+        });
+        */
     }
 
     validateInput(){

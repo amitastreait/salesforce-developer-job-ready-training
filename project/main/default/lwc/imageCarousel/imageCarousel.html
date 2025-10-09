@@ -1,0 +1,86 @@
+<template>
+    <div class="carousel-container">
+        <template if:true={currentImage}>
+            <!-- Main Image -->
+            <div class="image-carousel-container" style={carouselStyle}>
+                <img 
+                    src={currentImage.url} 
+                    alt={currentImage.alt}
+                    class="carousel-main-image"
+                    onclick={handleImageClick}>
+                
+                <!-- Navigation Buttons (only show if multiple images) -->
+                <template if:true={hasMultipleImages}>
+                    <button 
+                        class="carousel-nav-button carousel-prev" 
+                        onclick={handlePrevious}
+                        title="Previous image">
+                        <svg class="carousel-nav-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                        </svg>
+                    </button>
+                    <button 
+                        class="carousel-nav-button carousel-next" 
+                        onclick={handleNext}
+                        title="Next image">
+                        <svg class="carousel-nav-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </button>
+                </template>
+
+                <!-- Image Counter -->
+                <template if:true={showCounter}>
+                    <template if:true={hasMultipleImages}>
+                        <div class="carousel-counter">{imageCounter}</div>
+                    </template>
+                </template>
+
+                <!-- Dot Indicators -->
+                <template if:true={showIndicators}>
+                    <template if:true={hasMultipleImages}>
+                        <div class="carousel-indicators">
+                            <template for:each={indicators} for:item="indicator">
+                                <button 
+                                    key={indicator.id}
+                                    data-index={indicator.index}
+                                    onclick={handleIndicatorClick}
+                                    class={indicator.indicatorClass}
+                                    title={indicator.index}>
+                                </button>
+                            </template>
+                        </div>
+                    </template>
+                </template>
+            </div>
+
+            <!-- Thumbnails -->
+            <template if:true={showThumbnails}>
+                <template if:true={hasMultipleImages}>
+                    <div class="carousel-thumbnails">
+                        <template for:each={thumbnails} for:item="thumbnail">
+                            <div 
+                                key={thumbnail.id}
+                                data-index={thumbnail.index}
+                                onclick={handleThumbnailClick}
+                                class={thumbnail.thumbnailClass}
+                                title={thumbnail.alt}>
+                                <img src={thumbnail.url} alt={thumbnail.alt}>
+                            </div>
+                        </template>
+                    </div>
+                </template>
+            </template>
+        </template>
+
+        <!-- Empty State -->
+        <template if:false={currentImage}>
+            <div class="carousel-empty-state" style={carouselStyle}>
+                <svg class="empty-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <p class="empty-text">No images available</p>
+            </div>
+        </template>
+    </div>
+</template>

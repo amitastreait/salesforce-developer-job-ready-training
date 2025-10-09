@@ -31,14 +31,6 @@
             </div>
         </div>
 
-        <!-- Image Carousel -->
-        <div class="image-carousel-container">
-            <img class="carousel-main-image" src={mainImage} alt="Property">
-            <button class="carousel-nav-button carousel-prev">←</button>
-            <button class="carousel-nav-button carousel-next">→</button>
-            <div class="carousel-counter">1 / 5</div>
-        </div>
-
         <!-- Rating -->
         <div class="rating-container">
             <div class="rating-stars">
@@ -54,7 +46,7 @@
 
         <!-- CTA Buttons -->
         <div class="cta-button-group">
-            <button class="cta-button cta-primary">Schedule Viewing</button>
+            <button class="cta-button cta-primary" onclick={handleScheduleViewing}>Schedule Viewing</button>
             <button class="cta-button cta-secondary">Submit Inquiry</button>
             <button class="cta-button cta-success">Make Offer</button>
         </div>
