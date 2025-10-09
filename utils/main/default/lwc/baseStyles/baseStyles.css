@@ -1,0 +1,48 @@
+/**
+ * Base Styles - Foundation styles
+ */
+
+/* Colors */
+:host {
+    --color-primary: #0176d3;
+    --color-success: #2e844a;
+    --color-error: #ea001e;
+    --color-warning: #fe9339;
+    --color-text: #080707;
+    --color-text-light: #706e6b;
+    --color-border: #dddbda;
+    --color-background: #f3f3f3;
+    
+    /* Spacing */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    
+    /* Border Radius */
+    --radius-sm: 0.25rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 0.75rem;
+}
+
+/* Basic Utilities */
+.text-primary { color: var(--color-primary); }
+.text-success { color: var(--color-success); }
+.text-error { color: var(--color-error); }
+.text-warning { color: var(--color-warning); }
+
+.bg-primary { background-color: var(--color-primary); }
+.bg-success { background-color: var(--color-success); }
+.bg-error { background-color: var(--color-error); }
+
+/* Spacing Utilities */
+.m-1 { margin: var(--spacing-xs); }
+.m-2 { margin: var(--spacing-sm); }
+.m-3 { margin: var(--spacing-md); }
+.m-4 { margin: var(--spacing-lg); }
+
+.p-1 { padding: var(--spacing-xs); }
+.p-2 { padding: var(--spacing-sm); }
+.p-3 { padding: var(--spacing-md); }
+.p-4 { padding: var(--spacing-lg); }

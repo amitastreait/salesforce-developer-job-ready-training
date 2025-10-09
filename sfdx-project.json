@@ -11,6 +11,10 @@
     {
       "path": "frameworks",
       "default": false
+    },
+    {
+      "path": "utils",
+      "default": false
     }
   ],
   "name": "salesforce-developer-training",

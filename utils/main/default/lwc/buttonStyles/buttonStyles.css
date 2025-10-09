@@ -1,0 +1,82 @@
+/**
+ * Reusable Button Styles
+ */
+/* Import base styles */
+@import 'c/baseStyles';
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-sm);
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.btn:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btn-primary {
+    background-color: #0176d3;
+    color: white;
+}
+
+.btn-secondary {
+    background-color: #706e6b;
+    color: white;
+}
+
+.btn-success {
+    background-color: #2e844a;
+    color: white;
+}
+
+.btn-danger {
+    background-color: #ea001e;
+    color: white;
+}
+
+.btn-warning {
+    background-color: #fe9339;
+    color: white;
+}
+
+.btn-outline {
+    background-color: transparent;
+    border: 1px solid #0176d3;
+    color: #0176d3;
+}
+
+.btn-small {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+}
+
+.btn-large {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+}
+
+.btn-block {
+    display: block;
+    width: 100%;
+}
+
+.btn-group {
+    display: inline-flex;
+    gap: 0.5rem;
+}

@@ -1,0 +1,9 @@
+@import 'c/style'; /** WHere style is the name of reusable CSS LWC **/
+
+/** @import 'c/baseStyle'; **/
+/** WHere baseStyle is the name of reusable CSS LWC **/
+.h1 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #333;
+}

@@ -1,0 +1,148 @@
+<template>
+    <lightning-card title="Property Loan Calculator" icon-name="standard:home">
+        <div class="slds-m-around_medium">
+            
+            <!-- Property Details -->
+            <div class="slds-box slds-m-bottom_medium">
+                <h3 class="slds-text-heading_small slds-m-bottom_small">
+                    Property Details
+                </h3>
+                
+                <div class="slds-grid slds-wrap slds-gutters">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input 
+                            type="number" 
+                            name="propertyPrice"
+                            label="Property Price ($)" 
+                            value={propertyPrice}
+                            onchange={handleInputChange}
+                            formatter="currency">
+                        </lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input 
+                            type="number" 
+                            name="squareFeet"
+                            label="Square Feet" 
+                            value={squareFeet}
+                            onchange={handleInputChange}>
+                        </lightning-input>
+                    </div>
+                </div>
+                
+                <div class="slds-m-top_small">
+                    <strong>Price per Sq Ft:</strong> {displayPricePerSqFt}
+                </div>
+            </div>
+
+            <!-- Loan Details -->
+            <div class="slds-box slds-m-bottom_medium">
+                <h3 class="slds-text-heading_small slds-m-bottom_small">
+                    Loan Details
+                </h3>
+                
+                <div class="slds-grid slds-wrap slds-gutters">
+                    <div class="slds-col slds-size_1-of-3">
+                        <lightning-input 
+                            type="number" 
+                            name="downPaymentPercent"
+                            label="Down Payment (%)" 
+                            value={downPaymentPercent}
+                            onchange={handleInputChange}>
+                        </lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-3">
+                        <lightning-input 
+                            type="number" 
+                            name="interestRate"
+                            label="Interest Rate (% p.a.)" 
+                            value={interestRate}
+                            step="0.1"
+                            onchange={handleInputChange}>
+                        </lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-3">
+                        <lightning-input 
+                            type="number" 
+                            name="loanTenure"
+                            label="Loan Tenure (Months)" 
+                            value={loanTenure}
+                            onchange={handleInputChange}>
+                        </lightning-input>
+                    </div>
+                </div>
+
+                <div class="slds-m-top_medium">
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-2">
+                            <p><strong>Down Payment:</strong> {displayDownPayment}</p>
+                            <p><strong>Loan Amount:</strong> {displayLoanAmount}</p>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2">
+                            <p><strong>Monthly EMI:</strong> {displayEMI}</p>
+                            <p><strong>Total Interest:</strong> {displayTotalInterest}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Additional Costs -->
+            <div class="slds-box slds-m-bottom_medium">
+                <h3 class="slds-text-heading_small slds-m-bottom_small">
+                    Additional Costs
+                </h3>
+                
+                <div class="slds-grid slds-wrap slds-gutters">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input 
+                            type="number" 
+                            name="maintenancePerSqFt"
+                            label="Maintenance ($/Sq Ft/Year)" 
+                            value={maintenancePerSqFt}
+                            onchange={handleInputChange}>
+                        </lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input 
+                            type="number" 
+                            name="taxPercent"
+                            label="Property Tax (% Annual)" 
+                            value={taxPercent}
+                            step="0.1"
+                            onchange={handleInputChange}>
+                        </lightning-input>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Total Monthly Cost -->
+            <div class="slds-box slds-theme_success">
+                <h3 class="slds-text-heading_medium">
+                    Total Monthly Cost: {displayTotalMonthlyCost}
+                </h3>
+                <p class="slds-text-body_small slds-m-top_x-small">
+                    Includes EMI + Maintenance + Tax
+                </p>
+            </div>
+
+            <!-- Long-term Projections -->
+            <div class="slds-box slds-m-top_medium">
+                <h3 class="slds-text-heading_small slds-m-bottom_small">
+                    Long-term Cost Projections
+                </h3>
+                <div class="slds-grid slds-wrap slds-gutters">
+                    <div class="slds-col slds-size_1-of-3">
+                        <p><strong>3 Years:</strong> {displayThreeYearCost}</p>
+                    </div>
+                    <div class="slds-col slds-size_1-of-3">
+                        <p><strong>5 Years:</strong> {displayFiveYearCost}</p>
+                    </div>
+                    <div class="slds-col slds-size_1-of-3">
+                        <p><strong>10 Years:</strong> {displayTenYearCost}</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </lightning-card>
+</template>

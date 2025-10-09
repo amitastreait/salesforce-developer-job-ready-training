@@ -1,0 +1,13 @@
+/* Import reusable stylesheets */
+@import 'c/commonStyles';
+@import 'c/buttonStyles';
+
+/* Import in any component */
+@import 'c/propertyDetailsStyles';
+@import 'c/propertyCardStyles';
+@import 'c/genericStyles';
+
+/* Component-specific styles */
+.custom-style {
+    color: blue;
+}

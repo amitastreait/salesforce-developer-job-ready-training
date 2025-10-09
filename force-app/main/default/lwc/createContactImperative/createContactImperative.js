@@ -1,5 +1,7 @@
 import { api, LightningElement } from 'lwc';
 import createContact from '@salesforce/apex/ContactController.createContact'
+
+import { executeApexWithLoading } from 'c/ldsUtils';
 export default class CreateContactImperative extends LightningElement {
 
     @api recordId;
@@ -50,6 +52,8 @@ export default class CreateContactImperative extends LightningElement {
         if( !this.validateInput() ){
             return;
         }
+
+        // let result = executeApexWithLoading(this, createContact, {});
 
         this.isLoading = true;
         createContact({
