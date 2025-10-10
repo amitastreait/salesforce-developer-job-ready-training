@@ -1,0 +1,11 @@
+<template>
+    <lightning-card variant="Narrow" title="Toast Event" icon-name="custom:custom54">
+        <div class="slds-p-horizontal_small">
+            <lightning-button variant="brand" label="Success Toast" title="Success Toast" onclick={handleSuccessClick}></lightning-button>
+            <lightning-button variant="brand" label="Error Toast" title="Error Toast" onclick={handleErrorClick}></lightning-button>
+            <lightning-button variant="brand" label="Warning Toast" title="Warning Toast" onclick={handleWarningClick}></lightning-button>
+            <lightning-button variant="brand" label="info Toast" title="info Toast" onclick={handleInfoClick}></lightning-button>
+        </div>
+        <div slot="footer">Card Footer</div>
+    </lightning-card>
+</template>

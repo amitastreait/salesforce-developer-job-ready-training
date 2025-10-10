@@ -2,6 +2,8 @@ import { LightningElement, wire, api } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getFilteredProperties from '@salesforce/apex/PropertyController.getFilteredProperties';
 
+import { CurrentPageReference } from 'lightning/navigation';
+
 /**
  * Parent component that orchestrates property display
  * Manages filter state and data fetching
@@ -23,6 +25,11 @@ export default class PropertyContainer extends LightningElement {
     properties = [];
     error;
     isLoading = false;
+
+    @wire(CurrentPageReference)
+    getPageRef(currRef){
+        console.log('Current Page Reference: ', JSON.stringify(currRef.state));
+    }
 
     /**
      * Wire Apex method with reactive filter parameters

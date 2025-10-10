@@ -1,0 +1,11 @@
+<template>
+    <lightning-card variant="Narrow" title="Navigation" icon-name="custom:custom54">
+        <div class="slds-p-horizontal_small">
+            <lightning-button variant="brand" label="Navigate To Record" title="Navigate To Record" onclick={handleNavigateRecord}></lightning-button>
+            <lightning-button variant="brand" label="Create Account" title="Create Account" onclick={handleNavigateObject}></lightning-button>
+            <lightning-button variant="brand" label="Explore Property" title="Explore Property" onclick={navigateToCustomTab}></lightning-button>
+            <lightning-button variant="brand" label="Navigate LWC" title="Navigate LWC" onclick={navigateToLwc}></lightning-button>
+        </div>
+        <div slot="footer">Card Footer</div>
+    </lightning-card>
+</template>
