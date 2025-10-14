@@ -1,0 +1,19 @@
+<template>
+    <lightning-card variant="Narrow" title="Contact Table" icon-name="standard:contact">
+        <lightning-button slot="actions" variant="brand" label="Proceed Selected" title="Proceed Selected" 
+            onclick={handleProSelected}>
+        </lightning-button>
+        <div class="slds-p-horizontal_small">
+            <lightning-datatable
+                key-field="Id"
+                data={contacts}
+                columns={columns}
+                lwc:ref="condatatable"
+                show-row-number-column
+                max-row-selection="2"
+            >
+            </lightning-datatable>
+        </div>
+        <div slot="footer">Card Footer</div>
+    </lightning-card>
+</template>

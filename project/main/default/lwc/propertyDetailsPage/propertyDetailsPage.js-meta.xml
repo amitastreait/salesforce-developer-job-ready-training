@@ -10,6 +10,7 @@
     <targetConfigs>
         <targetConfig targets="lightning__RecordPage">
             <objects>
+                <object>Property_Image__c</object>
                 <object>Property__c</object>
             </objects>
         </targetConfig>

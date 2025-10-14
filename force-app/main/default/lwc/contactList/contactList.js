@@ -1,6 +1,9 @@
-import { LightningElement } from 'lwc';
+import { LightningElement, wire } from 'lwc';
+import { CurrentPageReference } from 'lightning/navigation';
 
 export default class ContactList extends LightningElement {
+
+    @wire(CurrentPageReference) pageRef;
 
     contacts = [
         {
