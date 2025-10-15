@@ -1,80 +1,5 @@
 import { LightningElement, track } from 'lwc';
 
-/**
- * Custom Table Demo Component
- *
- * LOOKUP FIELD CHANGE HANDLING FLOW:
- * ===================================
- *
- * When a user edits a lookup field in the table:
- *
- * 1. USER INTERACTION:
- *    - User clicks on the lookup cell (accountId)
- *    - lightning-record-picker appears in edit mode (lookupEdit.html)
- *
- * 2. RECORD SELECTION:
- *    - User searches and selects an Account
- *    - lightning-record-picker captures the selected record ID
- *    - The picker has data-inputable="true" so it integrates with datatable
- *
- * 3. CELLCHANGE EVENT:
- *    - Datatable fires a "cellchange" event
- *    - Event structure: { draftValues: [{ Id: "001", accountId: "001xxx..." }] }
- *    - This is the same event structure as other editable fields
- *
- * 4. HANDLECELLCHANGE METHOD:
- *    - Receives the cellchange event
- *    - Extracts accountId from draftValues
- *    - Calls updateDraftValues() to track the change
- *    - Note: At this point, we only have the accountId, not the account name
- *
- * 5. HANDLESAVE METHOD:
- *    - User clicks "Save" button on the datatable
- *    - handleSave receives all draft values
- *    - For lookup fields, we need to fetch the display value (account name)
- *    - In production: Use getRecord() or Apex to fetch the account name
- *    - Updates this.data with the new values
- *
- * 6. DISPLAY UPDATE:
- *    - The lookup.html template displays the accountName
- *    - User sees the account name as a clickable link
- *
- * KEY POINTS:
- * - lightning-record-picker only returns the ID, not the related record data
- * - You must fetch the display value (name) separately
- * - Use getRecord (LDS) or Apex to fetch related record details
- * - The accountId field stores the ID, accountName field stores the display value
- *
- * VISUAL FLOW:
- * ============
- *
- * User Action              Event/Method              Data Flow
- * -----------              ------------              ---------
- * Click cell      →        Edit mode                 lookupEdit.html renders
- *                          (lookup picker shown)
- *
- * Select Account  →        cellchange event          { draftValues: [{
- *                                                       Id: "001",
- *                                                       accountId: "001xxx..."
- *                                                     }]}
- *
- * Event fires     →        handleCellChange()        updateDraftValues()
- *                                                     (stores accountId)
- *
- * Click Save      →        handleSave()              1. Merge draft values
- *                                                     2. Fetch account name
- *                                                     3. Update this.data
- *
- * Display         →        lookup.html               Shows accountName
- *                          (read mode)               as clickable link
- *
- * DATA STRUCTURE:
- * ==============
- * Each row needs TWO fields for lookup:
- * - accountId: Stores the Account record ID (e.g., "001xxxxxxxxxxxxxxx")
- * - accountName: Stores the Account Name for display (e.g., "Acme Corp")
- */
-
 const columns = [
     {
         label: 'Picture',
@@ -149,7 +74,7 @@ const columns = [
             required: false
         }
     },
-    /* {
+    {
         label: 'Account',
         fieldName: 'accountId',
         type: 'lookup',
@@ -172,7 +97,7 @@ const columns = [
             },
             context: { fieldName: 'Id' }
         }
-    } */
+    }
 ];
 
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
@@ -272,15 +197,13 @@ export default class CustomTableDemo extends LightningElement {
             const draft = draftValues.find(d => d.Id === row.Id);
             if (draft) {
                 const updatedRow = { ...row, ...draft };
+
+                // Handle lookup field: Use cached account name if available
                 if (draft.accountId && draft.accountId !== row.accountId) {
                     console.log('Account lookup changed for row:', row.Id, 'New Account ID:', draft.accountId);
                     updatedRow.accountName = `Account ${draft.accountId}`;
-
-                    // Real implementation example:
-                    // this.fetchAccountName(draft.accountId).then(name => {
-                    //     updatedRow.accountName = name;
-                    // });
                 }
+
                 return updatedRow;
             }
             return row;
@@ -316,8 +239,13 @@ export default class CustomTableDemo extends LightningElement {
             Object.keys(draft).forEach(fieldName => {
                 if (fieldName !== 'Id') {
                     const value = draft[fieldName];
-                    // console.log('Cell Changed:', fieldName, recordId, value);
+                    console.log('Cell Changed:', fieldName, recordId, value);
                     this.updateDraftValues(recordId, fieldName, value);
+
+                    // Special handling for accountId lookup field
+                    if (fieldName === 'accountId' && value) {
+                        
+                    }
                 }
             });
         });
@@ -374,5 +302,14 @@ export default class CustomTableDemo extends LightningElement {
             ];
         }
         console.log('Updated Draft Values:', JSON.stringify(this.draftValues, null, 2));
+    }
+
+
+    handleLookupSelected(event) {
+        console.log('Lookup Selected Event:', JSON.stringify(event.detail));
+
+        const accountId = event.detail.recordId;
+        const accountName = event.detail.recordName;
+
     }
 }
