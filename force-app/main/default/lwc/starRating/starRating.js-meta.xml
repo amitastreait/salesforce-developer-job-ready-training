@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>60.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Star Rating</masterLabel>
+    <description>Reusable star rating component for display and input with keyboard and mouse support.</description>
+    <targets>
+        <target>lightning__RecordPage</target>
+        <target>lightning__AppPage</target>
+        <target>lightning__HomePage</target>
+        <target>lightning__FlowScreen</target>
+        <target>lightning__UtilityBar</target>
+        <target>lightning__Tab</target>
+        
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage,lightning__AppPage,lightning__HomePage,lightning__UtilityBar">
+            <property name="value" type="String" label="Initial Value" description="Initial rating value"/>
+            <property name="max" type="Integer" label="Max Stars" description="Number of stars to display" default="5"/>
+            <property name="readOnly" type="Boolean" label="Read Only" description="If true, component is display-only" default="false"/>
+            <property name="allowHalf" type="Boolean" label="Allow Half Stars" description="Enable half-star selection" default="false"/>
+            <property name="size" type="String" label="Size" datasource="small,medium,large" default="medium"/>
+            <property name="color" type="String" label="Fill Color" description="CSS color for filled stars (e.g. #f5a623)"/>
+            <property name="ariaLabel" type="String" label="ARIA Label" description="Accessible label for the rating control" default="Rating"/>
+            <property name="showValueText" type="Boolean" label="Show Value Text" description="Display X/Y text next to stars" default="false"/>
+        </targetConfig>
+        <targetConfig targets="lightning__FlowScreen">
+            <property name="value" type="String" label="Initial Value"/>
+            <property name="max" type="Integer" label="Max Stars" default="5"/>
+            <property name="readOnly" type="Boolean" label="Read Only" default="false"/>
+            <property name="allowHalf" type="Boolean" label="Allow Half Stars" default="false"/>
+            <property name="size" type="String" label="Size" datasource="small,medium,large" default="medium"/>
+            <property name="color" type="String" label="Fill Color"/>
+            <property name="ariaLabel" type="String" label="ARIA Label" default="Rating"/>
+            <property name="showValueText" type="Boolean" label="Show Value Text" default="false"/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

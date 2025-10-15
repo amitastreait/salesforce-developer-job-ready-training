@@ -1,0 +1,14 @@
+<template>
+    <lightning-formatted-number lwc:if={typeAttributes.currencyCode} format-style="currency"
+        currency-code={typeAttributes.currencyCode}
+        value={value}>
+    </lightning-formatted-number>
+    <lightning-formatted-number lwc:elseif={typeAttributes.percent}
+        format-style="percent"
+        value={value}>
+    </lightning-formatted-number>
+    <lightning-formatted-number lwc:else
+        format-style="decimal"
+        value={value}>
+    </lightning-formatted-number>
+</template>

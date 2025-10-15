@@ -1,0 +1,32 @@
+<template>
+    <lightning-card title="Custom Table Demo" icon-name="custom:custom63">
+        <div class="slds-m-around_medium">
+            <div class="slds-text-body_regular slds-m-bottom_medium">
+                This demo showcases all custom column types available in the Custom Table component:
+                <ul class="slds-list_dotted slds-m-top_small">
+                    <li>Custom Picture - Displays profile pictures</li>
+                    <li>Custom Link - Clickable name links</li>
+                    <li>Picklist - Editable dropdown for status</li>
+                    <li>Toggle - Active/Inactive toggle switch</li>
+                    <li>Custom Number - Currency and percentage fields with inline editing</li>
+                    <li>Lookup - Lightning Record Picker for Account selection with inline editing</li>
+                </ul>
+            </div>
+
+            <c-custom-table
+                key-field="Id"
+                data={data}
+                columns={columns}
+                hide-checkbox-column
+                draft-values={draftValues}
+                onsave={handleSave}
+                onrowaction={handleRowAction}
+                oncellchange={handleCellChange}
+                ontoggelselect={handleToggleChange}
+                onlookupchange={handleLookupChange}
+                lwc:ref="datatable"
+            >
+            </c-custom-table>
+        </div>
+    </lightning-card>
+</template>

@@ -1,0 +1,32 @@
+<template>
+    <!--
+        Edit mode: Show lightning-record-picker for inline editing
+
+        Using c-datatable-lookup wrapper component to properly integrate
+        lightning-record-picker with datatable's inline editing interface.
+
+        How it works:
+        1. User clicks to edit the cell
+        2. c-datatable-lookup wraps lightning-record-picker
+        3. User searches and selects a record
+        4. Wrapper implements data-inputable interface methods
+        5. Record ID is captured and change event is dispatched
+        6. cellchange event fires with draftValues containing the new ID
+        7. handleCellChange processes the change
+        8. On save, handleSave should fetch the record name for display
+    -->
+    <div class="slds-p-around_x-small">
+        <c-datatable-lookup
+            label={typeAttributes.label}
+            placeholder={typeAttributes.placeholder}
+            object-api-name={typeAttributes.objectApiName}
+            value={editedValue}
+            filter={typeAttributes.filter}
+            display-info={typeAttributes.displayInfo}
+            matching-info={typeAttributes.matchingInfo}
+            context={typeAttributes.context}
+            data-inputable="true"
+        >
+        </c-datatable-lookup>
+    </div>
+</template>

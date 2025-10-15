@@ -1,0 +1,42 @@
+<template>
+    <div
+        class={sizeClass}
+        role="slider"
+        tabindex={tabIndex}
+        aria-label={ariaLabelComputed}
+        aria-valuemin="0"
+        aria-valuemax={max}
+        aria-valuenow={displayValue}
+        aria-readonly={readOnly}
+        onkeydown={handleKeydown}
+        onblur={handleBlur}
+    >
+        <template for:each={stars} for:item="star">
+            <button
+                key={star.index}
+                class={star.className}
+                type="button"
+                data-index={star.index}
+                onmousemove={handleMouseMove}
+                onmouseleave={handleMouseLeave}
+                onclick={handleClick}
+                disabled={readOnly}
+                aria-label={star.aria}
+                title={star.title}
+            >
+                <span class="sr-only">{star.aria}</span>
+                <svg class="star-outline" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path>
+                </svg>
+                <div class="star-fill" style={star.fillStyle} aria-hidden="true">
+                    <svg viewBox="0 0 24 24" preserveAspectRatio="none">
+                        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path>
+                    </svg>
+                </div>
+            </button>
+        </template>
+        <template if:true={showValueText}>
+            <span class="value-text">{displayValue}/{max}</span>
+        </template>
+    </div>
+</template>

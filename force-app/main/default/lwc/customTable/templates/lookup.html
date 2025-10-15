@@ -1,0 +1,12 @@
+<template>
+    <!-- Display mode: Show the selected record name as a link -->
+    <template lwc:if={value}>
+        <a onclick={handleNavigate} class="slds-truncate" data-recordid={value} style="cursor: pointer;">
+            {typeAttributes.displayValue}
+        </a>
+    </template>
+    <!-- If no value, show placeholder -->
+    <template lwc:else>
+        <span class="slds-text-color_weak">{typeAttributes.placeholder}</span>
+    </template>
+</template>

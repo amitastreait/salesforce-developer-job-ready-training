@@ -1,0 +1,224 @@
+/* Root container spacing */
+:host {
+  display: block;
+  padding: 0.5rem;
+  background: linear-gradient(135deg, #f6f9fc 0%, #f0f5ff 100%);
+  --brand-1: #0168fa;
+  --brand-2: #00b3ff;
+  --accent-1: #22d1ee;
+  --ok: #2e8540;
+  --warn: #ffb75d;
+  --danger: #e24d4d;
+}
+
+/* Card enhancements */
+lightning-card {
+  --slds-c-card-radius-border: 0.875rem;
+  --slds-c-card-shadow: 0 12px 28px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04);
+  --slds-c-card-color-background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: saturate(140%) blur(6px);
+  -webkit-backdrop-filter: saturate(140%) blur(6px);
+  border: 1px solid rgba(8, 92, 192, 0.06);
+  position: relative;
+  overflow: hidden;
+}
+/* subtle animated gradient shimmer on header edge */
+lightning-card::before {
+  content: "";
+  position: absolute;
+  inset: -30% -60% auto -60%;
+  height: 160px;
+  background: radial-gradient(1200px 120px at 10% 50%, rgba(255,255,255,0.22), transparent 60%);
+  pointer-events: none;
+  animation: shimmer 6s ease-in-out infinite;
+  transform: rotate(2deg);
+}
+@keyframes shimmer {
+  0% { transform: translateX(-10%) rotate(2deg); opacity: .7; }
+  50% { transform: translateX(10%) rotate(2deg); opacity: .4; }
+  100% { transform: translateX(-10%) rotate(2deg); opacity: .7; }
+}
+
+/* Card header gradient and typography */
+lightning-card .slds-card__header {
+  background: linear-gradient(120deg, var(--brand-1) 0%, var(--brand-2) 100%);
+  border-top-left-radius: 0.875rem;
+  border-top-right-radius: 0.875rem;
+  padding: 0.75rem 1rem;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+/* thin accent bar under header */
+lightning-card .slds-card__header::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent-1), rgba(255,255,255,0.6), var(--brand-2));
+  opacity: .85;
+}
+lightning-card .slds-card__header .slds-media__body .slds-card__header-title {
+  color: #fff;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  text-shadow: 0 1px 1px rgba(0,0,0,0.2);
+}
+lightning-card .slds-icon_container,
+lightning-card .slds-icon {
+  filter: drop-shadow(0 1px 1px rgba(0,0,0,0.15));
+}
+
+/* Card body spacing */
+.slds-p-horizontal_small {
+  padding: 1rem !important;
+}
+
+/* Header action button styling */
+lightning-button[slot="actions"] {
+  --slds-c-button-brand-color-background: rgba(255,255,255,0.18);
+  --slds-c-button-brand-text-color: #ffffff;
+  --slds-c-button-brand-color-border: rgba(255,255,255,0.6);
+  --slds-c-button-radius-border: 999px;
+}
+lightning-button[slot="actions"] .slds-button {
+  backdrop-filter: saturate(130%) blur(2px);
+  -webkit-backdrop-filter: saturate(130%) blur(2px);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.2);
+  transition: transform 120ms ease, box-shadow 120ms ease, background 120ms ease;
+  position: relative;
+  overflow: hidden;
+}
+lightning-button[slot="actions"] .slds-button::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(120% 200% at -20% 50%, rgba(255,255,255,0.25), transparent 60%);
+  transition: opacity 160ms ease;
+  opacity: .6;
+  pointer-events: none;
+}
+lightning-button[slot="actions"] .slds-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.16), inset 0 1px 0 rgba(255,255,255,0.25);
+}
+lightning-button[slot="actions"] .slds-button:active {
+  transform: translateY(0);
+}
+/* subtle pulse on focus for accessibility */
+lightning-button[slot="actions"] .slds-button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(255,255,255,0.7), 0 0 0 4px rgba(1,104,250,0.35);
+}
+
+/* Datatable: zebra striping and row polish */
+lightning-datatable {
+  --slds-c-table-cell-spacing-block-start: 0.625rem;
+  --slds-c-table-cell-spacing-block-end: 0.625rem;
+  --slds-c-table-row-spacing-inline-start: 0.75rem;
+  --slds-c-table-row-spacing-inline-end: 0.75rem;
+  --slds-c-table-color-background: #ffffff;
+  --slds-c-table-color-background-hover: #f6faff;
+  --slds-c-table-color-border: rgba(1,104,250,0.08);
+  border-radius: 0.75rem;
+  overflow: hidden;
+  border: 1px solid rgba(1,104,250,0.08);
+  box-shadow: 0 8px 22px rgba(0,0,0,0.06);
+}
+/* compact density option */
+@media (min-width: 640px) {
+  lightning-datatable .slds-table td, 
+  lightning-datatable .slds-table th {
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+  }
+}
+
+/* Zebra rows */
+lightning-datatable .slds-table tbody tr:nth-child(odd) > td {
+  background-color: #fafcff;
+}
+lightning-datatable .slds-table tbody tr:hover > td {
+  background-color: var(--slds-c-table-color-background-hover);
+}
+
+/* Selected row accent */
+lightning-datatable .slds-table tbody tr.slds-is-selected > td,
+lightning-datatable .slds-table tbody tr.slds-has-focus > td {
+  background-image: linear-gradient(90deg, rgba(1,104,250,0.08), rgba(0,179,255,0.08));
+  box-shadow: inset 3px 0 0 var(--brand-1);
+}
+/* Row hover lift */
+lightning-datatable .slds-table tbody tr:hover {
+  transform: translateZ(0);
+}
+
+/* Header cells */
+lightning-datatable .slds-table thead th {
+  background: linear-gradient(180deg, #f6f9ff 0%, #eef5ff 100%);
+  color: #114579;
+  font-weight: 700;
+  letter-spacing: 0.15px;
+  border-bottom: 1px solid rgba(1,104,250,0.12);
+  position: relative;
+  z-index: 0;
+}
+/* Sort indicator accent underline (visual hint) */
+lightning-datatable .slds-table thead th[aria-sort="ascending"]::after,
+lightning-datatable .slds-table thead th[aria-sort="descending"]::after {
+  content: "";
+  position: absolute;
+  left: .5rem;
+  right: .5rem;
+  bottom: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--brand-1), var(--brand-2));
+  opacity: .8;
+}
+
+/* Links in table cells (Account) */
+lightning-datatable a {
+  color: var(--brand-1);
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px dashed transparent;
+  transition: color .12s ease, border-color .12s ease;
+}
+lightning-datatable a:hover {
+  text-decoration: none;
+  color: var(--brand-2);
+  border-color: var(--brand-2);
+}
+
+/* Spinner polish */
+lightning-spinner {
+  --slds-c-spinner-color-foreground: var(--brand-1);
+  --slds-c-spinner-color-background: rgba(1, 104, 250, 0.15);
+  --slds-c-spinner-sizing-width: 48px;
+  --slds-c-spinner-sizing-height: 48px;
+}
+
+/* Footer */
+[slot="footer"] {
+  background: #ffffff;
+  border-top: 1px solid rgba(1,104,250,0.08);
+  padding: 0.75rem 1rem;
+  color: #5b6b7a;
+}
+
+/* Micro-interactions */
+@media (prefers-reduced-motion: no-preference) {
+  lightning-card {
+    animation: cardIn 260ms ease-out;
+  }
+  @keyframes cardIn {
+    from { transform: translateY(8px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  /* soft focus ring animation on interactive cells */
+  lightning-datatable .slds-cell-edit:focus-within {
+    box-shadow: 0 0 0 2px rgba(1,104,250,0.2) inset, 0 0 0 3px rgba(1,104,250,0.12) inset;
+    transition: box-shadow .16s ease;
+  }
+}
