@@ -84,6 +84,7 @@ const columns = [
             label: 'Account',
             placeholder: 'Search Accounts...',
             displayValue: { fieldName: 'accountName' },
+            nameField: 'Name',
             filter: null,
             displayInfo: {
                 primaryField: 'Name',
@@ -198,10 +199,13 @@ export default class CustomTableDemo extends LightningElement {
             if (draft) {
                 const updatedRow = { ...row, ...draft };
 
-                // Handle lookup field: Use cached account name if available
+                // Handle lookup field: Preserve the accountName that was set during selection
                 if (draft.accountId && draft.accountId !== row.accountId) {
-                    console.log('Account lookup changed for row:', row.Id, 'New Account ID:', draft.accountId);
-                    updatedRow.accountName = `Account ${draft.accountId}`;
+                    // console.log('Account lookup changed for row:', row.Id, 'New Account ID:', draft.accountId);
+                    // If accountName is in draft (set by handleLookupSelected), use it
+                    if (draft.accountName) {
+                        updatedRow.accountName = draft.accountName;
+                    }
                 }
 
                 return updatedRow;
@@ -239,7 +243,7 @@ export default class CustomTableDemo extends LightningElement {
             Object.keys(draft).forEach(fieldName => {
                 if (fieldName !== 'Id') {
                     const value = draft[fieldName];
-                    console.log('Cell Changed:', fieldName, recordId, value);
+                    // console.log('Cell Changed:', fieldName, recordId, value);
                     this.updateDraftValues(recordId, fieldName, value);
 
                     // Special handling for accountId lookup field
@@ -258,24 +262,6 @@ export default class CustomTableDemo extends LightningElement {
         const fieldName = 'isActive';
         if (!recordId || value === undefined) {
             console.error('Invalid toggle event. Missing required fields:', { recordId, value });
-            return;
-        }
-        this.updateDraftValues(recordId, fieldName, value);
-        this.data = this.data.map(row => {
-            if (row.Id === recordId) {
-                return { ...row, [fieldName]: value };
-            }
-            return row;
-        });
-    }
-
-    handleLookupChange(event) {
-        console.log('Lookup Event:', JSON.stringify(event.detail));
-        const recordId = event.detail?.context;
-        const value = event.detail?.value;
-        const fieldName = 'accountId';
-        if (!recordId || value === undefined) {
-            console.error('Invalid lookup event. Missing required fields:', { recordId, value });
             return;
         }
         this.updateDraftValues(recordId, fieldName, value);
@@ -310,6 +296,56 @@ export default class CustomTableDemo extends LightningElement {
 
         const accountId = event.detail.recordId;
         const accountName = event.detail.recordName;
+        const recordId = event.detail.context;
 
+        if (!recordId) {
+            console.error('Invalid lookup selected event. Missing context (row ID)');
+            return;
+        }
+
+        if (!accountId) {
+            console.log('Record cleared');
+            // Handle record being cleared
+            this.data = this.data.map(row => {
+                if (row.Id === recordId) {
+                    return {
+                        ...row,
+                        accountId: null,
+                        accountName: null
+                    };
+                }
+                return row;
+            });
+            this.updateDraftValues(recordId, 'accountId', null);
+            return;
+        }
+
+        // console.log('Selected account - ID:', accountId, 'Name:', accountName);
+
+        // Update the data to show the selected account name immediately
+        this.data = this.data.map(row => {
+            if (row.Id === recordId) {
+                return {
+                    ...row,
+                    accountId: accountId,
+                    accountName: accountName || accountId
+                };
+            }
+            return row;
+        });
+
+        // Update draft values for the save operation
+        this.updateDraftValues(recordId, 'accountId', accountId);
+
+        // Store the account name in draft values so it's preserved during save
+        const existingIndex = this.draftValues.findIndex(item => item.Id === recordId);
+        if (existingIndex >= 0) {
+            this.draftValues[existingIndex] = {
+                ...this.draftValues[existingIndex],
+                accountName: accountName || accountId
+            };
+        }
+
+        // console.log('Updated data with account:', accountId, accountName);
     }
 }

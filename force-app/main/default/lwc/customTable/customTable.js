@@ -54,7 +54,9 @@ export default class CustomTable extends LightningDatatable {
                 "displayValue",
                 "filter",
                 "displayInfo",
-                "matchingInfo", 'context'
+                "matchingInfo",
+                "nameField",
+                "context"
             ],
         },
     };
