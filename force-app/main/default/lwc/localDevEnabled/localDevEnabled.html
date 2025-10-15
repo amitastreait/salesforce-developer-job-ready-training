@@ -1,0 +1,20 @@
+<template>
+    <lightning-card  variant="Narrow" title="Local Dev" icon-name="standard:contact">
+        <lightning-button-icon icon-name="utility:settings"  disabled alternative-text="Settings" 
+            title="Settings" slot="actions">
+        </lightning-button-icon>
+
+        <div class="container slds-m-around_large">
+            <lightning-combobox
+                name="progress"
+                label="Status"
+                placeholder="Select Progress"
+                options={options}>
+            </lightning-combobox>
+        </div>
+        
+        <div slot="footer">
+            <lightning-badge label="Narrow"></lightning-badge>
+        </div>
+    </lightning-card>
+</template>

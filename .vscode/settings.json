@@ -4,7 +4,7 @@
     "**/bower_components": true,
     "**/.sfdx": true
   },
-  "salesforce.einsteinForDevelopers.enable": false,
+  "salesforce.einsteinForDevelopers.enable": true,
   "explorer.fileNesting.enabled": true,
   "explorer.fileNesting.patterns": {
     "*.cls": "${capture}.cls-meta.xml",

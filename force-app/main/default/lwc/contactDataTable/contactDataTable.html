@@ -1,4 +1,5 @@
 <template>
+    <lightning-spinner alternative-text="Loading" size="small" variant="brand" lwc:if={isLoading}></lightning-spinner>
     <lightning-card variant="Narrow" title="Contact Table" icon-name="standard:contact">
         <lightning-button slot="actions" variant="brand" label="Proceed Selected" title="Proceed Selected" 
             onclick={handleProSelected}>
@@ -10,7 +11,19 @@
                 columns={columns}
                 lwc:ref="condatatable"
                 show-row-number-column
-                max-row-selection="2"
+                max-row-selection="5"
+
+                onrowaction={handleRowAction}
+                onrowselection={handleRowSelection}
+
+                draft-values={draftValues}
+                onsave={handleSave}
+                onsaveerror={handleSaveError}
+                oncancel={handleCancel}
+
+                sorted-by={sortByField}
+                sorted-direction={sortDirection}
+                onsort={handleSort}
             >
             </lightning-datatable>
         </div>
