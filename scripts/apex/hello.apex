@@ -1,10 +1,18 @@
-// Use .apex files to store anonymous Apex.
-// You can execute anonymous Apex in VS Code by selecting the
-//     apex text and running the command:
-//     SFDX: Execute Anonymous Apex with Currently Selected Text
-// You can also execute the entire file by running the command:
-//     SFDX: Execute Anonymous Apex with Editor Contents
+// CursorExample.pagination(6, 10);
 
-string tempvar = 'Enter_your_name_here';
-System.debug('Hello World!');
-System.debug('My name is ' + tempvar);
+Account myAcc = new Account(Name='123');
+FormulaEval.FormulaInstance ff = Formula.builder()
+    .withType(Schema.Account.class)
+    .withReturnType(FormulaEval.FormulaReturnType.STRING)
+    .withFormula('{!name} ({!website}) - {!TEXT(Industry)}')
+    .parseAsTemplate(true)
+    .build();
+
+//Use the list of field names returned by the getReferenced method to generate dynamic soql
+String fieldNameList = String.join(ff.getReferencedFields(),',');
+System.debug(fieldNameList);
+String queryStr = 'select ' + fieldNameList + ' from Account LIMIT 1'; //select name, website, Industry from Account
+Account s = Database.query(queryStr);
+system.debug(ff.evaluate(s));
+
+FormulaEvaluator.evaluate(new Account(Site='Test'));

@@ -3,6 +3,11 @@
         <div class="slds-m-around_small">
             {labels.WELCOME_MESSAGE}
         </div>
+        <lightning-button-group  class="slds-m-around_small">
+            <lightning-button label="Refresh"></lightning-button>
+            <lightning-button label="Edit"></lightning-button>
+            <lightning-button label="Save"></lightning-button>
+        </lightning-button-group>
         <div class="slds-m-around_small">
             <lightning-button variant="brand" label="Show Alert" title="Show Alert" onclick={handleAlert}></lightning-button>
             <lightning-button variant="brand" label="Show Confirm" title="Show Confirm" onclick={handleConfirm}></lightning-button>

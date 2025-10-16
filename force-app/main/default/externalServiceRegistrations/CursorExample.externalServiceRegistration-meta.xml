@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ExternalServiceRegistration xmlns="http://soap.sforce.com/2006/04/metadata">
+  <description>Collection of requested @AuraEnabled Apex method APIs</description>
+  <label>CursorExample</label>
+  <schema>openapi: 3.0.1
+info:
+  title: "@AuraEnabled Apex method APIs"
+  version: 1.0.0
+  description: Collection of requested @AuraEnabled Apex method APIs
+  x-betaInfo: OpenAPI documents generated from Apex classes using @AuraEnabled
+    annotations are in beta.
+servers:
+  - url: /services/aura-controllers/custom
+paths:
+  /CursorExample/pagination:
+    description: Default description for the path.
+    post:
+      description: Default description for the operation.
+      operationId: pagination
+      requestBody:
+        description: Default description for the requestBody.
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                position:
+                  type: integer
+                  format: int32
+                lastIndex:
+                  type: integer
+                  format: int32
+      responses:
+        "200":
+          description: Status Code 200
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+components:
+  schemas: {}
+</schema>
+  <schemaType>OpenApi3</schemaType>
+  <schemaUploadFileExtension>yaml</schemaUploadFileExtension>
+  <schemaUploadFileName>cursorexample_openapi</schemaUploadFileName>
+  <status>Complete</status>
+  <systemVersion>3</systemVersion>
+  <operations>
+    <name>pagination</name>
+    <active>true</active>
+  </operations>
+  <registrationProvider>CursorExample</registrationProvider>
+  <registrationProviderType>AuraEnabled</registrationProviderType>
+  <namedCredential>null</namedCredential>
+</ExternalServiceRegistration>
