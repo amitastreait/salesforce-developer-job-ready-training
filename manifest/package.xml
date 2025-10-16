@@ -40,6 +40,7 @@
 		<members>Access_Request__c</members>
 		<members>Agent_Specialisation__c</members>
 		<members>Agent__c</members>
+		<members>Amenities__c</members>
 		<members>AnnualRevenue__mdt</members>
 		<members>Application_Log__c</members>
 		<members>Appointment__c</members>
@@ -48,6 +49,7 @@
 		<members>Course__c</members>
 		<members>Employee__c</members>
 		<members>EquipmentRequest__c</members>
+		<members>Feature__c</members>
 		<members>Invoice__c</members>
 		<members>Loan_Application__c</members>
 		<members>LocationSite__c</members>
@@ -56,6 +58,10 @@
 		<members>OrgSettings__c</members>
 		<members>Places__c</members>
 		<members>PropertyDocument__c</members>
+		<members>PropertyInquiry__c</members>
+		<members>Property_Amenities__c</members>
+		<members>Property_Feature__c</members>
+		<members>Property_Image__c</members>
 		<members>Property_Listing__c</members>
 		<members>Property__c</members>
 		<members>Purchase_Order_Line__c</members>
@@ -64,9 +70,13 @@
 		<members>Scheduled_Course__c</members>
 		<members>Speaker_Submission__c</members>
 		<members>Specialisation__c</members>
+		<members>StripePaymentTransaction__c</members>
+		<members>Student__c</members>
 		<members>System_Log__c</members>
 		<members>TAXRATES__c</members>
 		<members>Tax_Rate__mdt</members>
+		<members>Territory__c</members>
+		<members>University__c</members>
 		<members>sObjectTriggerAction__mdt</members>
 		<members>sObjectTriggerSetting__mdt</members>
 		<name>CustomObject</name>
@@ -75,12 +85,14 @@
 		<members>Access_Request__c</members>
 		<members>Agent_Specialisation__c</members>
 		<members>Agent__c</members>
+		<members>Amenities__c</members>
 		<members>Application_Log__c</members>
 		<members>Appointment__c</members>
 		<members>Commission__c</members>
 		<members>Course__c</members>
 		<members>Employee__c</members>
 		<members>EquipmentRequest__c</members>
+		<members>Feature__c</members>
 		<members>Loan_Application__c</members>
 		<members>LocationSite__c</members>
 		<members>Offer__c</members>
@@ -91,6 +103,7 @@
 		<members>Scheduled_Course__c</members>
 		<members>Speaker_Submission__c</members>
 		<members>Specialisation__c</members>
+		<members>Student__c</members>
 		<members>System_Log__c</members>
 		<members>Territory__c</members>
 		<name>CustomTab</name>
@@ -109,9 +122,13 @@
 	</types>
 	<types>
 		<members>Agent_Record_Page</members>
+		<members>Amenities_Record_Page</members>
 		<members>Appointment_Record_Page</members>
 		<members>Commission_Record_Page</members>
+		<members>Offer_Record_Page</members>
 		<members>Property_Document_Record_Page</members>
+		<members>Property_Explorer</members>
+		<members>Property_Image_Record_Page</members>
 		<members>Property_Listing_Record_Page</members>
 		<members>Property_Management</members>
 		<members>Property_Management_UtilityBar</members>
@@ -128,6 +145,7 @@
 		<members>Access_Request__c-Access Request Layout</members>
 		<members>Agent_Specialisation__c-Agent Specialisation Layout</members>
 		<members>Agent__c-Agent Layout</members>
+		<members>Amenities__c-Amenities Layout</members>
 		<members>Application_Log__c-Application Log Layout</members>
 		<members>Appointment__c-Appointment Layout</members>
 		<members>Batch_Chain_Configuration__mdt-Batch Chain Configuration Layout</members>
@@ -135,12 +153,17 @@
 		<members>Course__c-Course Layout</members>
 		<members>Employee__c-Employee Layout</members>
 		<members>EquipmentRequest__c-Equipment Request Layout</members>
+		<members>Feature__c-Feature Layout</members>
 		<members>Invoice__c-Invoice Layout</members>
 		<members>Loan_Application__c-Loan Application Layout</members>
 		<members>LocationSite__c-Location Site Layout</members>
 		<members>Offer__c-Offer Layout</members>
 		<members>Places__c-Places Layout</members>
 		<members>PropertyDocument__c-Property Document Layout</members>
+		<members>PropertyInquiry__c-Property Inquiry Layout</members>
+		<members>Property_Amenities__c-Property%C2%A0Amenities Layout</members>
+		<members>Property_Feature__c-Property Feature Layout</members>
+		<members>Property_Image__c-Property Image Layout</members>
 		<members>Property_Listing__c-Property Listing Layout</members>
 		<members>Property__c-Property Admin Layout</members>
 		<members>Property__c-Property Layout</members>
@@ -151,6 +174,8 @@
 		<members>Speaker_Submission__c-Custom Compact Layout</members>
 		<members>Speaker_Submission__c-Speaker Submission Layout</members>
 		<members>Specialisation__c-Specialisation Layout</members>
+		<members>StripePaymentTransaction__c-Stripe Payment Transaction Layout</members>
+		<members>Student__c-Student Layout</members>
 		<members>System_Log__c-System Log Layout</members>
 		<members>Territory__c-Territory Layout</members>
 		<members>University__c-University Layout</members>
@@ -164,5 +189,5 @@
 		<members>*</members>
 		<name>StaticResource</name>
 	</types>
-	<version>64.0</version>
+	<version>65.0</version>
 </Package>

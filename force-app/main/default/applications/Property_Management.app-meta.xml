@@ -131,6 +131,7 @@
     <label>Property Management</label>
     <navType>Console</navType>
     <tabs>standard-home</tabs>
+    <tabs>Bulk_Contact_Creator</tabs>
     <tabs>Property_Explorer</tabs>
     <tabs>standard-Lead</tabs>
     <tabs>standard-Account</tabs>
@@ -149,11 +150,16 @@
     <tabs>Property_Listing__c</tabs>
     <tabs>System_Log__c</tabs>
     <tabs>Application_Log__c</tabs>
+    <tabs>Amenities__c</tabs>
+    <tabs>Feature__c</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>Property_Management_UtilityBar</utilityBar>
     <workspaceConfig>
         <mappings>
             <tab>Agent__c</tab>
+        </mappings>
+        <mappings>
+            <tab>Amenities__c</tab>
         </mappings>
         <mappings>
             <tab>Application_Log__c</tab>
@@ -163,8 +169,14 @@
             <tab>Appointment__c</tab>
         </mappings>
         <mappings>
+            <tab>Bulk_Contact_Creator</tab>
+        </mappings>
+        <mappings>
             <fieldName>Agent__c</fieldName>
             <tab>Commission__c</tab>
+        </mappings>
+        <mappings>
+            <tab>Feature__c</tab>
         </mappings>
         <mappings>
             <tab>LocationSite__c</tab>

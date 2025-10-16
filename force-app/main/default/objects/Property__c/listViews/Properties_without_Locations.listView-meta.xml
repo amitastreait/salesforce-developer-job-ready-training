@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Properties_without_Locations</fullName>
+    <columns>NAME</columns>
+    <columns>Property_Type__c</columns>
+    <columns>Square_footage__c</columns>
+    <columns>Lot_size__c</columns>
+    <columns>Built_Year__c</columns>
+    <columns>Location_Site__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Location_Site__c</field>
+        <operation>equals</operation>
+    </filters>
+    <label>Properties without Locations</label>
+</ListView>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>External_Student_Id__c</fullName>
+    <caseSensitive>false</caseSensitive>
     <externalId>true</externalId>
     <label>External Student Id</label>
     <length>50</length>
@@ -9,5 +10,4 @@
     <trackTrending>false</trackTrending>
     <type>Text</type>
     <unique>true</unique>
-    <caseSensitive>false</caseSensitive>
 </CustomField>

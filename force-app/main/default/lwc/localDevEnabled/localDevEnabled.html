@@ -3,7 +3,7 @@
         <lightning-button-icon icon-name="utility:settings"  disabled alternative-text="Settings" 
             title="Settings" slot="actions">
         </lightning-button-icon>
-
+        
         <div class="container slds-m-around_large">
             <lightning-combobox
                 name="progress"
@@ -11,6 +11,19 @@
                 placeholder="Select Progress"
                 options={options}>
             </lightning-combobox>
+            <lightning-accordion 
+                active-section-name="A">
+                <lightning-accordion-section name="A" label="Accordion Title1">
+                  
+                </lightning-accordion-section>
+                <lightning-accordion-section name="B" label="Accordion Title2">
+            
+                </lightning-accordion-section>
+            
+                <lightning-accordion-section name="C" label="Accordion Title3">
+            
+                </lightning-accordion-section>
+            </lightning-accordion>
         </div>
         
         <div slot="footer">

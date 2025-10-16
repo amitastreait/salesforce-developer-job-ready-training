@@ -299,7 +299,35 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Type__c</fields>
+        <fields>Image_Url__c</fields>
         <relatedList>Property_Image__c.Property__c</relatedList>
+        <sortField>Type__c</sortField>
+        <sortOrder>Asc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Buyer__c</fields>
+        <fields>Inquiry_Date__c</fields>
+        <fields>Inquiry_Type__c</fields>
+        <fields>Status__c</fields>
+        <fields>Priority__c</fields>
+        <relatedList>PropertyInquiry__c.Property__c</relatedList>
+        <sortField>Inquiry_Date__c</sortField>
+        <sortOrder>Desc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Amenities__c</fields>
+        <fields>Active__c</fields>
+        <fields>Description__c</fields>
+        <relatedList>Property_Amenities__c.Property__c</relatedList>
+        <sortField>NAME</sortField>
+        <sortOrder>Desc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>Property_Feature__c.Property__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>

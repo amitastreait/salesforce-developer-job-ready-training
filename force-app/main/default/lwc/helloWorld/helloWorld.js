@@ -1,5 +1,7 @@
 import { LightningElement, api, wire, track } from 'lwc';
 
+import { ShowToastEvent } from 'lightning/platformShowToastEvent'
+
 export default class HelloWorld extends LightningElement {
 
     showTom = false;
@@ -26,6 +28,15 @@ export default class HelloWorld extends LightningElement {
     website = 'www.PantherSchools.com';
     age = 90;
     account; // undefined
+
+    connectedCallback(){
+        this.dispatchEvent(new ShowToastEvent({
+            title: "This is the sample toast notification",
+            message: "This is the sample toast notification",
+            variant: "success",
+            mode: "dismissable"
+        }));
+    }
 
     @api 
     accountName = 'Salesforce.com';

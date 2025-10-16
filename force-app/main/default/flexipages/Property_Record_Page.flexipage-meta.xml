@@ -1166,6 +1166,26 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentName>propertyCalculator</componentName>
+                <identifier>c_propertyCalculator</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-54507df9-a0ee-42f7-8b7c-79a42d42f3ef</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentName>propertyDetailsPage</componentName>
+                <identifier>c_propertyDetailsPage</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-iqk8ok7jcs</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
                 <componentInstanceProperties>
                     <name>active</name>
                     <value>false</value>
@@ -1226,6 +1246,34 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
                 <identifier>flexipage_tab6</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-54507df9-a0ee-42f7-8b7c-79a42d42f3ef</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Property Loan Calculator</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+                <identifier>flexipage_tab7</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-iqk8ok7jcs</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>All Details</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+                <identifier>flexipage_tab8</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-0ede46c5-26db-4435-8f9e-3454b6067e99</name>

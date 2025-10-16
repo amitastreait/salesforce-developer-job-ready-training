@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Active_Students</fullName>
-    <label>Active Students</label>
-    <filterScope>Everything</filterScope>
     <columns>NAME</columns>
     <columns>Program__c</columns>
     <columns>Status__c</columns>
     <columns>Enrollment_Date__c</columns>
+    <filterScope>Everything</filterScope>
     <filters>
         <field>Status__c</field>
         <operation>equals</operation>
@@ -17,4 +16,5 @@
         <operation>equals</operation>
         <value>In Progress</value>
     </filters>
+    <label>Active Students</label>
 </ListView>
