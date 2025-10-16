@@ -131,8 +131,8 @@ export default class CustomTableDemo extends LightningElement {
                 isActive: true,
                 revenue: 150000,
                 discount: 10,
-                accountId: null,
-                accountName: null
+                accountId: "001gL00000RGjzMQAT",
+                accountName: "Mr. Jamie Jamison"
             },
             {
                 Id: '002',

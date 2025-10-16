@@ -3,7 +3,7 @@ public with sharing class ContactController {
     // Apex methods that are to be cached must be marked as @AuraEnabled(cacheable=true)
     @AuraEnabled(cacheable=true)
     public static List<Contact> getAllContacts(){
-        List<Contact> contactList = [SELECT Id, Name, Email, Phone, Title, Account.Name, CreatedDate, Account.AnnualRevenue, Account.CurrencyIsoCode FROM Contact WHERE Email <> null LIMIT 10];
+        List<Contact> contactList = [SELECT Id, Name, Email, Phone, Title, Account.Name, LeadSource, CreatedDate, Account.AnnualRevenue, Account.CurrencyIsoCode FROM Contact WHERE Email <> null LIMIT 10];
         return contactList;
     }
 

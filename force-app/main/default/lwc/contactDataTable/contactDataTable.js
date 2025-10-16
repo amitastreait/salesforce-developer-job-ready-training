@@ -2,9 +2,14 @@ import { LightningElement, track, wire } from 'lwc';
 import getAllContacts from '@salesforce/apex/ContactController.getAllContacts';
 
 import { updateRecord } from 'lightning/uiRecordApi';
-import { ShowToastEvent } from 'lightning/platformShowToastEvent'; 
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 import { refreshApex } from "@salesforce/apex";
+
+// Import for picklist values
+import { getObjectInfo, getPicklistValues } from 'lightning/uiObjectInfoApi';
+import CONTACT_OBJECT from '@salesforce/schema/Contact';
+import LEADSOURCE_FIELD from '@salesforce/schema/Contact.LeadSource';
 
 const actions = [
     { label: 'Show Details', name : 'show_details' },
@@ -21,17 +26,82 @@ export default class ContactDataTable extends LightningElement {
     sortByField;
     sortDirection = 'asc';
 
+    // Properties for picklist values
+    contactObjectInfo;
+    leadSourceOptions = [];
+
+    // Wire to get Contact object info (needed for picklist recordTypeId)
+    @wire(getObjectInfo, { objectApiName: CONTACT_OBJECT })
+    objectInfo({ error, data }) {
+        if (data) {
+            this.contactObjectInfo = data;
+            console.log('Contact Object Info:', data);
+        } else if (error) {
+            console.error('Error fetching object info:', error);
+        }
+    }
+
+    // Wire to get Lead Source picklist values
+    @wire(getPicklistValues, {
+        recordTypeId: '$contactObjectInfo.defaultRecordTypeId',
+        fieldApiName: LEADSOURCE_FIELD
+    })
+    leadSourcePicklist({ error, data }) {
+        if (data) {
+            this.leadSourceOptions = data.values.map(option => ({
+                label: option.label,
+                value: option.value
+            }));
+            console.log('Lead Source Options:', this.leadSourceOptions);
+            this.updateColumnsWithPicklist();
+        } else if (error) {
+            console.error('Error fetching Lead Source picklist:', error);
+        }
+    }
+
     columns = [
         { label: 'Name', fieldName: 'Name', type: 'text', sortable : true },
         { label: 'Email', fieldName: 'Email', type: 'email', editable : true, sortable : true },
         { label: 'Title', fieldName: 'Title', type: 'text',  editable : true, sortable : true },
         { label: 'Phone', fieldName: 'Phone', type: 'phone', editable : true, sortable : true },
-        { label: 'Account Name', fieldName: 'AccountUrl', type: 'url',
+        {
+            label: 'Lead Source',
+            fieldName: 'LeadSource',
+            type: 'picklist',
+            editable: true,
             typeAttributes: {
-                label: {
-                    fieldName: 'AccountName' // Attribute that contains the value which you want to display
+                placeholder: 'Choose Lead Source',
+                options: { fieldName: 'leadSourceOptions' },
+                value: { fieldName: 'LeadSource' },
+                context: { fieldName: 'Id' },
+                variant: 'label-hidden',
+                name: 'LeadSource',
+                label: 'Lead Source'
+            }
+        },
+        {
+            label: 'Account',
+            fieldName: 'AccountId',
+            type: 'lookup',
+            editable: true,
+            typeAttributes: {
+                objectApiName: 'Account',
+                label: 'Account',
+                placeholder: 'Search Accounts...',
+                displayValue: { fieldName: 'AccountName' },
+                nameField: 'Name',
+                filter: null,
+                displayInfo: {
+                    primaryField: 'Name',
+                    additionalFields: ['Type']
                 },
-                target: '_blank'
+                matchingInfo: {
+                    primaryField: { fieldPath: 'Name' },
+                    additionalFields: [
+                        { fieldPath: 'Type' }
+                    ]
+                },
+                context: { fieldName: 'Id' }
             }
         },
         /* { 
@@ -76,6 +146,9 @@ export default class ContactDataTable extends LightningElement {
             console.log(data);
             this.contacts = JSON.parse( JSON.stringify(data) );
             this.contacts.forEach( (item, index, tempArray) => {
+                // Add lead source options to each row for picklist
+                item.leadSourceOptions = this.leadSourceOptions;
+
                 if(item.AccountId){
                     item.AccountName = item.Account.Name;
                     item.AnnualRevenue = item.Account.AnnualRevenue;
@@ -92,6 +165,17 @@ export default class ContactDataTable extends LightningElement {
             // this.contacts = data;
         } else if(error){
             this.errors = error;
+        }
+    }
+
+    // Helper method to update columns when picklist values are loaded
+    updateColumnsWithPicklist() {
+        if (this.contacts && this.contacts.length > 0) {
+            // Update existing contacts with new picklist options
+            this.contacts = this.contacts.map(contact => ({
+                ...contact,
+                leadSourceOptions: this.leadSourceOptions
+            }));
         }
     }
 
@@ -129,13 +213,80 @@ export default class ContactDataTable extends LightningElement {
         console.log(JSON.stringify(selectedRows));
     }
 
+    handleCellChange(event) {
+        console.log('Cell Change Event:', JSON.stringify(event.detail));
+        const draftValues = event.detail.draftValues;
+        if (!draftValues || !Array.isArray(draftValues) || draftValues.length === 0) {
+            console.error('Invalid cellchange event. Missing or empty draftValues array');
+            return;
+        }
+        // Process each draft value from the event
+        draftValues.forEach(draft => {
+            const recordId = draft.Id;
+            Object.keys(draft).forEach(fieldName => {
+                if (fieldName !== 'Id') {
+                    const value = draft[fieldName];
+                    // console.log('Cell Changed:', fieldName, recordId, value);
+                    this.updateDraftValues(recordId, fieldName, value);
+                }
+            });
+        });
+    }
+
+    handleLookupSelected(event) {
+        console.log('Lookup Selected Event:', JSON.stringify(event.detail));
+
+        const accountId = event.detail.recordId;
+        const accountName = event.detail.recordName;
+        const recordId = event.detail.context;
+
+        if (!recordId) {
+            console.error('Invalid lookup selected event. Missing context (row ID)');
+            return;
+        }
+
+        // console.log('Selected account - ID:', accountId, 'Name:', accountName);
+
+        // Update the contacts data to show the selected account name immediately
+        this.contacts = this.contacts.map(row => {
+            if (row.Id === recordId) {
+                return {
+                    ...row,
+                    AccountId: accountId,
+                    AccountName: accountName || accountId
+                };
+            }
+            return row;
+        });
+
+        // Update draft values for the save operation
+        this.updateDraftValues(recordId, 'AccountId', accountId);
+    }
+
+    updateDraftValues(recordId, fieldName, value) {
+        const existingIndex = this.draftValues.findIndex(item => item.Id === recordId);
+
+        if (existingIndex >= 0) {
+            this.draftValues[existingIndex] = {
+                ...this.draftValues[existingIndex],
+                [fieldName]: value
+            };
+        } else {
+            this.draftValues = [
+                ...this.draftValues,
+                { Id: recordId, [fieldName]: value }
+            ];
+        }
+        // console.log('Updated Draft Values:', JSON.stringify(this.draftValues, null, 2));
+    }
+
     handleSave(event){
 
         event.preventDefault();
         this.isLoading = true;
         /** Step1 - get the change values in the Data Table */
         this.draftValues = event.detail.draftValues;
-        console.log(JSON.stringify(this.draftValues));
+        console.log(' Saving Draft Values: \n ', JSON.stringify(this.draftValues));
 
         /** Step2 - Prepare the input for record to update using updateRecord and there could be multiple records */
         let recordInputs = this.draftValues.map((item, index, tempArray)=>{
@@ -151,6 +302,12 @@ export default class ContactDataTable extends LightningElement {
             }
             if(item.Phone){
                 fields['Phone'] = item.Phone;
+            }
+            if(item.LeadSource){
+                fields['LeadSource'] = item.LeadSource;
+            }
+            if(item.AccountId){
+                fields['AccountId'] = item.AccountId;
             }
             // const fields = { ...item }
             return { fields }
@@ -237,6 +394,7 @@ export default class ContactDataTable extends LightningElement {
         event.preventDefault();
         this.draftValues = [];
         console.log('Cancel button clicked');
+        refreshApex(this.wiredContacts);
     }
 
     handleSort(event){

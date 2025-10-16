@@ -1,0 +1,21 @@
+<template>
+    <lightning-card variant="Narrow" title="Lightning Alert" icon-name="custom:custom35">
+        <div class="slds-m-around_small">
+            {labels.WELCOME_MESSAGE}
+        </div>
+        <div class="slds-m-around_small">
+            <lightning-button variant="brand" label="Show Alert" title="Show Alert" onclick={handleAlert}></lightning-button>
+            <lightning-button variant="brand" label="Show Confirm" title="Show Confirm" onclick={handleConfirm}></lightning-button>
+            <lightning-button variant="brand" label="Show Prompt" title="Show Prompt" onclick={handlePromptClick}></lightning-button>
+        </div>
+        <div class="slds-m-around_small">
+            <lightning-button variant="brand" label="Next Step" title="Next Step" onclick={handleNext}></lightning-button>
+            <lightning-progress-indicator current-step={currentStep} type="path" variant="base">
+                <lightning-progress-step label="Your Details" value="Your Details"></lightning-progress-step>
+                <lightning-progress-step label="Address Details" value="Address Details"></lightning-progress-step>
+                <lightning-progress-step label="Additional Details" value="Additional Details"></lightning-progress-step>
+            </lightning-progress-indicator>
+        </div>
+        <div slot="footer">Card Footer</div>
+    </lightning-card>
+</template>

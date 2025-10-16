@@ -5,12 +5,22 @@
             onclick={handleProSelected}>
         </lightning-button>
         <div class="slds-p-horizontal_small">
-            <lightning-datatable
+
+            <div class="slds-text-body_regular slds-m-bottom_medium">
+                This demo showcases custom column types available in the Custom Table component:
+                <ul class="slds-list_dotted slds-m-top_small">
+                    <li>Picklist - Editable dropdown for status</li>
+                    <li>Lookup - Lightning Record Picker for Account selection with inline editing</li>
+                </ul>
+            </div>
+
+            <c-custom-table
                 key-field="Id"
                 data={contacts}
                 columns={columns}
                 lwc:ref="condatatable"
-                show-row-number-column
+                show-row-number-column="false"
+                hide-checkbox-column
                 max-row-selection="5"
 
                 onrowaction={handleRowAction}
@@ -20,12 +30,14 @@
                 onsave={handleSave}
                 onsaveerror={handleSaveError}
                 oncancel={handleCancel}
+                oncellchange={handleCellChange}
+                onlookupselected={handleLookupSelected}
 
                 sorted-by={sortByField}
                 sorted-direction={sortDirection}
                 onsort={handleSort}
             >
-            </lightning-datatable>
+            </c-custom-table>
         </div>
         <div slot="footer">Card Footer</div>
     </lightning-card>
