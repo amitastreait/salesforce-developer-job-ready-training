@@ -56,21 +56,28 @@ export default class CreateContactImperative extends LightningElement {
 
         // let result = executeApexWithLoading(this, createContact, {});
 
-        let contact = await executeApexWithLoading(
-            createContact, {
-                firstName: this.contact.ContactFirstName,
-                lastName: this.contact.LastName,
-                email: this.contact.Email,
-                phone: this.contact.Phone,
-                title: this.contact.Title,
-                accountId: this.recordId
-            },
-            this,
-            'isLoading'
-        );
-        console.log('Contact Created ', contact);
-        console.log('Contact Id ', contact.Id)
-        showRecordCreatedToast(this, contact.Id || contact.id, 'Contact');
+        try{
+            let contact = await executeApexWithLoading(
+                createContact, {
+                    firstName: this.contact.ContactFirstName,
+                    lastName: this.contact.LastName,
+                    email: this.contact.Email,
+                    phone: this.contact.Phone,
+                    title: this.contact.Title,
+                    accountId: this.recordId
+                },
+                this,
+                'isLoading'
+            );
+            console.log('Contact Created ', contact);
+            console.log('Contact Id ', contact.Id)
+            showRecordCreatedToast(this, contact.Id || contact.id, 'Contact');
+        }catch(error){
+
+        }finally {
+            this.isLoading = false;
+            /** Store the log record into Obejct */
+        }
         /* this.isLoading = true;
         createContact({
             firstName: this.contact.ContactFirstName,

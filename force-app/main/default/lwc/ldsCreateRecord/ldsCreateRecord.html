@@ -1,11 +1,24 @@
 <template>
     <lightning-spinner alternative-text="Loading" size="large" variant="brand" lwc:if={isLoading}></lightning-spinner>
     <lightning-card  variant="Narrow"  title="LDS Create Record" icon-name="standard:contact">
+        Data goes here
+        <template lwc:if={contactRecord}>
+            <p>{contactRecord.FirstName}</p>
+            <template lwc:if={contactRecord.address}>
+                <p>{contactRecord.address.city}</p>
+                <template lwc:if={contactRecord.address.completeAddress}>
+                    <p>{contactRecord.address.completeAddress.line1}</p>
+                </template>
+            </template>
+        </template>
         <div class="slds-p-horizontal_small">
             <span class="badge badge-error">Error</span>
             <span class="badge badge-warning">Warning</span>
             <span class="badge badge-success">Success</span>
             <lightning-button class="btn btn-danger" label="Create" title="Create" onclick={handleSave}></lightning-button>
+        </div>
+        <div class="slds-p-horizontal_small" lwc:if={errorDetails}>
+            <c-error-panel errors={errorDetails} lwc:if={errorDetails} type="inlineMessage" friendly-message="Error while creating contact record"></c-error-panel>
         </div>
         <div slot="footer">Card Footer</div>
     </lightning-card>
