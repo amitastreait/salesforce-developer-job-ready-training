@@ -1,16 +1,17 @@
 <template>
     <lightning-spinner alternative-text="Loading" size="large" variant="brand" lwc:if={isLoading}></lightning-spinner>
     <lightning-card  variant="Narrow"  title="LDS Create Record" icon-name="standard:contact">
-        Data goes here
-        <template lwc:if={contactRecord}>
-            <p>{contactRecord.FirstName}</p>
-            <template lwc:if={contactRecord.address}>
-                <p>{contactRecord.address.city}</p>
-                <template lwc:if={contactRecord.address.completeAddress}>
-                    <p>{contactRecord.address.completeAddress.line1}</p>
+        <div class="slds-p-horizontal_small">
+            <template lwc:if={contactRecord}>
+                <p>{contactRecord.FirstName}</p>
+                <template lwc:if={contactRecord.address}>
+                    <p>{contactRecord.address.city}</p>
+                    <template lwc:if={contactRecord.address.completeAddress}>
+                        <p>{contactRecord.address.completeAddress.line1}</p>
+                    </template>
                 </template>
             </template>
-        </template>
+        </div>
         <div class="slds-p-horizontal_small">
             <span class="badge badge-error">Error</span>
             <span class="badge badge-warning">Warning</span>

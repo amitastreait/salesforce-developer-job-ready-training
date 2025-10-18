@@ -1,0 +1,21 @@
+<template>
+    <lightning-card title="LMC Web Component" icon-name="custom:custom14">
+        <div class="slds-m-around_medium">
+            <p>MessageChannel: MyMessageChannel__c</p>
+            <br>
+        </div>
+        <div class="slds-m-around_medium">
+            {message}
+        </div>
+        <div class="slds-p-around_medium lgc-bg">
+            <lightning-button variant="brand" label="Subscribe" onclick={subscribeMC}></lightning-button>
+            <lightning-button variant="destructive" label="Unsubscribe" onclick={unsubscribeMC}></lightning-button>
+            
+        </div>
+         <div class="slds-p-around_medium lgc-bg">
+            <p>Latest Message Received</p>
+            <lightning-formatted-text value={receivedMessage}></lightning-formatted-text>
+         </div>
+
+    </lightning-card>
+</template>
