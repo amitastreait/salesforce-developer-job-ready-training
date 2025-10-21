@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Redemption Code Access</label>
+
+    <!-- Object permissions for Redemption_Code__c -->
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>Redemption_Code__c</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+
+    <!-- Field-level security for all fields on Redemption_Code__c -->
+    <!-- Remove FLS for required name/external id field to satisfy deployment constraint -->
+    <!-- Remove FLS for required picklist field Status__c to satisfy deployment constraint -->
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Redemption_Code__c.Product__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Redemption_Code__c.SKU__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <!-- Remove FLS for required picklist field to satisfy deployment constraint -->
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Redemption_Code__c.Max_Redemptions__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Redemption_Code__c.Redemption_Count__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Redemption_Code__c.Valid_From__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Redemption_Code__c.Valid_Until__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Redemption_Code__c.Redeemed_By__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Redemption_Code__c.Redeemed_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Redemption_Code__c.Order_Source__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Redemption_Code__c.Notes__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Redemption_Code__c.Is_Active__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+
+    <!-- Tab visibility -->
+    <tabSettings>
+        <tab>Redemption_Code__c</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+</PermissionSet>
