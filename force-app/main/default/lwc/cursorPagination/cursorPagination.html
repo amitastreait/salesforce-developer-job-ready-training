@@ -1,0 +1,96 @@
+<template>
+    <div class="slds-box slds-theme_default">
+        <div class="slds-grid slds-grid_vertical slds-wrap">
+            <!-- Header with total records -->
+            <div class="slds-col slds-size_12-of-12">
+                <h2 class="slds-text-heading_small">Contacts ({totalRecords})</h2>
+            </div>
+            
+            <!-- Table with contacts -->
+            <div class="slds-col slds-size_12-of-12">
+                <table class="slds-table slds-table_bordered slds-table_cell-buffer slds-no-row-hover">
+                    <thead>
+                        <tr class="slds-line-height_reset">
+                            <th class="slds-text-title_caps" scope="col">
+                                <div class="slds-truncate" title="Name">Name</div>
+                            </th>
+                            <th class="slds-text-title_caps" scope="col">
+                                <div class="slds-truncate" title="Email">Email</div>
+                            </th>
+                            <th class="slds-text-title_caps" scope="col">
+                                <div class="slds-truncate" title="Phone">Phone</div>
+                            </th>
+                            <th class="slds-text-title_caps" scope="col">
+                                <div class="slds-truncate" title="Title">Title</div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template for:each={contacts} for:item="contact">
+                            <tr key={contact.Id} class="slds-hint-parent slds-selectable" data-contact-id={contact.Id} onclick={handleRowSelect}>
+                                <td>
+                                    <div class="slds-truncate" title={contact.Name}>{contact.Name}</div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate" title={contact.Email}>{contact.Email}</div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate" title={contact.Phone}>{contact.Phone}</div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate" title={contact.Title}>{contact.Title}</div>
+                                </td>
+                            </tr>
+                        </template>
+                        <template if:true={loading}>
+                            <tr>
+                                <td colspan="4" class="slds-text-align_center">
+                                    <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+                                    <span class="slds-assistive-text">Loading</span>
+                                </td>
+                            </tr>
+                        </template>
+                        <template if:false={contacts.length}>
+                            <tr>
+                                <td colspan="4" class="slds-text-align_center">
+                                    No records found
+                                </td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Pagination controls -->
+            <div class="slds-col slds-size_12-of-12 slds-m-top_medium">
+                <div class="slds-grid slds-grid_vertical slds-wrap">
+                    <!-- Page info -->
+                    <div class="slds-col slds-size_12-of-12 slds-text-align_center">
+                        <span class="slds-text-body_small">
+                            Showing {currentPage} of {totalPages} pages
+                        </span>
+                    </div>
+                    
+                    <!-- Navigation buttons -->
+                    <div class="slds-col slds-size_12-of-12 slds-m-top_small slds-text-align_center">
+                        <lightning-button 
+                            label="Previous" 
+                            variant="brand-outline" 
+                            disabled={disablePreviousButton}
+                            onclick={handlePrevious}
+                            class="slds-m-right_x-small">
+                        </lightning-button>
+                        
+                        <lightning-button 
+                            label="Next" 
+                            variant="brand" 
+                            disabled={disableNextButton}
+                            onclick={handleNext}
+                            class="slds-m-left_x-small">
+                        </lightning-button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

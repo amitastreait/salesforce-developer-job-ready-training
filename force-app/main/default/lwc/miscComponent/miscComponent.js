@@ -6,8 +6,6 @@ import LightningPrompt from 'lightning/prompt';
 /** Import the custom label from Salesforce */
 import WELCOME_MESSAGE from '@salesforce/label/c.Welcome_Message';
 
-import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-
 export default class MiscComponent extends LightningElement {
 
     labels = {
@@ -19,18 +17,10 @@ export default class MiscComponent extends LightningElement {
     handleNext(event){
         event.preventDefault();
         this.currentStep = 'Additional Details';
-        this.dispatchEvent(new ShowToastEvent({
-            title: "title",
-            message: "message",
-            variant: "success"
-        }));
     }
 
     async handleAlert(event){
         event.preventDefault();
-
-        
-
         let result = await LightningAlert.open({
             message: 'This is a Lightning Alert',
             theme: 'alt-inverse',
@@ -79,14 +69,12 @@ export default class MiscComponent extends LightningElement {
             label: 'Please Respond', // this is the header text
             defaultValue: 'initial input value', //this is optional
         }).then((result) => {
-            if(result){
-                LightningAlert.open({
-                    message: 'You have typed '+ result,
-                    theme: 'info',
-                    label: 'Success',
-                    variant:'header'
-                });
-            }
+            LightningAlert.open({
+                message: 'You have typed '+ result,
+                theme: 'info',
+                label: 'Success',
+                variant:'header'
+            });
         });
     }
 }

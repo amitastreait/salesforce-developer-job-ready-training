@@ -4,11 +4,6 @@ import { CurrentPageReference } from 'lightning/navigation';
 export default class ContactList extends LightningElement {
 
     @wire(CurrentPageReference) pageRef;
-    errors;
-
-    handleWireError(event){
-        
-    }
 
     contacts = [
         {

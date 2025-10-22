@@ -1,0 +1,13 @@
+<template>
+    <div class="slds-p-around_medium">
+        <h2 class="slds-text-heading_medium slds-m-bottom_small">Cursor Pagination Demo</h2>
+        <p class="slds-text-body_regular slds-m-bottom_medium">
+            This demo shows the cursor pagination component working with mock data.
+        </p>
+        
+        <c-mock-cursor-pagination 
+            batch-size="5"
+            oncontactselected={handleContactSelected}>
+        </c-mock-cursor-pagination>
+    </div>
+</template>

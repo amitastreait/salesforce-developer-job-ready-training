@@ -1,0 +1,19 @@
+<template>
+    <lightning-card  variant="Narrow" title="LMS - Subscriber Component" icon-name="custom:custom56">
+        <div class="slds-p-horizontal_small">
+            <lightning-textarea
+              name="receivedMessage" 
+              label="Received Message" 
+              placeholder="type here..."
+              value={receivedMessage}
+              variant="standard"
+            ></lightning-textarea>
+        </div>
+        <div class="slds-p-horizontal_small">
+            <lightning-button disabled={subscription} variant="brand" label="Subscribe" title="Subscribe" onclick={handleSubscribe}></lightning-button>
+
+            <lightning-button variant="destructive" label="UnSubscribe" title="UnSubscribe" onclick={handleUnSubscribe}></lightning-button>
+        </div>
+        <div slot="footer">LMS Demo</div>
+    </lightning-card>
+</template>

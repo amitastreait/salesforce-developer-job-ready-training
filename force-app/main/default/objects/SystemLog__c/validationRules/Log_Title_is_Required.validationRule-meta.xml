@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Log_Title_is_Required</fullName>
+    <active>true</active>
+    <errorConditionFormula>ISBLANK( LogTitle__c )</errorConditionFormula>
+    <errorDisplayField>LogTitle__c</errorDisplayField>
+    <errorMessage>Log Title is required to create the System Log Record.</errorMessage>
+</ValidationRule>

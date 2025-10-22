@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FlowType__c</fullName>
+    <label>Flow Type</label>
+    <required>true</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Screen Flow</fullName>
+                <default>false</default>
+                <label>Screen Flow</label>
+            </value>
+            <value>
+                <fullName>Scheduled Flow</fullName>
+                <default>false</default>
+                <label>Scheduled Flow</label>
+            </value>
+            <value>
+                <fullName>Record Trigger Flow</fullName>
+                <default>false</default>
+                <label>Record Trigger Flow</label>
+            </value>
+            <value>
+                <fullName>Platform Event Flow</fullName>
+                <default>false</default>
+                <label>Platform Event Flow</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

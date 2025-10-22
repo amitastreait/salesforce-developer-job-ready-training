@@ -2,8 +2,6 @@ import { LightningElement } from 'lwc';
 
 export default class LocalDevEnabled extends LightningElement {
 
-    message = 'Hello World';
-
     handleClick(){
         console.log('Button Clicked');
     }

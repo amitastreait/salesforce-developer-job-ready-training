@@ -12,6 +12,7 @@ export default class LmsSub1 extends LightningElement {
         if (this.subscription) {
             return;
         }
+        
         this.subscription = subscribe(this.context, SAMPLEMC, 
             (message) => {
                 this.displayMessage(message);

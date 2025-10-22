@@ -1380,6 +1380,12 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentName>lmsPub1</componentName>
+                <identifier>c_lmsPub1</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentInstanceProperties>
                     <name>lookupFieldName</name>
                     <value>Property__c.PrimaryAgent__c</value>
