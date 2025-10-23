@@ -1,0 +1,201 @@
+<template>
+    <div class="order-detail-container">
+        <!-- Loading State -->
+        <template if:true={isLoading}>
+            <div class="loading-container">
+                <lightning-spinner alternative-text="Loading order details..." size="large"></lightning-spinner>
+            </div>
+        </template>
+
+        <!-- Error State -->
+        <template if:true={error}>
+            <div class="error-container">
+                <div class="error-message">
+                    <lightning-icon icon-name="utility:error" size="large" variant="error"></lightning-icon>
+                    <p>{error}</p>
+                    <lightning-button label="Back to Orders" onclick={handleBackToOrders} variant="brand"></lightning-button>
+                </div>
+            </div>
+        </template>
+
+        <!-- Order Details Content -->
+        <template if:false={isLoading}>
+            <template if:false={error}>
+                <!-- Header Section -->
+                <div class="order-header">
+                    <div class="header-content">
+                        <div class="header-left">
+                            <lightning-icon icon-name="standard:orders" size="large"></lightning-icon>
+                            <div class="header-info">
+                                <h1 class="order-title">Order Confirmation</h1>
+                                <p class="order-number">Order #{orderDetail.orderNumber}</p>
+                            </div>
+                        </div>
+                        <div class="header-right">
+                            <lightning-badge label={orderDetail.status} class="status-badge"></lightning-badge>
+                        </div>
+                    </div>
+                    <div class="order-date">
+                        <lightning-formatted-date-time
+                            value={orderDetail.orderDate}
+                            year="numeric"
+                            month="long"
+                            day="numeric"
+                            hour="2-digit"
+                            minute="2-digit">
+                        </lightning-formatted-date-time>
+                    </div>
+                </div>
+
+                <!-- Success Message -->
+                <div class="success-message">
+                    <lightning-icon icon-name="utility:success" size="medium" variant="success"></lightning-icon>
+                    <div class="success-text">
+                        <h2>Thank you for your order!</h2>
+                        <p>We've sent a confirmation email to {orderDetail.customerEmail}</p>
+                    </div>
+                </div>
+
+                <!-- Main Content Grid -->
+                <div class="content-grid">
+                    <!-- Left Column: Order Items -->
+                    <div class="left-column">
+                        <!-- Order Items Section -->
+                        <div class="section-card">
+                            <div class="section-header">
+                                <h2 class="section-title">Order Items ({orderDetail.totalItems})</h2>
+                            </div>
+                            <div class="items-list">
+                                <template for:each={orderDetail.items} for:item="item">
+                                    <div key={item.id} class="order-item">
+                                        <div class="item-image">
+                                            <template if:true={item.propertyImage}>
+                                                <img src={item.propertyImage} alt={item.propertyName} />
+                                            </template>
+                                            <template if:false={item.propertyImage}>
+                                                <div class="placeholder-image">
+                                                    <lightning-icon icon-name="standard:home" size="large"></lightning-icon>
+                                                </div>
+                                            </template>
+                                        </div>
+                                        <div class="item-details">
+                                            <h3 class="item-name">{item.propertyName}</h3>
+                                            <p class="item-location">
+                                                <lightning-icon icon-name="utility:location" size="xx-small"></lightning-icon>
+                                                {item.location}
+                                            </p>
+                                            <template if:true={item.propertyAddress}>
+                                                <p class="item-address">{item.propertyAddress}</p>
+                                            </template>
+                                            <div class="item-pricing">
+                                                <span class="item-price">
+                                                    <lightning-formatted-number value={item.propertyPrice} format-style="currency" currency-code="USD"></lightning-formatted-number>
+                                                </span>
+                                                <span class="item-quantity">Qty: {item.quantity}</span>
+                                            </div>
+                                        </div>
+                                        <div class="item-total">
+                                            <lightning-formatted-number value={item.total} format-style="currency" currency-code="USD"></lightning-formatted-number>
+                                        </div>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Summary and Info -->
+                    <div class="right-column">
+                        <!-- Order Summary -->
+                        <div class="section-card summary-card">
+                            <h2 class="section-title">Order Summary</h2>
+                            <div class="summary-content">
+                                <div class="summary-row">
+                                    <span class="summary-label">Subtotal:</span>
+                                    <span class="summary-value">
+                                        <lightning-formatted-number value={orderDetail.subtotal} format-style="currency" currency-code="USD"></lightning-formatted-number>
+                                    </span>
+                                </div>
+                                <div class="summary-row">
+                                    <span class="summary-label">Tax ({orderDetail.taxRate}%):</span>
+                                    <span class="summary-value">
+                                        <lightning-formatted-number value={orderDetail.tax} format-style="currency" currency-code="USD"></lightning-formatted-number>
+                                    </span>
+                                </div>
+                                <div class="summary-row">
+                                    <span class="summary-label">Shipping:</span>
+                                    <span class="summary-value">
+                                        <template if:true={freeShipping}>
+                                            <span class="free-shipping">FREE</span>
+                                        </template>
+                                        <template if:false={freeShipping}>
+                                            <lightning-formatted-number value={orderDetail.shipping} format-style="currency" currency-code="USD"></lightning-formatted-number>
+                                        </template>
+                                    </span>
+                                </div>
+                                <div class="summary-divider"></div>
+                                <div class="summary-row total-row">
+                                    <span class="summary-label">Total:</span>
+                                    <span class="summary-value total-value">
+                                        <lightning-formatted-number value={orderDetail.total} format-style="currency" currency-code="USD"></lightning-formatted-number>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Customer Information -->
+                        <div class="section-card">
+                            <h2 class="section-title">Customer Information</h2>
+                            <div class="info-content">
+                                <div class="info-row">
+                                    <lightning-icon icon-name="utility:user" size="x-small"></lightning-icon>
+                                    <span>{orderDetail.customerName}</span>
+                                </div>
+                                <div class="info-row">
+                                    <lightning-icon icon-name="utility:email" size="x-small"></lightning-icon>
+                                    <span>{orderDetail.customerEmail}</span>
+                                </div>
+                                <template if:true={orderDetail.customerPhone}>
+                                    <div class="info-row">
+                                        <lightning-icon icon-name="utility:phone_portrait" size="x-small"></lightning-icon>
+                                        <span>{orderDetail.customerPhone}</span>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+
+                        <!-- Shipping Address -->
+                        <div class="section-card">
+                            <h2 class="section-title">Shipping Address</h2>
+                            <div class="address-content">
+                                <template if:true={hasShippingAddress}>
+                                    <p>{orderDetail.shippingStreet}</p>
+                                    <p>{orderDetail.shippingCity}, {orderDetail.shippingState} {orderDetail.shippingPostalCode}</p>
+                                    <p>{orderDetail.shippingCountry}</p>
+                                </template>
+                                <template if:false={hasShippingAddress}>
+                                    <p class="no-address">No shipping address provided</p>
+                                </template>
+                            </div>
+                        </div>
+
+                        <!-- Actions -->
+                        <div class="action-buttons">
+                            <lightning-button
+                                label="Back to Orders"
+                                onclick={handleBackToOrders}
+                                variant="neutral"
+                                class="action-btn">
+                            </lightning-button>
+                            <lightning-button
+                                label="Continue Shopping"
+                                onclick={handleContinueShopping}
+                                variant="brand"
+                                class="action-btn">
+                            </lightning-button>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </template>
+    </div>
+</template>

@@ -4,15 +4,12 @@
     "**/bower_components": true,
     "**/.sfdx": true
   },
-  "salesforce.einsteinForDevelopers.enable": false,
+  "salesforce.einsteinForDevelopers.enable": true,
   "explorer.fileNesting.enabled": true,
   "explorer.fileNesting.patterns": {
     "*.cls": "${capture}.cls-meta.xml",
     "*.trigger": "${capture}.trigger-meta.xml",
   },
   "xml.preferences.showSchemaDocumentationType": "none",
-  "workbench.colorCustomizations": {
-    "statusBar.background": "#2f53a8",
-    "activityBar.background": "#2f53a8"
-  }
+  "workbench.colorCustomizations": {}
 }

@@ -1,0 +1,25 @@
+<template>
+   <lightning-modal-header label={label}>
+        Tagline can be descriptive content with <a href="https://www.example.com">links</a> and can wrap to multiple lines.
+    </lightning-modal-header>
+    <lightning-modal-body>
+        <div class="slds-m-around_small">
+            <p>
+                {content}
+            </p>
+            <p>
+                {recordId}
+            </p>
+            <p>
+                {recordName}
+            </p>
+        </div>
+    </lightning-modal-body>
+    <lightning-modal-footer>
+        <lightning-button
+            variant="destructive"
+            label="Cancel"
+            onclick={handleClose}
+        ></lightning-button>
+    </lightning-modal-footer>
+</template>

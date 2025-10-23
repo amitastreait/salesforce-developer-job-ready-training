@@ -15,12 +15,19 @@ export default class PropertyCard extends LightningElement {
 
     /**
      * Get property image URL or default placeholder
-     * Assumes Property__c has Image_URL__c field
+     * Priority: 1. firstImageUrl (from Property_Image__c), 2. Image_URL__c field, 3. Default
      * @returns {string} Image URL
      */
     get propertyImage() {
-        if (this.property && this.property.Image_URL__c) {
-            return this.property.Image_URL__c;
+        if (this.property) {
+            // First priority: Image from Property_Image__c related records
+            if (this.property.firstImageUrl) {
+                return this.property.firstImageUrl;
+            }
+            // Second priority: Image_URL__c field on Property__c
+            if (this.property.Image_URL__c) {
+                return this.property.Image_URL__c;
+            }
         }
         return this.defaultImage;
     }
@@ -60,7 +67,7 @@ export default class PropertyCard extends LightningElement {
      */
     get location() {
         if (this.property) {
-            return `${this.property.Location_Site__r.City__c}, ${this.property.Location_Site__r.State__c}`;
+            return `${this.property.Location_Site__r?.City__c}, ${this.property.Location_Site__r?.State__c}`;
         }
         return '';
     }

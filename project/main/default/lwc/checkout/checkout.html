@@ -1,0 +1,411 @@
+<template>
+    <div class="checkout-container">
+
+        <!-- Header -->
+        <div class="checkout-header">
+            <h1 class="checkout-title">Checkout</h1>
+            <div class="checkout-steps">
+                <div class={step1Class}>
+                    <div class="step-number">1</div>
+                    <span class="step-label">Shipping</span>
+                </div>
+                <div class="step-connector"></div>
+                <div class={step2Class}>
+                    <div class="step-number">2</div>
+                    <span class="step-label">Payment</span>
+                </div>
+                <div class="step-connector"></div>
+                <div class={step3Class}>
+                    <div class="step-number">3</div>
+                    <span class="step-label">Review</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading Spinner -->
+        <template if:true={isLoading}>
+            <div class="loading-container">
+                <lightning-spinner alternative-text="Loading checkout..." size="large"></lightning-spinner>
+            </div>
+        </template>
+
+        <!-- Error Message -->
+        <template if:true={error}>
+            <div class="error-banner">
+                <lightning-icon icon-name="utility:error" size="small" variant="error"></lightning-icon>
+                <span class="error-text">{error}</span>
+            </div>
+        </template>
+
+        <!-- Main Content -->
+        <template if:false={isLoading}>
+            <div class="checkout-content">
+
+                <!-- Left Column: Forms -->
+                <div class="checkout-forms">
+
+                    <!-- Step 1: Shipping Information -->
+                    <template if:true={isShippingStep}>
+                        <div class="form-card">
+                            <div class="form-card-header">
+                                <h2 class="form-title">Shipping Information</h2>
+                                <p class="form-subtitle">Where should we deliver your order?</p>
+                            </div>
+                            <div class="form-card-body">
+                                <lightning-input
+                                    label="Full Name"
+                                    value={shippingInfo.name}
+                                    data-field="name"
+                                    onchange={handleShippingChange}
+                                    required>
+                                </lightning-input>
+
+                                <lightning-input
+                                    label="Email"
+                                    type="email"
+                                    value={shippingInfo.email}
+                                    data-field="email"
+                                    onchange={handleShippingChange}
+                                    required>
+                                </lightning-input>
+
+                                <lightning-input
+                                    label="Phone"
+                                    type="tel"
+                                    value={shippingInfo.phone}
+                                    data-field="phone"
+                                    onchange={handleShippingChange}
+                                    required>
+                                </lightning-input>
+
+                                <lightning-textarea
+                                    label="Street Address"
+                                    value={shippingInfo.street}
+                                    data-field="street"
+                                    onchange={handleShippingChange}
+                                    required>
+                                </lightning-textarea>
+
+                                <div class="form-row">
+                                    <lightning-input
+                                        label="City"
+                                        value={shippingInfo.city}
+                                        data-field="city"
+                                        onchange={handleShippingChange}
+                                        required>
+                                    </lightning-input>
+
+                                    <lightning-input
+                                        label="State/Province"
+                                        value={shippingInfo.state}
+                                        data-field="state"
+                                        onchange={handleShippingChange}
+                                        required>
+                                    </lightning-input>
+                                </div>
+
+                                <div class="form-row">
+                                    <lightning-input
+                                        label="Postal Code"
+                                        value={shippingInfo.postalCode}
+                                        data-field="postalCode"
+                                        onchange={handleShippingChange}
+                                        required>
+                                    </lightning-input>
+
+                                    <lightning-input
+                                        label="Country"
+                                        value={shippingInfo.country}
+                                        data-field="country"
+                                        onchange={handleShippingChange}
+                                        required>
+                                    </lightning-input>
+                                </div>
+                            </div>
+                            <div class="form-card-footer">
+                                <button class="btn-secondary" onclick={handleBackToCart}>
+                                    <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                                    </svg>
+                                    Back to Cart
+                                </button>
+                                <button class="btn-primary" onclick={handleContinueToPayment}>
+                                    Continue to Payment
+                                    <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </template>
+
+                    <!-- Step 2: Payment Information -->
+                    <template if:true={isPaymentStep}>
+                        <div class="form-card">
+                            <div class="form-card-header">
+                                <h2 class="form-title">Payment Information</h2>
+                                <p class="form-subtitle">All transactions are secure and encrypted</p>
+                            </div>
+                            <div class="form-card-body">
+                                <lightning-input
+                                    label="Cardholder Name"
+                                    value={paymentInfo.cardholderName}
+                                    data-field="cardholderName"
+                                    onchange={handlePaymentChange}
+                                    required>
+                                </lightning-input>
+
+                                <lightning-input
+                                    label="Card Number"
+                                    type="tel"
+                                    value={paymentInfo.cardNumber}
+                                    data-field="cardNumber"
+                                    onchange={handlePaymentChange}
+                                    placeholder="1234 5678 9012 3456"
+                                    pattern="[0-9]{13,19}"
+                                    required>
+                                </lightning-input>
+
+                                <div class="form-row">
+                                    <lightning-input
+                                        label="Expiry Date"
+                                        type="text"
+                                        value={paymentInfo.expiryDate}
+                                        data-field="expiryDate"
+                                        onchange={handlePaymentChange}
+                                        placeholder="MM/YY"
+                                        pattern="[0-9]{2}/[0-9]{2}"
+                                        required>
+                                    </lightning-input>
+
+                                    <lightning-input
+                                        label="CVV"
+                                        type="password"
+                                        value={paymentInfo.cvv}
+                                        data-field="cvv"
+                                        onchange={handlePaymentChange}
+                                        placeholder="123"
+                                        pattern="[0-9]{3,4}"
+                                        maxlength="4"
+                                        required>
+                                    </lightning-input>
+                                </div>
+
+                                <!-- Promo Code -->
+                                <div class="promo-section">
+                                    <label class="promo-label">Have a promo code?</label>
+                                    <div class="promo-input-group">
+                                        <lightning-input
+                                            value={promoCode}
+                                            onchange={handlePromoCodeChange}
+                                            placeholder="Enter promo code">
+                                        </lightning-input>
+                                        <button class="btn-secondary promo-btn" onclick={handleApplyPromo}>
+                                            Apply
+                                        </button>
+                                    </div>
+                                    <template if:true={promoMessage}>
+                                        <div class={promoMessageClass}>
+                                            {promoMessage}
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+                            <div class="form-card-footer">
+                                <button class="btn-secondary" onclick={handleBackToShipping}>
+                                    <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                                    </svg>
+                                    Back
+                                </button>
+                                <button class="btn-primary" onclick={handleContinueToReview}>
+                                    Review Order
+                                    <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </template>
+
+                    <!-- Step 3: Review Order -->
+                    <template if:true={isReviewStep}>
+                        <div class="form-card">
+                            <div class="form-card-header">
+                                <h2 class="form-title">Review Your Order</h2>
+                                <p class="form-subtitle">Please review your information before placing the order</p>
+                            </div>
+                            <div class="form-card-body">
+                                <!-- Shipping Details -->
+                                <div class="review-section">
+                                    <h3 class="review-section-title">Shipping Address</h3>
+                                    <div class="review-details">
+                                        <p>{shippingInfo.name}</p>
+                                        <p>{shippingInfo.street}</p>
+                                        <p>{shippingInfo.city}, {shippingInfo.state} {shippingInfo.postalCode}</p>
+                                        <p>{shippingInfo.country}</p>
+                                        <p class="review-contact">{shippingInfo.email} | {shippingInfo.phone}</p>
+                                    </div>
+                                    <button class="btn-link" onclick={handleEditShipping}>Edit</button>
+                                </div>
+
+                                <!-- Payment Details -->
+                                <div class="review-section">
+                                    <h3 class="review-section-title">Payment Method</h3>
+                                    <div class="review-details">
+                                        <p>Credit Card ending in {maskedCardNumber}</p>
+                                        <p>Expires: {paymentInfo.expiryDate}</p>
+                                    </div>
+                                    <button class="btn-link" onclick={handleEditPayment}>Edit</button>
+                                </div>
+
+                                <!-- Terms and Conditions -->
+                                <div class="terms-section">
+                                    <lightning-input
+                                        type="checkbox"
+                                        label="I agree to the Terms and Conditions"
+                                        checked={agreedToTerms}
+                                        onchange={handleTermsChange}>
+                                    </lightning-input>
+                                </div>
+                            </div>
+                            <div class="form-card-footer">
+                                <button class="btn-secondary" onclick={handleBackToPayment}>
+                                    <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                                    </svg>
+                                    Back
+                                </button>
+                                <button class="btn-primary btn-place-order" onclick={handlePlaceOrder} disabled={isProcessing}>
+                                    <template if:false={isProcessing}>
+                                        <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                        </svg>
+                                        Place Order
+                                    </template>
+                                    <template if:true={isProcessing}>
+                                        <lightning-spinner alternative-text="Processing..." size="small"></lightning-spinner>
+                                        Processing...
+                                    </template>
+                                </button>
+                            </div>
+                        </div>
+                    </template>
+
+                </div>
+
+                <!-- Right Column: Order Summary -->
+                <div class="order-summary">
+                    <div class="summary-card">
+                        <h2 class="summary-title">Order Summary</h2>
+
+                        <!-- Cart Items -->
+                        <div class="summary-items">
+                            <template for:each={checkoutData.items} for:item="item">
+                                <div key={item.id} class="summary-item">
+                                    <div class="item-image-container">
+                                        <template if:true={item.propertyImage}>
+                                            <img src={item.propertyImage} alt={item.propertyName} class="item-image" />
+                                        </template>
+                                        <template if:false={item.propertyImage}>
+                                            <div class="item-image-placeholder">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                                                </svg>
+                                            </div>
+                                        </template>
+                                    </div>
+                                    <div class="item-details">
+                                        <h4 class="item-name">{item.propertyName}</h4>
+                                        <template if:true={item.location}>
+                                            <p class="item-location">{item.location}</p>
+                                        </template>
+                                        <p class="item-quantity">Qty: {item.quantity}</p>
+                                    </div>
+                                    <div class="item-price">
+                                        <lightning-formatted-number
+                                            value={item.total}
+                                            format-style="currency"
+                                            currency-code="USD">
+                                        </lightning-formatted-number>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+
+                        <!-- Price Breakdown -->
+                        <div class="summary-breakdown">
+                            <div class="breakdown-row">
+                                <span class="breakdown-label">Subtotal:</span>
+                                <span class="breakdown-value">
+                                    <lightning-formatted-number
+                                        value={checkoutData.subtotal}
+                                        format-style="currency"
+                                        currency-code="USD">
+                                    </lightning-formatted-number>
+                                </span>
+                            </div>
+                            <template if:true={discountAmount}>
+                                <div class="breakdown-row discount-row">
+                                    <span class="breakdown-label">Discount ({discountPercent}%):</span>
+                                    <span class="breakdown-value discount-value">
+                                        -<lightning-formatted-number
+                                            value={discountAmount}
+                                            format-style="currency"
+                                            currency-code="USD">
+                                        </lightning-formatted-number>
+                                    </span>
+                                </div>
+                            </template>
+                            <div class="breakdown-row">
+                                <span class="breakdown-label">Shipping:</span>
+                                <span class="breakdown-value">
+                                    <template if:true={freeShipping}>
+                                        <span class="free-shipping">FREE</span>
+                                    </template>
+                                    <template if:false={freeShipping}>
+                                        <lightning-formatted-number
+                                            value={checkoutData.shipping}
+                                            format-style="currency"
+                                            currency-code="USD">
+                                        </lightning-formatted-number>
+                                    </template>
+                                </span>
+                            </div>
+                            <div class="breakdown-row">
+                                <span class="breakdown-label">Tax ({checkoutData.taxRate}%):</span>
+                                <span class="breakdown-value">
+                                    <lightning-formatted-number
+                                        value={calculatedTax}
+                                        format-style="currency"
+                                        currency-code="USD">
+                                    </lightning-formatted-number>
+                                </span>
+                            </div>
+                            <div class="breakdown-row total-row">
+                                <span class="breakdown-label">Total:</span>
+                                <span class="breakdown-value total-value">
+                                    <lightning-formatted-number
+                                        value={finalTotal}
+                                        format-style="currency"
+                                        currency-code="USD">
+                                    </lightning-formatted-number>
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Security Badge -->
+                        <div class="security-badge">
+                            <svg class="security-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                            </svg>
+                            <span class="security-text">Secure Checkout</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </template>
+
+    </div>
+</template>

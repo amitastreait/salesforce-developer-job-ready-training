@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Preferences__c</fullName>
+    <label>Preferences</label>
+    <type>MultiselectPicklist</type>
+    <required>false</required>
+    <visibleLines>4</visibleLines>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>New Properties</fullName>
+                <default>false</default>
+                <label>New Properties</label>
+            </value>
+            <value>
+                <fullName>Price Drops</fullName>
+                <default>false</default>
+                <label>Price Drops</label>
+            </value>
+            <value>
+                <fullName>Open Houses</fullName>
+                <default>false</default>
+                <label>Open Houses</label>
+            </value>
+            <value>
+                <fullName>Market Updates</fullName>
+                <default>false</default>
+                <label>Market Updates</label>
+            </value>
+            <value>
+                <fullName>Tips & Advice</fullName>
+                <default>false</default>
+                <label>Tips & Advice</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

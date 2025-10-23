@@ -26,6 +26,11 @@ export default class PropertyContainer extends LightningElement {
     error;
     isLoading = false;
 
+    connectedCallback() {
+        console.log('=== PropertyContainer Connected ===');
+        console.log('Initial Filters:', this.filters);
+    }
+
     @wire(CurrentPageReference)
     getPageRef(currRef){
         console.log('Current Page Reference: ', JSON.stringify(currRef.state));
@@ -43,16 +48,61 @@ export default class PropertyContainer extends LightningElement {
         maxPrice: '$filters.maxPrice',
         minBedrooms: '$filters.minBedrooms'
     })
-    wiredProperties({ error, data }) {
+    wiredProperties(result) {
+        console.log('=== Wire Adapter Called ===');
+        console.log('Wire Result:', result);
+
         this.isLoading = false;
-        
+
+        const { error, data } = result;
+
+        console.log('Has Error:', !!error);
+        console.log('Has Data:', !!data);
+
         if (data) {
-            this.properties = data;
+            console.log('Wired Properties Raw Data (length):', data.length);
+            console.log('Wired Properties Raw Data:', JSON.stringify(data));
+
+            // Transform property data to extract first image from subquery
+            this.properties = data.map(property => {
+                console.log('Processing property:', property.Name);
+                console.log('Property_Images__r:', property.Property_Images__r);
+
+                // Check if Property_Images__r exists and has records
+                let firstImageUrl = null;
+                if (property.Property_Images__r && property.Property_Images__r.length > 0) {
+                    firstImageUrl = property.Property_Images__r[0].Image_Url__c;
+                    console.log('Using Property Image:', firstImageUrl);
+                } else if (property.Image_URL__c) {
+                    // Fallback to Image_URL__c field
+                    firstImageUrl = property.Image_URL__c;
+                    console.log('Using fallback Image_URL__c:', firstImageUrl);
+                } else {
+                    console.log('No image found for property:', property.Name);
+                }
+
+                // Return property with firstImageUrl added
+                return {
+                    ...property,
+                    firstImageUrl: firstImageUrl
+                };
+            });
+
+            console.log('Transformed Properties Count:', this.properties.length);
+            console.log('First Property:', JSON.stringify(this.properties[0]));
             this.error = undefined;
         } else if (error) {
+            console.error('=== ERROR IN WIRE ADAPTER ===');
+            console.error('Error Object:', error);
+            console.error('Error Body:', error.body);
+            console.error('Error Message:', error.body?.message);
+            console.error('Error Stack:', error.body?.stackTrace);
+
             this.error = error;
             this.properties = [];
             this.showErrorToast();
+        } else {
+            console.log('Wire adapter called but no data or error yet');
         }
     }
 

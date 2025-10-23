@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>60.0</apiVersion>
+    <isExposed>true</isExposed>
+    <targets>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightningCommunity__Default">
+            <property name="heroTitle" type="String" default="Welcome to Our Store" label="Hero Title" description="Main title displayed in the hero section"/>
+            <property name="heroSubtitle" type="String" default="Discover amazing products at great prices" label="Hero Subtitle" description="Subtitle text in the hero section"/>
+            <property name="ctaButtonText" type="String" default="Shop Now" label="CTA Button Text" description="Text for the call-to-action button"/>
+            <property name="showFeaturedProperties" type="Boolean" default="true" label="Show Featured Products" description="Display the featured products carousel"/>
+            <property name="showCategories" type="Boolean" default="true" label="Show Categories" description="Display the product categories section"/>
+            <property name="showPromotionalBanner" type="Boolean" default="true" label="Show Promotional Banner" description="Display the promotional banner section"/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

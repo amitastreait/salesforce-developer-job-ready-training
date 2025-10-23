@@ -3,7 +3,8 @@
     "allow": [
       "Bash(sfdx force:source:deploy:*)",
       "Bash(sf project deploy start:*)",
-      "Bash(sf apex run test:*)"
+      "Bash(sf apex run test:*)",
+      "Bash(mkdir:*)"
     ],
     "deny": []
   }

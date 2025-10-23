@@ -1,0 +1,193 @@
+<template>
+    <div class="cart-page">
+        <!-- Loading Spinner -->
+        <template if:true={isLoading}>
+            <div class="loading-container">
+                <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+            </div>
+        </template>
+
+        <!-- Cart Content -->
+        <template if:false={isLoading}>
+            <!-- Page Header -->
+            <div class="cart-header">
+                <h1 class="cart-title">
+                    <lightning-icon icon-name="utility:cart" size="medium"></lightning-icon>
+                    Shopping Cart
+                    <template if:true={cartNumber}>
+                        <span class="cart-number"> - {cartNumber}</span>
+                    </template>
+                </h1>
+                <p class="cart-subtitle">
+                    <template if:true={hasCartItems}>
+                        {cartItemsCount} property(s) in your cart
+                    </template>
+                </p>
+            </div>
+
+            <!-- Empty Cart State -->
+            <template if:false={hasCartItems}>
+                <div class="empty-cart">
+                    <lightning-icon icon-name="utility:cart" size="large" class="empty-cart-icon"></lightning-icon>
+                    <h2 class="empty-cart-title">Your cart is empty</h2>
+                    <p class="empty-cart-text">Add items to get started</p>
+                    <lightning-button
+                        label="Continue Shopping"
+                        variant="brand"
+                        onclick={handleContinueShopping}
+                        class="continue-shopping-btn">
+                    </lightning-button>
+                </div>
+            </template>
+
+            <!-- Cart Items -->
+            <template if:true={hasCartItems}>
+                <div class="cart-content">
+                    <!-- Cart Items List -->
+                    <div class="cart-items-section">
+                        <div class="cart-items-header">
+                            <span>Property</span>
+                            <span>Price</span>
+                            <span>Quantity</span>
+                            <span>Total</span>
+                            <span></span>
+                        </div>
+
+                        <template for:each={cartItems} for:item="item">
+                            <div key={item.id} class="cart-item">
+                                <!-- Product Image -->
+                                <div class="cart-item-image">
+                                    <img src={item.imageUrl} alt={item.productName} />
+                                </div>
+
+                                <!-- Property Details -->
+                                <div class="cart-item-details">
+                                    <h3 class="product-name">{item.propertyName}</h3>
+                                    <p class="product-sku">Item: {item.sku}</p>
+                                    <template if:true={item.productDescription}>
+                                        <p class="product-description">
+                                            <lightning-icon icon-name="utility:location" size="xx-small"></lightning-icon>
+                                            {item.productDescription}
+                                        </p>
+                                    </template>
+                                    <template if:true={item.propertyStatus}>
+                                        <p class="property-status">Status: {item.propertyStatus}</p>
+                                    </template>
+                                    <template if:true={item.discount}>
+                                        <p class="discount-info">Discount: {item.formattedDiscount} ({item.discountPercent}%)</p>
+                                    </template>
+                                </div>
+
+                                <!-- Price -->
+                                <div class="cart-item-price">
+                                    <span class="price-label">Price:</span>
+                                    <span class="price-value">{item.formattedPrice}</span>
+                                </div>
+
+                                <!-- Quantity Controls -->
+                                <div class="cart-item-quantity">
+                                    <span class="quantity-label">Quantity:</span>
+                                    <div class="quantity-controls">
+                                        <button 
+                                            class="quantity-btn" 
+                                            data-item-id={item.id}
+                                            onclick={handleDecrement}
+                                            disabled={item.quantity}>
+                                            <lightning-icon icon-name="utility:dash" size="x-small"></lightning-icon>
+                                        </button>
+                                        <input 
+                                            type="number" 
+                                            class="quantity-input"
+                                            value={item.quantity}
+                                            min="1"
+                                            data-item-id={item.id}
+                                            onchange={handleQuantityChange} />
+                                        <button 
+                                            class="quantity-btn"
+                                            data-item-id={item.id}
+                                            onclick={handleIncrement}>
+                                            <lightning-icon icon-name="utility:add" size="x-small"></lightning-icon>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Total Price -->
+                                <div class="cart-item-total">
+                                    <span class="total-label">Total:</span>
+                                    <span class="total-value">{item.formattedTotal}</span>
+                                </div>
+
+                                <!-- Remove Button -->
+                                <div class="cart-item-remove">
+                                    <button 
+                                        class="remove-btn"
+                                        data-item-id={item.id}
+                                        onclick={handleRemoveItem}
+                                        title="Remove item">
+                                        <lightning-icon icon-name="utility:delete" size="small"></lightning-icon>
+                                    </button>
+                                </div>
+                            </div>
+                        </template>
+
+                        <!-- Action Buttons -->
+                        <div class="cart-actions">
+                            <lightning-button
+                                label="Continue Shopping"
+                                variant="neutral"
+                                onclick={handleContinueShopping}>
+                            </lightning-button>
+                            <lightning-button
+                                label="Clear Cart"
+                                variant="destructive"
+                                onclick={handleClearCart}>
+                            </lightning-button>
+                        </div>
+                    </div>
+
+                    <!-- Cart Summary -->
+                    <div class="cart-summary-section">
+                        <div class="cart-summary">
+                            <h2 class="summary-title">Order Summary</h2>
+                            
+                            <div class="summary-row">
+                                <span class="summary-label">Subtotal:</span>
+                                <span class="summary-value">{formattedSubtotal}</span>
+                            </div>
+                            
+                            <div class="summary-row">
+                                <span class="summary-label">Shipping:</span>
+                                <span class="summary-value">{formattedShipping}</span>
+                            </div>
+                            
+                            <div class="summary-row">
+                                <span class="summary-label">Tax:</span>
+                                <span class="summary-value">{formattedTax}</span>
+                            </div>
+                            
+                            <div class="summary-divider"></div>
+                            
+                            <div class="summary-row summary-total">
+                                <span class="summary-label">Total:</span>
+                                <span class="summary-value">{formattedTotal}</span>
+                            </div>
+
+                            <lightning-button
+                                label="Proceed to Checkout"
+                                variant="brand"
+                                onclick={handleCheckout}
+                                class="checkout-btn">
+                            </lightning-button>
+
+                            <!-- Security Badge -->
+                            <div class="security-badge">
+                                <lightning-icon icon-name="utility:lock" size="x-small"></lightning-icon>
+                                <span>Secure Checkout</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </template>
+    </div>
+</template>

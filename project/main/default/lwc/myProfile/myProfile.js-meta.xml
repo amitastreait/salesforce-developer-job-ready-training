@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>My Profile</masterLabel>
+    <description>Comprehensive profile page for Experience Cloud sites showing personal information, address, orders, cart, and wishlist</description>
+    <targets>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightningCommunity__Default">
+            <property name="showHeader" type="Boolean" default="true" label="Show Profile Header" description="Display the profile header with avatar and name"/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

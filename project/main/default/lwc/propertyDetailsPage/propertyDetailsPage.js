@@ -1,120 +1,105 @@
-import { LightningElement, api, track } from 'lwc';
-import { NavigationMixin } from 'lightning/navigation';
+import { LightningElement, api, track, wire } from 'lwc';
+import { NavigationMixin, CurrentPageReference } from 'lightning/navigation';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import { publish, MessageContext } from 'lightning/messageService';
+import CART_CHANGED_CHANNEL from '@salesforce/messageChannel/CartChanged__c';
+import getPropertyDetails from '@salesforce/apex/PropertyController.getPropertyDetails';
+import addToCart from '@salesforce/apex/CartController.addToCart';
+import getCartSummary from '@salesforce/apex/CartController.getCartSummary';
 
 export default class PropertyDetailsPage extends NavigationMixin(LightningElement) {
     @api recordId;
-    
+
     currentImageIndex = 0;
     showInquiryModal = false;
     showScheduleModal = false;
-    
-    property = {
-        id: 'P001',
-        name: 'Luxury Waterfront Villa',
-        type: 'Villa',
-        status: 'Available',
-        price: 2500000,
-        address: '123 Ocean Drive',
-        city: 'Miami Beach',
-        state: 'Florida',
-        zipCode: '33139',
-        country: 'USA',
-        bedrooms: 5,
-        bathrooms: 4.5,
-        squareFeet: 4500,
-        lotSize: 8000,
-        yearBuilt: 2020,
-        description: 'Experience luxury living at its finest in this stunning waterfront villa. This meticulously designed residence offers breathtaking ocean views, premium finishes, and state-of-the-art amenities. The open-concept floor plan seamlessly blends indoor and outdoor living spaces, perfect for entertaining guests or enjoying peaceful family moments. With five spacious bedrooms, four and a half elegant bathrooms, and over 4,500 square feet of living space, this home provides the ultimate in comfort and sophistication.',
-        features: [
-            { id: 'f1', name: 'Ocean View' },
-            { id: 'f2', name: 'Swimming Pool' },
-            { id: 'f3', name: 'Private Beach Access' },
-            { id: 'f4', name: 'Gourmet Kitchen' },
-            { id: 'f5', name: 'Smart Home Technology' },
-            { id: 'f6', name: 'Home Theater' },
-            { id: 'f7', name: 'Wine Cellar' },
-            { id: 'f8', name: 'Three Car Garage' }
-        ],
-        amenities: [
-            { id: 'a1', icon: '🏊', name: 'Swimming Pool', available: true },
-            { id: 'a2', icon: '🏋️', name: 'Fitness Center', available: true },
-            { id: 'a3', icon: '🚗', name: 'Parking', available: true },
-            { id: 'a4', icon: '🔒', name: '24/7 Security', available: true },
-            { id: 'a5', icon: '🌳', name: 'Garden', available: true },
-            { id: 'a6', icon: '🎾', name: 'Tennis Court', available: false },
-            { id: 'a7', icon: '🏖️', name: 'Beach Access', available: true },
-            { id: 'a8', icon: '📡', name: 'High Speed Internet', available: true }
-        ],
-        images: [
-            { id: 'img1', url: 'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800', alt: 'Living Room' },
-            { id: 'img2', url: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800', alt: 'Kitchen' },
-            { id: 'img3', url: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800', alt: 'Bedroom' },
-            { id: 'img4', url: 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800', alt: 'Bathroom' },
-            { id: 'img5', url: 'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=800', alt: 'Pool' }
-        ],
-        agent: {
-            name: 'Sarah Johnson',
-            phone: '(305) 555-0123',
-            email: 'sarah.johnson@realty.com'
-        },
-        rating: 4.8,
-        reviewCount: 24
-    };
+    isAddingToCart = false;
 
-    /* 
-        inquiryForm = {
-            name: '',
-            email: '',
-            phone: '',
-            message: ''
-        };
+    propertyData;
+    propertyError;
+    isLoading = true;
 
-        viewingForm = {
-            date: '',
-            time: '',
-            name: '',
-            phone: ''
-        };
-    */
-    get ratingStars() {
-        const stars = [];
-        const fullStars = Math.floor(this.property.rating);
-        const hasHalfStar = this.property.rating % 1 >= 0.5;
-        const emptyStars = 5 - Math.ceil(this.property.rating);
+    @wire(MessageContext)
+    messageContext;
 
-        // Full stars - Use boolean properties
-        for (let i = 0; i < fullStars; i++) {
-            stars.push({ 
-                id: `star-full-${i}`, 
-                isFull: true,      // ✅ Boolean property
-                isHalf: false, 
-                isEmpty: false 
-            });
+    @wire(CurrentPageReference)
+    setPageReference(pageRef){
+        if(pageRef){
+            this.recordId = pageRef?.state?.c__recordId;
         }
-
-        // Half star
-        if (hasHalfStar) {
-            stars.push({ 
-                id: 'star-half', 
-                isFull: false, 
-                isHalf: true,      // ✅ Boolean property
-                isEmpty: false 
-            });
-        }
-
-        // Empty stars
-        for (let i = 0; i < emptyStars; i++) {
-            stars.push({ 
-                id: `star-empty-${i}`, 
-                isFull: false, 
-                isHalf: false, 
-                isEmpty: true      // ✅ Boolean property
-            });
-        }
-
-        return stars;
     }
+
+    // Wire adapter to fetch property details
+    @wire(getPropertyDetails, { propertyId: '$recordId' })
+    wiredPropertyDetails({ error, data }) {
+        this.isLoading = true;
+        console.log('Property details: ', data);
+        if (data) {
+            this.propertyData = data;
+            this.propertyError = undefined;
+            this.isLoading = false;
+        } else if (error) {
+            this.propertyError = error;
+            this.propertyData = undefined;
+            this.isLoading = false;
+            this.showToast('Error', 'Failed to load property details', 'error');
+        }
+    }
+
+    // Getter to access property object from wire data
+    get property() {
+        if (!this.propertyData || !this.propertyData.property) {
+            return null;
+        }
+        return this.propertyData.property;
+    }
+
+    // Getter for property images
+    get images() {
+        if (!this.propertyData || !this.propertyData.images) {
+            return [];
+        }
+        return this.propertyData.images.map(img => ({
+            id: img.Id,
+            url: img.Image_Url__c,
+            alt: img.Name,
+            type: img.Type__c
+        }));
+    }
+
+    // Getter for property amenities
+    get amenities() {
+        if (!this.propertyData || !this.propertyData.amenities) {
+            return [];
+        }
+        return this.propertyData.amenities.map(amenity => ({
+            id: amenity.Id,
+            name: amenity.Amenities__r?.Name || amenity.Name,
+            description: amenity.Description__c,
+            available: amenity.Active__c
+        }));
+    }
+
+    // Getter for property features
+    get features() {
+        if (!this.propertyData || !this.propertyData.features) {
+            return [];
+        }
+        return this.propertyData.features.map(feature => ({
+            id: feature.Id,
+            name: feature.Feature__r?.Name || feature.Name,
+            description: feature.Description__c
+        }));
+    }
+
+    // Getter for location information
+    get location() {
+        if (!this.property || !this.property.Location_Site__r) {
+            return null;
+        }
+        return this.property.Location_Site__r;
+    }
+
 
     // Handle carousel image change
     handleImageChange(event) {
@@ -131,68 +116,104 @@ export default class PropertyDetailsPage extends NavigationMixin(LightningElemen
     }
 
     get formattedPrice() {
+        if (!this.property || !this.property.Listing_price__c) return '$0';
         return new Intl.NumberFormat('en-US', {
             style: 'currency',
-            currency: 'USD',
+            currency: this.property.CurrencyIsoCode || 'USD',
             minimumFractionDigits: 0
-        }).format(this.property.price);
+        }).format(this.property.Listing_price__c);
     }
 
     get formattedAddress() {
-        return `${this.property.address}, ${this.property.city}, ${this.property.state} ${this.property.zipCode}`;
+        if (!this.property) return '';
+        const address = this.property.Address__c || '';
+        const city = this.location?.City__c || '';
+        const state = this.location?.State__c || '';
+        const zip = this.location?.ZIPPostal_code__c || '';
+        return `${address}${city ? ', ' + city : ''}${state ? ', ' + state : ''}${zip ? ' ' + zip : ''}`;
     }
 
     get statusClass() {
+        if (!this.property) return 'property-status-badge';
         const statusMap = {
             'Available': 'status-available',
             'Under Contract': 'status-under-contract',
             'Sold': 'status-sold',
             'Pending': 'status-pending'
         };
-        return `property-status-badge ${statusMap[this.property.status] || ''}`;
-    }
-
-    get ratingStars() {
-        const stars = [];
-        const fullStars = Math.floor(this.property.rating);
-        const hasHalfStar = this.property.rating % 1 >= 0.5;
-        const emptyStars = 5 - Math.ceil(this.property.rating);
-
-        // Full stars
-        for (let i = 0; i < fullStars; i++) {
-            stars.push({ id: `star-full-${i}`, type: 'full' });
-        }
-
-        // Half star
-        if (hasHalfStar) {
-            stars.push({ id: 'star-half', type: 'half' });
-        }
-
-        // Empty stars
-        for (let i = 0; i < emptyStars; i++) {
-            stars.push({ id: `star-empty-${i}`, type: 'empty' });
-        }
-
-        return stars;
+        return `property-status-badge ${statusMap[this.property.Status__c] || ''}`;
     }
 
     get pricePerSqFt() {
-        const perSqFt = this.property.price / this.property.squareFeet;
+        if (!this.property || !this.property.Price_Per_SqFt__c) return '$0';
         return new Intl.NumberFormat('en-US', {
             style: 'currency',
-            currency: 'USD',
+            currency: this.property.CurrencyIsoCode || 'USD',
             minimumFractionDigits: 0
-        }).format(perSqFt);
+        }).format(this.property.Price_Per_SqFt__c);
+    }
+
+    // Property details getters
+    get propertyName() {
+        return this.property?.Name || '';
+    }
+
+    get propertyType() {
+        return this.property?.Property_Type__c || '';
+    }
+
+    get propertyStatus() {
+        return this.property?.Status__c || '';
+    }
+
+    get bedrooms() {
+        return this.property?.Bedrooms__c || 0;
+    }
+
+    get bathrooms() {
+        return this.property?.Bathrooms__c || 0;
+    }
+
+    get squareFeet() {
+        return this.property?.Square_footage__c || 0;
+    }
+
+    get lotSize() {
+        return this.property?.Lot_size__c || 0;
+    }
+
+    get yearBuilt() {
+        return this.property?.Built_Year__c || '';
+    }
+
+    get description() {
+        return this.property?.Description__c || '';
+    }
+
+    get hasProperty() {
+        return this.property !== null && this.property !== undefined;
+    }
+
+    get hasImages() {
+        return this.images && this.images.length > 0;
+    }
+
+    get hasFeatures() {
+        return this.features && this.features.length > 0;
+    }
+
+    get hasAmenities() {
+        return this.amenities && this.amenities.length > 0;
     }
     
     handleBack() {
-        this[NavigationMixin.Navigate]({
-            type: 'standard__objectPage',
+        this.pageReference = {
+            type: 'comm__namedPage',
             attributes: {
-                objectApiName: 'Property__c',
-                actionName: 'list'
+                name: 'properties__c'
             }
-        });
+        };
+        this[NavigationMixin.Navigate](this.pageReference);
     }
 
     handleScheduleViewing() {
@@ -208,7 +229,12 @@ export default class PropertyDetailsPage extends NavigationMixin(LightningElemen
     }
 
     handleContactAgent() {
-        this.showToast('Info', `Calling ${this.property.agent.name}...`, 'info');
+        if (this.property?.PrimaryAgent__c) {
+            this.showToast('Info', 'Contacting agent...', 'info');
+            // In real scenario: Navigate to agent detail or initiate contact
+        } else {
+            this.showToast('Info', 'No agent assigned to this property', 'info');
+        }
     }
 
     handleShareProperty() {
@@ -222,6 +248,48 @@ export default class PropertyDetailsPage extends NavigationMixin(LightningElemen
 
     handleSaveFavorite() {
         this.showToast('Success', 'Property saved to favorites!', 'success');
+    }
+
+    handleAddToCart() {
+        if (!this.recordId) {
+            this.showToast('Error', 'Property ID not found', 'error');
+            return;
+        }
+
+        this.isAddingToCart = true;
+
+        // Call Apex method to add property to cart
+        addToCart({ propertyId: this.recordId, quantity: 1 })
+            .then(result => {
+                if (result.success) {
+                    this.showToast('Success', 'Property added to cart successfully!', 'success');
+
+                    // Get updated cart summary
+                    return getCartSummary();
+                } else {
+                    throw new Error(result.message || 'Failed to add property to cart');
+                }
+            })
+            .then(cartSummary => {
+                // Publish message to update cart UI via Lightning Message Service
+                if (cartSummary) {
+                    const message = {
+                        cartId: cartSummary.cartId,
+                        itemCount: cartSummary.itemCount || 0,
+                        totalAmount: cartSummary.totalAmount || 0,
+                        action: 'add'
+                    };
+                    publish(this.messageContext, CART_CHANGED_CHANNEL, message);
+                }
+            })
+            .catch(error => {
+                console.error('Error adding to cart:', error);
+                const errorMessage = error.body?.message || error.message || 'Failed to add property to cart';
+                this.showToast('Error', errorMessage, 'error');
+            })
+            .finally(() => {
+                this.isAddingToCart = false;
+            });
     }
 
     handleCloseScheduleModal() {

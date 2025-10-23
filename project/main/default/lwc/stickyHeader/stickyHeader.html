@@ -1,0 +1,59 @@
+<template>
+    <div class="sticky-header">
+        <div class="header-container">
+            <!-- Logo Section -->
+            <div class="logo-section">
+                <a href="/" class="logo-link">
+                    <template if:true={logoImage}>
+                        <img src={logoImage} alt={headerTitle} class="logo-image" />
+                    </template>
+                    <template if:false={logoImage}>
+                        <lightning-icon icon-name="standard:home" size="medium" alternative-text="Home"></lightning-icon>
+                    </template>
+                    <span class="logo-text">{headerTitle}</span>
+                </a>
+            </div>
+
+            <!-- Actions Section -->
+            <div class="actions-section">
+                <!-- Login/User Info -->
+                <template if:true={isGuestUser}>
+                    <lightning-button
+                        label="Login"
+                        variant="brand"
+                        onclick={handleLogin}
+                        class="login-button">
+                    </lightning-button>
+                </template>
+
+                <template if:false={isGuestUser}>
+                    <div class="user-info" onclick={handleUserClick}>
+                        <lightning-icon icon-name="standard:user" size="small" alternative-text="User"></lightning-icon>
+                        <span class="user-text">My Account</span>
+                    </div>
+                </template>
+
+                <!-- Cart Icon with Badge -->
+                <div class="cart-container" onclick={handleCartClick}>
+                    <div class="cart-icon-wrapper">
+                        <lightning-icon 
+                            icon-name="utility:cart" 
+                            size="medium" 
+                            alternative-text="Shopping Cart"
+                            class="cart-icon">
+                        </lightning-icon>
+                        <template if:true={showCartBadge}>
+                            <span class="cart-badge">{cartBadgeLabel}</span>
+                        </template>
+                    </div>
+                    <template if:false={isGuestUser}>
+                        <div class="cart-details">
+                            <span class="cart-text">Cart</span>
+                            <span class="cart-amount">{formattedCartTotal}</span>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

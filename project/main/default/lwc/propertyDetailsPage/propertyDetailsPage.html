@@ -1,64 +1,84 @@
 <template>
     <div class="property-details-container">
-        
-        <!-- Back Button -->
-        <div class="back-button-container">
-            <button class="back-button" onclick={handleBack}>
-                <svg class="back-button-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                </svg>
-                Back to Listings
-            </button>
-        </div>
 
-        <!-- Property Header -->
-        <div class="property-header">
-            <div class="property-title-section">
-                <h1 class="property-title">{property.name}</h1>
-                <p class="property-subtitle">{formattedAddress}</p>
-                <div class="slds-m-top_small">
-                    <span class={statusClass}>{property.status}</span>
-                    <span class="badge badge-info slds-m-left_small">{property.type}</span>
+        <!-- Loading Spinner -->
+        <template if:true={isLoading}>
+            <div class="slds-spinner_container">
+                <div role="status" class="slds-spinner slds-spinner_medium">
+                    <span class="slds-assistive-text">Loading property details...</span>
+                    <div class="slds-spinner__dot-a"></div>
+                    <div class="slds-spinner__dot-b"></div>
                 </div>
-                <p class="property-price slds-m-top_small">{formattedPrice}</p>
             </div>
-        </div>
+        </template>
 
-        <!-- Image Carousel Component -->
-        <c-image-carousel
-            images={property.images}
-            height="500px"
-            show-thumbnails=true
-            show-indicators=true
-            show-counter=true
-            auto-play=true
-            onimagechange={handleImageChange}
-            onimageclick={handleImageClick}>
-        </c-image-carousel>
-
-        <!-- Rating -->
-        <div class="rating-container">
-            <div class="rating-stars rating-readonly">
-                <template for:each={ratingStars} for:item="star">
-                    <!-- ✅ Uses boolean properties directly -->
-                    <template if:true={star.isFull}>
-                        <span key={star.id} class="star star-filled">★</span>
-                    </template>
-                    <template if:true={star.isHalf}>
-                        <span key={star.id} class="star star-filled">★</span>
-                    </template>
-                    <template if:true={star.isEmpty}>
-                        <span key={star.id} class="star star-empty">★</span>
-                    </template>
-                </template>
+        <!-- Error Message -->
+        <template if:true={propertyError}>
+            <div class="slds-notify slds-notify_alert slds-alert_error" role="alert">
+                <span class="slds-assistive-text">error</span>
+                <h2>Error loading property details. Please try again.</h2>
             </div>
-            <span class="rating-value">{property.rating}</span>
-            <span class="rating-count">({property.reviewCount} reviews)</span>
-        </div>
+        </template>
+
+        <!-- Main Content - Only show when property data is loaded -->
+        <template if:true={hasProperty}>
+            <!-- Back Button -->
+            <div class="back-button-container">
+                <button class="back-button" onclick={handleBack}>
+                    <svg class="back-button-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                    </svg>
+                    Back to Listings
+                </button>
+            </div>
+
+            <!-- Property Header -->
+            <div class="property-header">
+                <div class="property-title-section">
+                    <h1 class="property-title">{propertyName}</h1>
+                    <p class="property-subtitle">{formattedAddress}</p>
+                    <div class="slds-m-top_small">
+                        <span class={statusClass}>{propertyStatus}</span>
+                        <span class="badge badge-info slds-m-left_small">{propertyType}</span>
+                    </div>
+                    <p class="property-price slds-m-top_small">{formattedPrice}</p>
+                </div>
+            </div>
+
+            <!-- Image Carousel Component -->
+            <template if:true={hasImages}>
+                <c-image-carousel
+                    images={images}
+                    height="500px"
+                    show-thumbnails=true
+                    show-indicators=true
+                    show-counter=true
+                    auto-play=true
+                    onimagechange={handleImageChange}
+                    onimageclick={handleImageClick}>
+                </c-image-carousel>
+            </template>
+
+            <template if:false={hasImages}>
+                <div class="slds-m-vertical_large slds-text-align_center slds-text-color_weak">
+                    <p>No images available for this property</p>
+                </div>
+            </template>
 
         <!-- CTA Buttons -->
         <div class="cta-button-group">
-            <button class="cta-button cta-primary" onclick={handleScheduleViewing}>
+            <button class="cta-button cta-primary" onclick={handleAddToCart} disabled={isAddingToCart}>
+                <svg class="cta-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+                <template if:true={isAddingToCart}>
+                    Adding to Cart...
+                </template>
+                <template if:false={isAddingToCart}>
+                    Add to Cart
+                </template>
+            </button>
+            <button class="cta-button cta-secondary" onclick={handleScheduleViewing}>
                 <svg class="cta-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
@@ -106,23 +126,23 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                         </svg>
                         <span class="info-label">Bedrooms</span>
-                        <span class="info-value">{property.bedrooms}</span>
+                        <span class="info-value">{bedrooms}</span>
                     </div>
                     <div class="property-info-item">
                         <span class="info-label">Bathrooms</span>
-                        <span class="info-value">{property.bathrooms}</span>
+                        <span class="info-value">{bathrooms}</span>
                     </div>
                     <div class="property-info-item">
                         <span class="info-label">Square Feet</span>
-                        <span class="info-value">{property.squareFeet} sq ft</span>
+                        <span class="info-value">{squareFeet} sq ft</span>
                     </div>
                     <div class="property-info-item">
                         <span class="info-label">Lot Size</span>
-                        <span class="info-value">{property.lotSize} sq ft</span>
+                        <span class="info-value">{lotSize} sq ft</span>
                     </div>
                     <div class="property-info-item">
                         <span class="info-label">Year Built</span>
-                        <span class="info-value">{property.yearBuilt}</span>
+                        <span class="info-value">{yearBuilt}</span>
                     </div>
                     <div class="property-info-item">
                         <span class="info-label">Price/Sq Ft</span>
@@ -132,123 +152,111 @@
             </div>
         </div>
 
-        <!-- Description -->
-        <div class="card-container slds-m-top_large">
-            <div class="card-header">
-                <h2 class="card-title">Description</h2>
-            </div>
-            <div class="card-body">
-                <p class="slds-text-body_regular">{property.description}</p>
-            </div>
-        </div>
-
-        <!-- Features -->
-        <div class="card-container slds-m-top_large">
-            <div class="card-header">
-                <h2 class="card-title">Key Features</h2>
-            </div>
-            <div class="card-body">
-                <div class="slds-grid slds-wrap slds-gutters_small">
-                    <template for:each={property.features} for:item="feature">
-                        <div key={feature.id} class="slds-col slds-size_1-of-2 slds-medium-size_1-of-3 slds-large-size_1-of-4">
-                            <span class="badge badge-outline badge-info slds-m-bottom_small">
-                                {feature.name}
-                            </span>
-                        </div>
-                    </template>
+            <!-- Description -->
+            <div class="card-container slds-m-top_large">
+                <div class="card-header">
+                    <h2 class="card-title">Description</h2>
+                </div>
+                <div class="card-body">
+                    <p class="slds-text-body_regular">{description}</p>
                 </div>
             </div>
-        </div>
 
-        <!-- Amenities -->
-        <div class="card-container slds-m-top_large">
-            <div class="card-header">
-                <h2 class="card-title">Amenities</h2>
-            </div>
-            <div class="card-body">
-                <div class="slds-grid slds-wrap slds-gutters">
-                    <template for:each={property.amenities} for:item="amenity">
-                        <div key={amenity.id} class="slds-col slds-size_1-of-2 slds-medium-size_1-of-4">
-                            <div class="slds-m-bottom_medium">
-                                <span style="font-size: 2rem;">{amenity.icon}</span>
-                                <p class="slds-text-body_small slds-m-top_x-small">{amenity.name}</p>
-                                <template if:true={amenity.available}>
-                                    <span class="badge badge-small badge-success">Available</span>
-                                </template>
-                                <template if:false={amenity.available}>
-                                    <span class="badge badge-small badge-default">Not Available</span>
-                                </template>
-                            </div>
-                        </div>
-                    </template>
-                </div>
-            </div>
-        </div>
-
-        <!-- Location -->
-        <div class="card-container slds-m-top_large">
-            <div class="card-header">
-                <h2 class="card-title">Location</h2>
-            </div>
-            <div class="card-body">
-                <p class="slds-text-heading_small">{formattedAddress}</p>
-                <p class="slds-text-body_small slds-text-color_weak slds-m-top_x-small">
-                    {property.city}, {property.state} {property.zipCode}, {property.country}
-                </p>
-                <div class="slds-m-top_medium" style="height: 300px; background: #f3f3f3; display: flex; align-items: center; justify-content: center; border-radius: 0.5rem;">
-                    <p class="slds-text-color_weak">Map View (Google Maps Integration)</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Agent Info -->
-        <div class="card-container slds-m-top_large slds-m-bottom_xx-large">
-            <div class="card-header">
-                <h2 class="card-title">Listing Agent</h2>
-            </div>
-            <div class="card-body">
-                <div class="slds-media">
-                    <div class="slds-media__figure">
-                        <span class="slds-avatar slds-avatar_large">
-                            <svg class="slds-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-                            </svg>
-                        </span>
+            <!-- Features -->
+            <template if:true={hasFeatures}>
+                <div class="card-container slds-m-top_large">
+                    <div class="card-header">
+                        <h2 class="card-title">Key Features</h2>
                     </div>
-                    <div class="slds-media__body">
-                        <h3 class="slds-text-heading_small">{property.agent.name}</h3>
-                        <p class="slds-text-body_small slds-m-top_x-small">
-                            <strong>Phone:</strong> {property.agent.phone}
-                        </p>
-                        <p class="slds-text-body_small">
-                            <strong>Email:</strong> {property.agent.email}
-                        </p>
-                        <button class="btn btn-primary slds-m-top_small" onclick={handleContactAgent}>
-                            Contact Agent
-                        </button>
+                    <div class="card-body">
+                        <div class="slds-grid slds-wrap slds-gutters_small">
+                            <template for:each={features} for:item="feature">
+                                <div key={feature.id} class="slds-col slds-size_1-of-2 slds-medium-size_1-of-3 slds-large-size_1-of-4">
+                                    <span class="badge badge-outline badge-info slds-m-bottom_small">
+                                        {feature.name}
+                                    </span>
+                                </div>
+                            </template>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
+            </template>
 
-        <!-- Schedule Viewing Modal -->
-         <template if:true={showScheduleModal}>
-            <c-schedule-viewing-modal
-                property-id={property.id}
-                property-name={property.name}
-                onclose={handleCloseScheduleModal}
-                onscheduleviewing={handleScheduleViewingSubmit}>
-            </c-schedule-viewing-modal>
-        </template>
-        
-        <!-- Inquiry Modal -->
-         <template if:true={showInquiryModal}>
-            <c-submit-inquiry-modal
-                property-id={property.id}
-                property-name={property.name}
-                onclose={handleCloseInquiryModal}
-                onsubmitinquiry={handleInquirySubmit}>
-            </c-submit-inquiry-modal>
+            <!-- Amenities -->
+            <template if:true={hasAmenities}>
+                <div class="card-container slds-m-top_large">
+                    <div class="card-header">
+                        <h2 class="card-title">Amenities</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="slds-grid slds-wrap slds-gutters">
+                            <template for:each={amenities} for:item="amenity">
+                                <div key={amenity.id} class="slds-col slds-size_1-of-2 slds-medium-size_1-of-4">
+                                    <div class="slds-m-bottom_medium">
+                                        <p class="slds-text-body_small slds-m-top_x-small">{amenity.name}</p>
+                                        <template if:true={amenity.available}>
+                                            <span class="badge badge-small badge-success">Available</span>
+                                        </template>
+                                        <template if:false={amenity.available}>
+                                            <span class="badge badge-small badge-default">Not Available</span>
+                                        </template>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+            </template>
+
+            <!-- Location -->
+            <template if:true={location}>
+                <div class="card-container slds-m-top_large">
+                    <div class="card-header">
+                        <h2 class="card-title">Location</h2>
+                    </div>
+                    <div class="card-body">
+                        <p class="slds-text-heading_small">{formattedAddress}</p>
+                        <template if:true={location.County__c}>
+                            <p class="slds-text-body_small slds-text-color_weak slds-m-top_x-small">
+                                County: {location.County__c}
+                            </p>
+                        </template>
+                        <template if:true={location.School_district__c}>
+                            <p class="slds-text-body_small slds-text-color_weak">
+                                School District: {location.School_district__c}
+                            </p>
+                        </template>
+                        <template if:true={location.Walkability_score_1_100__c}>
+                            <p class="slds-text-body_small slds-text-color_weak">
+                                Walkability Score: {location.Walkability_score_1_100__c}
+                            </p>
+                        </template>
+                        <div class="slds-m-top_medium" style="height: 300px; background: #f3f3f3; display: flex; align-items: center; justify-content: center; border-radius: 0.5rem;">
+                            <p class="slds-text-color_weak">Map View (Google Maps Integration)</p>
+                        </div>
+                    </div>
+                </div>
+            </template>
+
+            <!-- Schedule Viewing Modal -->
+            <template if:true={showScheduleModal}>
+                <c-schedule-viewing-modal
+                    property-id={recordId}
+                    property-name={propertyName}
+                    onclose={handleCloseScheduleModal}
+                    onscheduleviewing={handleScheduleViewingSubmit}>
+                </c-schedule-viewing-modal>
+            </template>
+
+            <!-- Inquiry Modal -->
+            <template if:true={showInquiryModal}>
+                <c-submit-inquiry-modal
+                    property-id={recordId}
+                    property-name={propertyName}
+                    onclose={handleCloseInquiryModal}
+                    onsubmitinquiry={handleInquirySubmit}>
+                </c-submit-inquiry-modal>
+            </template>
         </template>
     </div>
 </template>

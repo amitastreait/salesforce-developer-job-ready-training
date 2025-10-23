@@ -1,0 +1,286 @@
+<template>
+    <div class="home-page-container">
+        <!-- Loading Spinner -->
+        <template if:true={isLoading}>
+            <div class="loading-container">
+                <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+            </div>
+        </template>
+
+        <!-- Main Content -->
+        <template if:false={isLoading}>
+            
+            <!-- Hero Section -->
+            <section class="hero-section">
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <h1 class="hero-title">{welcomeMessage}</h1>
+                        <p class="hero-subtitle">{heroSubtitle}</p>
+                        <lightning-button
+                            label={ctaButtonText}
+                            variant="brand"
+                            onclick={handleCtaClick}
+                            class="hero-cta-button">
+                        </lightning-button>
+                    </div>
+                    <div class="hero-image">
+                        <template if:true={heroImage}>
+                            <img src={heroImage} alt={heroTitle} class="hero-img" />
+                        </template>
+                        <template if:false={heroImage}>
+                            <div class="hero-placeholder">
+                                <lightning-icon icon-name="custom:custom85" size="large"></lightning-icon>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Promotional Banner -->
+            <template if:true={showBanner}>
+                <section class="promotional-banner">
+                    <div class="banner-content">
+                        <div class="banner-text">
+                            <h2 class="banner-title">{promotionalBanner.title}</h2>
+                            <p class="banner-subtitle">{promotionalBanner.subtitle}</p>
+                            <lightning-button
+                                label={promotionalBanner.ctaText}
+                                variant="brand-outline"
+                                class="banner-cta">
+                            </lightning-button>
+                        </div>
+                        <template if:true={promotionalBanner.imageUrl}>
+                            <div class="banner-image">
+                                <img src={promotionalBanner.imageUrl} alt={promotionalBanner.title} />
+                            </div>
+                        </template>
+                    </div>
+                </section>
+            </template>
+
+            <!-- Categories Section -->
+            <template if:true={showCategories}>
+                <template if:true={hasCategories}>
+                    <section class="categories-section">
+                        <div class="section-header">
+                            <h2 class="section-title">Shop by Category</h2>
+                            <p class="section-subtitle">Browse our collection</p>
+                        </div>
+                        
+                        <div class="categories-grid">
+                            <template for:each={categories} for:item="category">
+                                <div key={category.id} 
+                                     class="category-card"
+                                     data-category-id={category.id}
+                                     onclick={handleCategoryClick}>
+                                    <div class="category-image-wrapper">
+                                        <img src={category.imageUrl} alt={category.name} class="category-image" />
+                                        <div class="category-overlay">
+                                            <span class="category-product-count">{category.productCount} Products</span>
+                                        </div>
+                                    </div>
+                                    <div class="category-info">
+                                        <h3 class="category-name">{category.name}</h3>
+                                        <p class="category-description">{category.description}</p>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+                    </section>
+                </template>
+            </template>
+
+            <!-- Featured Properties Section -->
+            <template if:true={showFeaturedProperties}>
+                <template if:true={hasFeaturedProperties}>
+                    <section class="featured-properties-section">
+                        <div class="section-header">
+                            <h2 class="section-title">Featured Properties</h2>
+                            <p class="section-subtitle">Discover your dream home</p>
+                        </div>
+
+                        <div class="properties-carousel-container">
+                            <button class="carousel-nav carousel-nav-prev" onclick={handlePrevSlide}>
+                                <lightning-icon icon-name="utility:chevronleft" size="medium"></lightning-icon>
+                            </button>
+
+                            <div class="properties-carousel-wrapper">
+                                <div class="properties-carousel">
+                                    <template for:each={featuredProperties} for:item="property">
+                                        <div key={property.id}
+                                             class="property-card"
+                                             data-property-id={property.id}
+                                             onclick={handlePropertyClick}>
+
+                                            <!-- Property Image -->
+                                            <div class="property-image-wrapper">
+                                                <img src={property.imageUrl} alt={property.name} class="property-image" />
+
+                                                <!-- Badges -->
+                                                <div class="property-badges">
+                                                    <template if:true={property.isNew}>
+                                                        <span class="badge badge-new">New Listing</span>
+                                                    </template>
+                                                    <template if:true={property.isLuxury}>
+                                                        <span class="badge badge-luxury">Luxury</span>
+                                                    </template>
+                                                </div>
+
+                                                <!-- Quick Actions -->
+                                                <div class="property-quick-actions">
+                                                    <button
+                                                        class="quick-action-btn"
+                                                        data-property-id={property.id}
+                                                        onclick={handleFavoriteProperty}
+                                                        title="Add to Favorites">
+                                                        <lightning-icon icon-name="utility:favorite" size="small"></lightning-icon>
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            <!-- Property Info -->
+                                            <div class="property-info">
+                                                <div class="property-header">
+                                                    <h3 class="property-name">{property.name}</h3>
+                                                    <span class="property-type">{property.propertyType}</span>
+                                                </div>
+                                                <p class="property-address">
+                                                    <lightning-icon icon-name="utility:location" size="x-small"></lightning-icon>
+                                                    {property.city}
+                                                </p>
+
+                                                <!-- Property Features -->
+                                                <div class="property-features">
+                                                    <div class="feature-item">
+                                                        <lightning-icon icon-name="utility:record" size="x-small"></lightning-icon>
+                                                        <span>{property.bedrooms} Beds</span>
+                                                    </div>
+                                                    <div class="feature-item">
+                                                        <lightning-icon icon-name="utility:record" size="x-small"></lightning-icon>
+                                                        <span>{property.bathrooms} Baths</span>
+                                                    </div>
+                                                    <div class="feature-item">
+                                                        <lightning-icon icon-name="utility:expand_alt" size="x-small"></lightning-icon>
+                                                        <span>{property.formattedSquareFootage} sq ft</span>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Additional Features -->
+                                                <div class="property-amenities">
+                                                    <template if:true={property.hasPool}>
+                                                        <span class="amenity-badge">Pool</span>
+                                                    </template>
+                                                    <template if:true={property.hasFireplace}>
+                                                        <span class="amenity-badge">Fireplace</span>
+                                                    </template>
+                                                    <template if:true={property.garageSpaces}>
+                                                        <span class="amenity-badge">{property.garageSpaces} Car Garage</span>
+                                                    </template>
+                                                </div>
+
+                                                <!-- Price -->
+                                                <div class="property-price">
+                                                    <span class="price-current">{property.formattedPrice}</span>
+                                                    <span class="price-per-sqft">{property.formattedPricePerSqFt}/sq ft</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+
+                            <button class="carousel-nav carousel-nav-next" onclick={handleNextSlide}>
+                                <lightning-icon icon-name="utility:chevronright" size="medium"></lightning-icon>
+                            </button>
+                        </div>
+
+                        <!-- Carousel Dots -->
+                        <div class="carousel-dots">
+                            <template for:each={carouselDots} for:item="dot">
+                                <button key={dot.index} class={dot.className}></button>
+                            </template>
+                        </div>
+                    </section>
+                </template>
+            </template>
+
+            <!-- Features Section -->
+            <section class="features-section">
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <lightning-icon icon-name="utility:home" size="large" class="feature-icon"></lightning-icon>
+                        <h3 class="feature-title">Expert Guidance</h3>
+                        <p class="feature-description">Professional real estate agents</p>
+                    </div>
+
+                    <div class="feature-item">
+                        <lightning-icon icon-name="utility:search" size="large" class="feature-icon"></lightning-icon>
+                        <h3 class="feature-title">Easy Search</h3>
+                        <p class="feature-description">Find your perfect home quickly</p>
+                    </div>
+
+                    <div class="feature-item">
+                        <lightning-icon icon-name="utility:reassign" size="large" class="feature-icon"></lightning-icon>
+                        <h3 class="feature-title">Virtual Tours</h3>
+                        <p class="feature-description">View properties from anywhere</p>
+                    </div>
+
+                    <div class="feature-item">
+                        <lightning-icon icon-name="utility:shield" size="large" class="feature-icon"></lightning-icon>
+                        <h3 class="feature-title">Secure Transactions</h3>
+                        <p class="feature-description">Safe & trusted process</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Newsletter Section -->
+            <section class="newsletter-section">
+                <div class="newsletter-content">
+                    <div class="newsletter-icon-wrapper">
+                        <lightning-icon icon-name="utility:email" size="large" class="newsletter-icon"></lightning-icon>
+                    </div>
+                    <h2 class="newsletter-title">Stay Updated on New Listings</h2>
+                    <p class="newsletter-subtitle">Get exclusive property alerts and real estate insights delivered to your inbox</p>
+
+                    <div class="newsletter-form-wrapper">
+                        <div class="newsletter-form">
+                            <div class="input-wrapper">
+                                <lightning-input
+                                    type="email"
+                                    placeholder="Enter your email address"
+                                    value={newsletterEmail}
+                                    onchange={handleEmailChange}
+                                    class="newsletter-input"
+                                    variant="label-hidden">
+                                </lightning-input>
+                            </div>
+                            <lightning-button
+                                label="Subscribe Now"
+                                variant="brand"
+                                onclick={handleNewsletterSubscribe}
+                                disabled={isSubscribing}
+                                class="newsletter-button">
+                            </lightning-button>
+                        </div>
+                        <template if:true={newsletterMessage}>
+                            <div class={newsletterMessageClass}>
+                                <lightning-icon
+                                    icon-name={newsletterMessageIcon}
+                                    size="x-small"
+                                    class="message-icon">
+                                </lightning-icon>
+                                <span>{newsletterMessage}</span>
+                            </div>
+                        </template>
+                    </div>
+
+                    <p class="newsletter-disclaimer">
+                        <lightning-icon icon-name="utility:lock" size="xx-small"></lightning-icon>
+                        Your email is safe with us. We respect your privacy.
+                    </p>
+                </div>
+            </section>
+
+        </template>
+    </div>
+</template>
