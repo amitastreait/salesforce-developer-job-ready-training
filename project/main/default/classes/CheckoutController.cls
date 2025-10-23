@@ -295,8 +295,9 @@ public without sharing class CheckoutController {
             newOrder.Status = 'Activated';
             update newOrder;
 
-            // Mark cart as completed
+            // Mark cart as completed (don't delete items, just mark as completed)
             cart.Status__c = 'Completed';
+            cart.Last_Modified_Date_Time__c = System.now();
             update cart;
 
             // Prepare result
@@ -305,6 +306,7 @@ public without sharing class CheckoutController {
             result.put('orderNumber', newOrder.OrderNumber);
             result.put('message', 'Order placed successfully!');
             result.put('total', checkoutInfo.get('total'));
+            result.put('cartCleared', true); // Flag to indicate cart should be cleared in UI
 
             return result;
 

@@ -103,31 +103,6 @@
                             onclick={handleViewDetails}
                             class="action-button-primary">
                         </lightning-button>
-
-                        <!-- Secondary Actions Row -->
-                        <div class="secondary-actions slds-m-top_x-small">
-                            <!-- Contact Agent -->
-                            <lightning-button
-                                variant="neutral"
-                                label="Contact"
-                                icon-name="utility:email"
-                                title="Contact agent about this property"
-                                onclick={handleContactAgent}
-                                class="action-button-secondary">
-                            </lightning-button>
-
-                            <!-- Schedule Tour - Only show if Available -->
-                            <template if:true={isAvailable}>
-                                <lightning-button
-                                    variant="neutral"
-                                    label="Tour"
-                                    icon-name="utility:event"
-                                    title="Schedule a property tour"
-                                    onclick={handleScheduleTour}
-                                    class="action-button-secondary">
-                                </lightning-button>
-                            </template>
-                        </div>
                     </div>
                 </div>
             </lightning-card>

@@ -5,8 +5,8 @@ import getCartItems from '@salesforce/apex/CartController.getCartItems';
 import updateCartItemQuantity from '@salesforce/apex/CartController.updateCartItemQuantity';
 import removeCartItem from '@salesforce/apex/CartController.removeCartItem';
 import clearCart from '@salesforce/apex/CartController.clearCart';
-import { publish, MessageContext } from 'lightning/messageService';
-// import CART_CHANGED_CHANNEL from '@salesforce/messageChannel/CartChanged__c';
+import { publish, subscribe, unsubscribe, MessageContext } from 'lightning/messageService';
+import CART_UPDATED_CHANNEL from '@salesforce/messageChannel/Cart_Updated__c';
 
 export default class CartDetailsPage extends NavigationMixin(LightningElement) {
     cartItems = [];
@@ -21,12 +21,55 @@ export default class CartDetailsPage extends NavigationMixin(LightningElement) {
     };
 
     @api showEmptyCartMessage;
+    subscription = null;
 
     @wire(MessageContext)
     messageContext;
 
     connectedCallback() {
         this.loadCartItems();
+        this.subscribeToCartUpdates();
+    }
+
+    disconnectedCallback() {
+        this.unsubscribeFromCartUpdates();
+    }
+
+    // Subscribe to cart update events
+    subscribeToCartUpdates() {
+        if (!this.subscription) {
+            this.subscription = subscribe(
+                this.messageContext,
+                CART_UPDATED_CHANNEL,
+                (message) => this.handleCartUpdate(message)
+            );
+        }
+    }
+
+    // Unsubscribe from cart update events
+    unsubscribeFromCartUpdates() {
+        if (this.subscription) {
+            unsubscribe(this.subscription);
+            this.subscription = null;
+        }
+    }
+
+    // Handle cart update message
+    handleCartUpdate(message) {
+        if (message.cartCleared) {
+            // Clear the cart items in UI
+            this.cartItems = [];
+            this.cartSummary = {
+                subtotal: 0,
+                tax: 0,
+                shipping: 0,
+                total: 0,
+                itemCount: 0
+            };
+        } else {
+            // Reload cart items for other updates
+            this.loadCartItems();
+        }
     }
 
     // Load all cart items
@@ -206,7 +249,7 @@ export default class CartDetailsPage extends NavigationMixin(LightningElement) {
             cartUpdated: true,
             timestamp: new Date().getTime()
         };
-        // publish(this.messageContext, CART_CHANGED_CHANNEL, message);
+        publish(this.messageContext, CART_UPDATED_CHANNEL, message);
     }
 
     // Format currency

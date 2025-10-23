@@ -1,0 +1,121 @@
+<template>
+    <div class="my-properties-container">
+        <!-- Header Section -->
+        <div class="properties-header">
+            <div class="header-content">
+                <h1 class="page-title">My Properties</h1>
+                <p class="page-subtitle">{propertyCountLabel} purchased</p>
+            </div>
+        </div>
+
+        <!-- Loading Spinner -->
+        <template if:true={isLoading}>
+            <div class="loading-container">
+                <lightning-spinner alternative-text="Loading properties..." size="medium"></lightning-spinner>
+            </div>
+        </template>
+
+        <!-- Properties Grid -->
+        <template if:true={hasProperties}>
+            <div class="properties-grid">
+                <template for:each={properties} for:item="property">
+                    <article key={property.propertyId} class="property-card">
+                        <!-- Property Image -->
+                        <div class="property-image-container">
+                            <template if:true={property.imageUrl}>
+                                <img src={property.imageUrl} alt={property.propertyName} class="property-image" />
+                            </template>
+                            <template if:false={property.imageUrl}>
+                                <div class="placeholder-image">
+                                    <lightning-icon icon-name="standard:home" size="large"></lightning-icon>
+                                </div>
+                            </template>
+                        </div>
+
+                        <!-- Property Details -->
+                        <div class="property-details">
+                            <!-- Property Name -->
+                            <h3 class="property-name">{property.propertyName}</h3>
+
+                            <!-- Location -->
+                            <div class="property-location">
+                                <lightning-icon icon-name="utility:location" size="x-small"></lightning-icon>
+                                <span>{property.location}</span>
+                            </div>
+
+                            <!-- Property Type -->
+                            <div class="property-type">
+                                <lightning-icon icon-name="utility:home" size="x-small"></lightning-icon>
+                                <span>{property.propertyType}</span>
+                            </div>
+
+                            <!-- Features -->
+                            <div class="property-features">
+                                <template if:true={property.bedrooms}>
+                                    <span class="feature-item">
+                                        <lightning-icon icon-name="utility:bed" size="xx-small"></lightning-icon>
+                                        {property.bedroomsLabel}
+                                    </span>
+                                </template>
+                                <template if:true={property.bathrooms}>
+                                    <span class="feature-item">
+                                        <lightning-icon icon-name="utility:water" size="xx-small"></lightning-icon>
+                                        {property.bathroomsLabel}
+                                    </span>
+                                </template>
+                            </div>
+
+                            <!-- Purchase Information -->
+                            <div class="purchase-info">
+                                <div class="info-row">
+                                    <span class="info-label">Purchase Price:</span>
+                                    <span class="info-value price">{property.formattedPurchasePrice}</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">Purchase Date:</span>
+                                    <span class="info-value">{property.formattedPurchaseDate}</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">Order:</span>
+                                    <span class="info-value">
+                                        <a class="order-link" data-order-number={property.orderNumber} onclick={handleViewOrder}>
+                                            {property.orderNumber}
+                                        </a>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- Action Button -->
+                            <div class="property-actions">
+                                <lightning-button
+                                    variant="brand"
+                                    label="View Details"
+                                    data-property-id={property.propertyId}
+                                    onclick={handleViewProperty}
+                                    class="action-button">
+                                </lightning-button>
+                            </div>
+                        </div>
+                    </article>
+                </template>
+            </div>
+        </template>
+
+        <!-- Empty State -->
+        <template if:false={hasProperties}>
+            <template if:false={isLoading}>
+                <div class="empty-state">
+                    <lightning-icon icon-name="custom:custom85" size="large" class="empty-icon"></lightning-icon>
+                    <h2 class="empty-title">No Properties Yet</h2>
+                    <p class="empty-text">You haven't purchased any properties yet. Browse our available properties to find your dream home.</p>
+                    <lightning-button
+                        variant="brand"
+                        label="Browse Properties"
+                        onclick={handleBrowseProperties}
+                        class="browse-button">
+                    </lightning-button>
+                </div>
+            </template>
+        </template>
+    </div>
+</template>

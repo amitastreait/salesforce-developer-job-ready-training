@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningMessageChannel xmlns="http://soap.sforce.com/2006/04/metadata">
+    <masterLabel>Cart_Updated</masterLabel>
+    <isExposed>true</isExposed>
+    <description>Lightning Message Channel for cart updates including cart cleared events</description>
+    <lightningMessageFields>
+        <fieldName>cartUpdated</fieldName>
+        <description>Flag indicating cart was updated</description>
+    </lightningMessageFields>
+    <lightningMessageFields>
+        <fieldName>cartCleared</fieldName>
+        <description>Flag indicating cart was cleared</description>
+    </lightningMessageFields>
+    <lightningMessageFields>
+        <fieldName>timestamp</fieldName>
+        <description>Timestamp of the update</description>
+    </lightningMessageFields>
+    <lightningMessageFields>
+        <fieldName>action</fieldName>
+        <description>The action performed (add, remove, update, clear)</description>
+    </lightningMessageFields>
+</LightningMessageChannel>

@@ -1,6 +1,8 @@
-import { LightningElement, track } from 'lwc';
+import { LightningElement, track, wire } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import { publish, MessageContext } from 'lightning/messageService';
+import CART_UPDATED_CHANNEL from '@salesforce/messageChannel/Cart_Updated__c';
 import getCheckoutData from '@salesforce/apex/CheckoutController.getCheckoutData';
 import processCheckout from '@salesforce/apex/CheckoutController.processCheckout';
 import validatePayment from '@salesforce/apex/CheckoutController.validatePayment';
@@ -42,6 +44,9 @@ export default class Checkout extends NavigationMixin(LightningElement) {
     @track promoSuccess = false;
     @track discountPercent = 0;
     @track discountAmount = 0;
+
+    @wire(MessageContext)
+    messageContext;
 
     // Lifecycle hook
     connectedCallback() {
@@ -267,11 +272,16 @@ export default class Checkout extends NavigationMixin(LightningElement) {
                 }
             })
             .then(result => {
-                
+
                 if (result.success) {
                     this.showToast('Success', result.message || 'Order placed successfully!', 'success');
 
-                    // Navigate to order detail page
+                    // Publish cart cleared event to update cart display across components
+                    if (result.cartCleared) {
+                        this.publishCartClearedEvent();
+                    }
+
+                    // Navigate to order detail page or profile
                     setTimeout(() => {
                         this.isProcessing = false;
                         this[NavigationMixin.Navigate]({
@@ -280,7 +290,8 @@ export default class Checkout extends NavigationMixin(LightningElement) {
                                 name: 'orderDetails__c'
                             },
                             state: {
-                                c__recordId: result.orderId
+                                c__tab: 'orders',
+                                c__orderId: result.orderId
                             }
                         });
                     }, 2000); // Wait 2 seconds to show success message
@@ -320,6 +331,15 @@ export default class Checkout extends NavigationMixin(LightningElement) {
             this.paymentInfo.cvv &&
             this.paymentInfo.cvv.length >= 3
         );
+    }
+
+    // Publish cart cleared event
+    publishCartClearedEvent() {
+        const payload = {
+            cartCleared: true,
+            timestamp: new Date().getTime()
+        };
+        publish(this.messageContext, CART_UPDATED_CHANNEL, payload);
     }
 
     // Utility methods

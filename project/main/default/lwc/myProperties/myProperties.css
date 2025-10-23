@@ -1,0 +1,253 @@
+/* Container */
+.my-properties-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem;
+    background: #f9fafb;
+    min-height: 100vh;
+}
+
+/* Header */
+.properties-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 2px solid #e5e7eb;
+}
+
+.header-content {
+    text-align: left;
+}
+
+.page-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0 0 0.5rem 0;
+}
+
+.page-subtitle {
+    font-size: 1rem;
+    color: #6b7280;
+    margin: 0;
+}
+
+/* Loading */
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 400px;
+}
+
+/* Properties Grid */
+.properties-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+/* Property Card */
+.property-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.property-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* Property Image */
+.property-image-container {
+    position: relative;
+    width: 100%;
+    height: 240px;
+    overflow: hidden;
+    background: #e5e7eb;
+}
+
+.property-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.placeholder-image {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+/* Status badge styles removed - not displayed in UI */
+
+/* Property Details */
+.property-details {
+    padding: 1.5rem;
+}
+
+.property-name {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0 0 1rem 0;
+}
+
+.property-location,
+.property-type {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #6b7280;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Property Features */
+.property-features {
+    display: flex;
+    gap: 1rem;
+    margin: 1rem 0;
+    padding: 0.75rem 0;
+    border-top: 1px solid #e5e7eb;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    color: #374151;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+/* Purchase Information */
+.purchase-info {
+    background: #f9fafb;
+    padding: 1rem;
+    border-radius: 8px;
+    margin: 1rem 0;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.info-row:last-child {
+    margin-bottom: 0;
+}
+
+.info-label {
+    color: #6b7280;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.info-value {
+    color: #1a1a1a;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.info-value.price {
+    color: #059669;
+    font-size: 1rem;
+}
+
+.order-link {
+    color: #2563eb;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.order-link:hover {
+    text-decoration: underline;
+}
+
+/* Action Button */
+.property-actions {
+    margin-top: 1rem;
+}
+
+.action-button {
+    width: 100%;
+}
+
+/* Empty State */
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem;
+    text-align: center;
+    background: white;
+    border-radius: 12px;
+    margin-top: 2rem;
+}
+
+.empty-icon {
+    color: #9ca3af;
+    margin-bottom: 1.5rem;
+}
+
+.empty-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0 0 0.75rem 0;
+}
+
+.empty-text {
+    font-size: 1rem;
+    color: #6b7280;
+    max-width: 500px;
+    margin: 0 0 2rem 0;
+    line-height: 1.6;
+}
+
+.browse-button {
+    padding: 0.75rem 2rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .my-properties-container {
+        padding: 1rem;
+    }
+
+    .properties-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .page-title {
+        font-size: 1.5rem;
+    }
+
+    .property-card {
+        margin-bottom: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .property-features {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .info-row {
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+}

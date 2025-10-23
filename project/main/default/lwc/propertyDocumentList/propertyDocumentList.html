@@ -1,0 +1,55 @@
+<template>
+    <div class="documents-container">
+        <template if:true={hasDocuments}>
+            <div class="documents-list">
+                <template for:each={documents} for:item="doc">
+                    <div key={doc.id} class="document-item">
+                        <div class="document-icon">
+                            <lightning-icon icon-name="doctype:pdf" size="small"></lightning-icon>
+                        </div>
+                        <div class="document-info">
+                            <div class="document-name">{doc.name}</div>
+                            <div class="document-meta">
+                                <span class="document-type">{doc.type}</span>
+                                <template if:true={doc.uploadDate}>
+                                    <span class="document-date">Uploaded: {doc.formattedUploadDate}</span>
+                                </template>
+                            </div>
+                            <template if:true={doc.description}>
+                                <div class="document-description">{doc.description}</div>
+                            </template>
+                        </div>
+                        <div class="document-status">
+                            <span class={doc.statusClass}>{doc.status}</span>
+                        </div>
+                        <div class="document-actions">
+                            <lightning-button
+                                variant="neutral"
+                                label="View"
+                                icon-name="utility:preview"
+                                data-id={doc.id}
+                                data-file-id={doc.fileId}
+                                onclick={handleViewDocument}
+                                class="action-button">
+                            </lightning-button>
+                            <lightning-button
+                                variant="brand"
+                                label="Download"
+                                icon-name="utility:download"
+                                data-file-id={doc.fileId}
+                                onclick={handleDownloadDocument}
+                                class="action-button">
+                            </lightning-button>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </template>
+        <template if:false={hasDocuments}>
+            <div class="empty-message">
+                <lightning-icon icon-name="utility:info" size="small"></lightning-icon>
+                <span>No documents available</span>
+            </div>
+        </template>
+    </div>
+</template>

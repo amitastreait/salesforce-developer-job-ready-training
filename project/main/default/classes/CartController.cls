@@ -396,7 +396,7 @@ public without sharing class CartController {
                     Property__c = propertyId,
                     Property_Name__c = property.Name,
                     Property_Price__c = property.Listing_price__c,
-                    Property_Image_URL__c = property.Property_Images__r?.get(0).Image_Url__c,
+                    Property_Image_URL__c = (property.Property_Images__r != null && property.Property_Images__r.size() > 0 ) ? property.Property_Images__r.get(0).Image_Url__c : '',
                     Property_Status__c = property.Status__c,
                     Quantity__c = quantity,
                     Added_Date__c = System.now()

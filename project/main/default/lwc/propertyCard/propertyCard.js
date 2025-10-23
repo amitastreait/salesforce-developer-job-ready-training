@@ -1,12 +1,13 @@
 import { LightningElement, api } from 'lwc';
+import { NavigationMixin } from 'lightning/navigation';
 
 /**
  * Enhanced component to display a single property card
  * Receives property data from parent via @api
  * Displays image, details, and action buttons
- * Dispatches CustomEvents for user actions
+ * Navigates to property details page on View Details click
  */
-export default class PropertyCard extends LightningElement {
+export default class PropertyCard extends NavigationMixin(LightningElement) {
     // Public property to receive property data from parent
     @api property;
 
@@ -82,52 +83,19 @@ export default class PropertyCard extends LightningElement {
 
     /**
      * Handle View Details button click
-     * Dispatches CustomEvent to parent with property ID
+     * Navigate to property details page
      */
     handleViewDetails() {
-        const viewDetailsEvent = new CustomEvent('viewdetails', {
-            detail: {
-                propertyId: this.property.Id,
-                propertyName: this.property.Name
+        this.pageReference = {
+            type: 'comm__namedPage',
+            attributes: {
+                name: 'PropertyDetails__c'
             },
-            bubbles: true,
-            composed: true
-        });
-        this.dispatchEvent(viewDetailsEvent);
-    }
-
-    /**
-     * Handle Contact Agent button click
-     * Dispatches CustomEvent to parent
-     */
-    handleContactAgent() {
-        const contactEvent = new CustomEvent('contactagent', {
-            detail: {
-                propertyId: this.property.Id,
-                propertyName: this.property.Name,
-                city: this.property.Location_Site__r.City__c
-            },
-            bubbles: true,
-            composed: true
-        });
-        this.dispatchEvent(contactEvent);
-    }
-
-    /**
-     * Handle Schedule Tour button click
-     * Dispatches CustomEvent to parent
-     */
-    handleScheduleTour() {
-        const tourEvent = new CustomEvent('scheduletour', {
-            detail: {
-                propertyId: this.property.Id,
-                propertyName: this.property.Name,
-                address: this.location
-            },
-            bubbles: true,
-            composed: true
-        });
-        this.dispatchEvent(tourEvent);
+            state : {
+                c__recordId : this.property.Id
+            }
+        };
+        this[NavigationMixin.Navigate](this.pageReference);
     }
 
     /**
@@ -144,23 +112,6 @@ export default class PropertyCard extends LightningElement {
             composed: true
         });
         this.dispatchEvent(saveEvent);
-    }
-
-    /**
-     * Handle Share button click
-     * Dispatches CustomEvent to parent
-     */
-    handleShareProperty() {
-        const shareEvent = new CustomEvent('shareproperty', {
-            detail: {
-                propertyId: this.property.Id,
-                propertyName: this.property.Name,
-                propertyUrl: window.location.href
-            },
-            bubbles: true,
-            composed: true
-        });
-        this.dispatchEvent(shareEvent);
     }
 
     /**

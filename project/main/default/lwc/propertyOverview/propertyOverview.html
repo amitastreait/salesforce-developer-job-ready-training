@@ -1,0 +1,182 @@
+<template>
+    <div class="property-overview-container">
+        <!-- Loading Spinner -->
+        <template if:true={isLoading}>
+            <div class="loading-container">
+                <lightning-spinner alternative-text="Loading property details..." size="medium"></lightning-spinner>
+            </div>
+        </template>
+
+        <!-- Property Overview Content -->
+        <template if:true={hasPropertyData}>
+            <!-- Property Header -->
+            <div class="property-header">
+                <div class="property-image-section">
+                    <template if:true={primaryImage}>
+                        <img src={primaryImage} alt={propertyData.propertyName} class="property-main-image" />
+                    </template>
+                    <template if:false={primaryImage}>
+                        <div class="placeholder-image">
+                            <lightning-icon icon-name="standard:home" size="large"></lightning-icon>
+                        </div>
+                    </template>
+                </div>
+
+                <div class="property-basic-info">
+                    <h1 class="property-title">{propertyData.propertyName}</h1>
+                    <div class="property-price">{propertyData.formattedPrice}</div>
+                    <div class="property-location">
+                        <lightning-icon icon-name="utility:location" size="x-small"></lightning-icon>
+                        <span>{propertyData.fullAddress}</span>
+                    </div>
+
+                    <!-- Property Stats -->
+                    <div class="property-stats">
+                        <template if:true={propertyData.bedrooms}>
+                            <div class="stat-item">
+                                <lightning-icon icon-name="utility:bed" size="small"></lightning-icon>
+                                <span>{propertyData.bedrooms} Beds</span>
+                            </div>
+                        </template>
+                        <template if:true={propertyData.bathrooms}>
+                            <div class="stat-item">
+                                <lightning-icon icon-name="utility:water" size="small"></lightning-icon>
+                                <span>{propertyData.bathrooms} Baths</span>
+                            </div>
+                        </template>
+                        <template if:true={propertyData.sqFt}>
+                            <div class="stat-item">
+                                <lightning-icon icon-name="utility:metrics" size="small"></lightning-icon>
+                                <span>{propertyData.formattedSqFt} Sq Ft</span>
+                            </div>
+                        </template>
+                        <template if:true={propertyData.yearBuilt}>
+                            <div class="stat-item">
+                                <lightning-icon icon-name="utility:date_time" size="small"></lightning-icon>
+                                <span>Built {propertyData.yearBuilt}</span>
+                            </div>
+                        </template>
+                    </div>
+
+                    <!-- View All Button -->
+                    <div class="action-section">
+                        <lightning-button
+                            variant="brand"
+                            label="View All Information"
+                            icon-name="utility:preview"
+                            onclick={handleViewAllInformation}
+                            class="view-all-button">
+                        </lightning-button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Description -->
+            <template if:true={propertyData.description}>
+                <div class="section-card">
+                    <h2 class="section-title">Description</h2>
+                    <p class="property-description">{propertyData.description}</p>
+                </div>
+            </template>
+
+            <!-- Location Details -->
+            <div class="section-card">
+                <h2 class="section-title">
+                    <lightning-icon icon-name="utility:location" size="small"></lightning-icon>
+                    Location
+                </h2>
+                <div class="location-details">
+                    <template if:true={propertyData.locationName}>
+                        <div class="detail-row">
+                            <span class="detail-label">Location Site:</span>
+                            <span class="detail-value">{propertyData.locationName}</span>
+                        </div>
+                    </template>
+                    <div class="detail-row">
+                        <span class="detail-label">Address:</span>
+                        <span class="detail-value">{propertyData.fullAddress}</span>
+                    </div>
+                    <!-- <template if:true={propertyData.locationId}>
+                        <div class="location-action">
+                            <lightning-button
+                                variant="neutral"
+                                label="View Location Details"
+                                icon-name="utility:target"
+                                onclick={handleViewLocation}>
+                            </lightning-button>
+                        </div>
+                    </template> -->
+                </div>
+            </div>
+
+            <!-- Property Documents -->
+            <div class="section-card">
+                <h2 class="section-title">
+                    <lightning-icon icon-name="utility:file" size="small"></lightning-icon>
+                    Property Documents ({documentsCount})
+                </h2>
+                <c-property-document-list documents={formattedDocuments}></c-property-document-list>
+            </div>
+
+            <!-- Offers -->
+            <div class="section-card">
+                <h2 class="section-title">
+                    <lightning-icon icon-name="utility:money" size="small"></lightning-icon>
+                    Offers ({offersCount})
+                </h2>
+                <template if:true={hasOffers}>
+                    <div class="offers-list">
+                        <template for:each={formattedOffers} for:item="offer">
+                            <div key={offer.id} class="offer-item">
+                                <div class="offer-header">
+                                    <span class="offer-name">{offer.name}</span>
+                                    <span class={offer.statusClass}>{offer.status}</span>
+                                </div>
+                                <div class="offer-details">
+                                    <div class="offer-row">
+                                        <span class="offer-label">Offered Price:</span>
+                                        <span class="offer-value price">{offer.formattedOfferedPrice}</span>
+                                    </div>
+                                    <template if:true={offer.counterOfferAmount}>
+                                        <div class="offer-row">
+                                            <span class="offer-label">Counter Offer:</span>
+                                            <span class="offer-value">{offer.formattedCounterOffer}</span>
+                                        </div>
+                                    </template>
+                                    <template if:true={offer.depositAmount}>
+                                        <div class="offer-row">
+                                            <span class="offer-label">Deposit:</span>
+                                            <span class="offer-value">{offer.formattedDepositAmount}</span>
+                                        </div>
+                                    </template>
+                                    <template if:true={offer.buyerName}>
+                                        <div class="offer-row">
+                                            <span class="offer-label">Buyer:</span>
+                                            <span class="offer-value">{offer.buyerName}</span>
+                                        </div>
+                                    </template>
+                                    <div class="offer-row">
+                                        <span class="offer-label">Offer Date:</span>
+                                        <span class="offer-value">{offer.formattedOfferDate}</span>
+                                    </div>
+                                    <template if:true={offer.proposedClosingDate}>
+                                        <div class="offer-row">
+                                            <span class="offer-label">Proposed Closing:</span>
+                                            <span class="offer-value">{offer.formattedClosingDate}</span>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </template>
+                <template if:false={hasOffers}>
+                    <div class="empty-message">
+                        <lightning-icon icon-name="utility:info" size="small"></lightning-icon>
+                        <span>No offers yet</span>
+                    </div>
+                </template>
+            </div>
+        </template>
+    </div>
+</template>
