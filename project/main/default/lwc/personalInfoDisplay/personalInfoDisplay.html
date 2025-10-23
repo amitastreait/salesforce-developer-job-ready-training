@@ -1,0 +1,50 @@
+<template>
+    <div class="content-card">
+        <div class="card-header-section">
+            <h2 class="card-title">Personal Information</h2>
+            <p class="card-subtitle">Manage your personal details and information</p>
+        </div>
+        <div class="card-body">
+            <div class="info-grid">
+                <div class="info-item">
+                    <label class="info-label">Full Name</label>
+                    <p class="info-value">{personalInfo.name}</p>
+                </div>
+                <div class="info-item">
+                    <label class="info-label">Email Address</label>
+                    <p class="info-value">{personalInfo.email}</p>
+                </div>
+                <div class="info-item">
+                    <label class="info-label">Phone Number</label>
+                    <p class="info-value">{displayPhone}</p>
+                </div>
+                <div class="info-item">
+                    <label class="info-label">Mobile Number</label>
+                    <p class="info-value">{displayMobile}</p>
+                </div>
+                <div class="info-item">
+                    <label class="info-label">Job Title</label>
+                    <p class="info-value">{displayTitle}</p>
+                </div>
+                <div class="info-item">
+                    <label class="info-label">Department</label>
+                    <p class="info-value">{displayDepartment}</p>
+                </div>
+                <div class="info-item">
+                    <label class="info-label">Company</label>
+                    <p class="info-value">{displayCompany}</p>
+                </div>
+                <div class="info-item">
+                    <label class="info-label">Birth Date</label>
+                    <p class="info-value">{displayBirthdate}</p>
+                </div>
+            </div>
+            <template if:true={personalInfo.aboutMe}>
+                <div class="about-section">
+                    <label class="info-label">About Me</label>
+                    <p class="about-text">{personalInfo.aboutMe}</p>
+                </div>
+            </template>
+        </div>
+    </div>
+</template>

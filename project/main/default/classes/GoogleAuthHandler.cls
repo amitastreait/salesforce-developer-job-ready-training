@@ -1,4 +1,4 @@
-global class LinkedInAuthHandler implements Auth.RegistrationHandler{
+global class GoogleAuthHandler implements Auth.RegistrationHandler{
 
     // Static flag to track if this is a new user creation
     private static Boolean isNewUser = false;
@@ -14,7 +14,8 @@ global class LinkedInAuthHandler implements Auth.RegistrationHandler{
         }
         User u = new User();
         Id userId;
-        System.debug(JSON.serializePretty(data));
+        System.debug('Google Auth User Data: ' + JSON.serializePretty(data));
+
         if(data.attributeMap.containsKey('sfdc_networkid')) {
 
             // Get Person Account Record Type
@@ -43,7 +44,7 @@ global class LinkedInAuthHandler implements Auth.RegistrationHandler{
             ];
 
             Profile p = [SELECT Id, Name FROM Profile WHERE Name = 'Customer Community Plus User'];
-            u.username = data.email.substringBefore('@') + '@realityforce.com.customer';
+            u.username = data.email.substringBefore('@') + '@realityforce.com.google';
             u.email = data.email;
             u.lastName = data.lastName;
             u.firstName = data.firstName;
@@ -61,8 +62,8 @@ global class LinkedInAuthHandler implements Auth.RegistrationHandler{
             userId = u.Id;
         } else {
             Profile p = [SELECT Id FROM Profile WHERE Name = 'Standard User'];
-            
-            u.username = data.email.substringBefore('@') + '@myorg.com';
+
+            u.username = data.email.substringBefore('@') + '@myorg.com.google';
             u.email = data.email;
             u.lastName = data.lastName;
             u.firstName = data.firstName;
@@ -78,15 +79,13 @@ global class LinkedInAuthHandler implements Auth.RegistrationHandler{
             u.profileId = p.Id;
             userId = u.Id;
         }
-        
-        if (isNewUser) {
-            enqueuePermissionSetAssignment(userId);
-            isNewUser = false; // Reset flag
-        }
+
+        enqueuePermissionSetAssignment(userId);
+        isNewUser = false; // Reset flag
 
         return u;
     }
-    
+
     global void updateUser(Id userId, Id portalId, Auth.UserData data){
         User u = new User(id=userId);
         u.email = data.email;

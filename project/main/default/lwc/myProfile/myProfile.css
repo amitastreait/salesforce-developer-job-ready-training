@@ -159,6 +159,14 @@
     animation: fadeIn 0.3s ease-in;
 }
 
+.tab-content c-personal-info-display,
+.tab-content c-address-display,
+.tab-content c-order-list,
+.tab-content c-cart-display,
+.tab-content c-wishlist-display {
+    display: block;
+}
+
 @keyframes fadeIn {
     from {
         opacity: 0;

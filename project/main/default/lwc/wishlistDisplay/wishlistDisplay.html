@@ -1,0 +1,104 @@
+<template>
+    <div class="content-card">
+        <div class="card-header-section">
+            <h2 class="card-title">My Wishlist</h2>
+            <p class="card-subtitle">Items you've saved for later ({totalItems} items)</p>
+        </div>
+        <div class="card-body">
+            <template if:true={hasWishlistItems}>
+                <div class="wishlist-grid">
+                    <template for:each={wishlistItems} for:item="item">
+                        <div key={item.id} class="wishlist-card">
+                            <div class="wishlist-image-container">
+                                <template if:true={item.propertyImage}>
+                                    <img src={item.propertyImage} alt={item.propertyName} class="wishlist-image" />
+                                </template>
+                                <template if:false={item.propertyImage}>
+                                    <div class="wishlist-image-placeholder">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                                        </svg>
+                                    </div>
+                                </template>
+                                <button class="wishlist-remove-icon" data-item-id={item.id} onclick={handleRemoveWishlistItem} title="Remove from wishlist">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M6 18L18 6M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="wishlist-details">
+                                <h3 class="wishlist-name">{item.propertyName}</h3>
+                                <template if:true={item.location}>
+                                    <p class="wishlist-location">
+                                        <svg class="location-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                        </svg>
+                                        {item.location}
+                                    </p>
+                                </template>
+                                <div class="wishlist-property-info">
+                                    <template if:true={item.propertyType}>
+                                        <span class="property-badge">{item.propertyType}</span>
+                                    </template>
+                                    <template if:true={item.bedrooms}>
+                                        <span class="property-feature">{item.bedrooms} Beds</span>
+                                    </template>
+                                    <template if:true={item.bathrooms}>
+                                        <span class="property-feature">{item.bathrooms} Baths</span>
+                                    </template>
+                                </div>
+                                <div class="wishlist-price">
+                                    <lightning-formatted-number
+                                        value={item.propertyPrice}
+                                        format-style="currency"
+                                        currency-code="USD">
+                                    </lightning-formatted-number>
+                                </div>
+                                <template if:true={item.notes}>
+                                    <div class="wishlist-notes">
+                                        <p class="notes-label">Notes:</p>
+                                        <p class="notes-text">{item.notes}</p>
+                                    </div>
+                                </template>
+                                <div class="wishlist-added-date">
+                                    Added: <lightning-formatted-date-time
+                                        value={item.addedDate}
+                                        year="numeric"
+                                        month="short"
+                                        day="2-digit">
+                                    </lightning-formatted-date-time>
+                                </div>
+                            </div>
+                            <div class="wishlist-actions">
+                                <button
+                                    class="btn-primary wishlist-btn"
+                                    data-property-id={item.propertyId}
+                                    onclick={handleAddToCartFromWishlist}>
+                                    Add to Cart
+                                </button>
+                                <button
+                                    class="btn-secondary wishlist-btn"
+                                    data-property-id={item.propertyId}
+                                    onclick={handleViewWishlistItem}>
+                                    View Details
+                                </button>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </template>
+
+            <template if:false={hasWishlistItems}>
+                <div class="empty-state">
+                    <svg class="empty-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                    </svg>
+                    <h3 class="empty-title">No Items in Wishlist</h3>
+                    <p class="empty-text">Save your favorite properties to your wishlist.</p>
+                    <button class="btn-primary" onclick={handleBrowseProducts}>Browse Properties</button>
+                </div>
+            </template>
+        </div>
+    </div>
+</template>

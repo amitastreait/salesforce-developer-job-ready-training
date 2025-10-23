@@ -45,7 +45,7 @@ public without sharing class CheckoutController {
 
             // Get active cart
             List<Cart__c> carts = [
-                SELECT Id, Name, Total_Items__c, Total_Amount__c
+                SELECT Id, Name, Total_Items__c, Total_Amount__c, Cart_UUID__c
                 FROM Cart__c
                 WHERE User__c = :userId
                 AND Status__c = 'Active'
@@ -87,6 +87,8 @@ public without sharing class CheckoutController {
                 ciw.subtotal = item.Subtotal__c;
                 ciw.discount = item.Discount_Amount__c;
                 ciw.total = item.Total_Price__c;
+                ciw.cartId = cart.Id;
+                ciw.cartUUId = cart.Cart_UUID__c;
 
                 String location = '';
                 if (item.Property__r?.Location_Site__r?.City__c != null) {
@@ -406,6 +408,8 @@ public without sharing class CheckoutController {
 
     public class CheckoutItemWrapper {
         @AuraEnabled public String id { get; set; }
+        @AuraEnabled public String cartId { get; set; }
+        @AuraEnabled public String cartUUId { get; set; }
         @AuraEnabled public String propertyId { get; set; }
         @AuraEnabled public String propertyName { get; set; }
         @AuraEnabled public Decimal propertyPrice { get; set; }

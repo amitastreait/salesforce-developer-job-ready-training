@@ -366,7 +366,10 @@ public without sharing class CartController {
             // Get property details
             Property__c property = [
                 SELECT Id, Name, Listing_price__c, Image_URL__c, Status__c,
-                       Address__c, Location_Site__r.City__c, Location_Site__r.State__c
+                       Address__c, Location_Site__r.City__c, Location_Site__r.State__c,
+                       (SELECT Id, Name, Image_Url__c, Type__c
+                        FROM Property_Images__r
+                        ORDER BY CreatedDate ASC LIMIT 1)
                 FROM Property__c
                 WHERE Id = :propertyId
                 LIMIT 1
@@ -393,7 +396,7 @@ public without sharing class CartController {
                     Property__c = propertyId,
                     Property_Name__c = property.Name,
                     Property_Price__c = property.Listing_price__c,
-                    Property_Image_URL__c = property.Image_URL__c,
+                    Property_Image_URL__c = property.Property_Images__r?.get(0).Image_Url__c,
                     Property_Status__c = property.Status__c,
                     Quantity__c = quantity,
                     Added_Date__c = System.now()

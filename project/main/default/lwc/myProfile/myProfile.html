@@ -98,367 +98,49 @@
 
                 <!-- Personal Information Tab -->
                 <template if:true={isPersonalInfoTab}>
-                    <div class="content-card">
-                        <div class="card-header-section">
-                            <h2 class="card-title">Personal Information</h2>
-                            <p class="card-subtitle">Manage your personal details and information</p>
-                        </div>
-                        <div class="card-body">
-                            <div class="info-grid">
-                                <div class="info-item">
-                                    <label class="info-label">Full Name</label>
-                                    <p class="info-value">{profileData.personalInfo.name}</p>
-                                </div>
-                                <div class="info-item">
-                                    <label class="info-label">Email Address</label>
-                                    <p class="info-value">{profileData.personalInfo.email}</p>
-                                </div>
-                                <div class="info-item">
-                                    <label class="info-label">Phone Number</label>
-                                    <p class="info-value">{displayValue.phone}</p>
-                                </div>
-                                <div class="info-item">
-                                    <label class="info-label">Mobile Number</label>
-                                    <p class="info-value">{displayValue.mobile}</p>
-                                </div>
-                                <div class="info-item">
-                                    <label class="info-label">Job Title</label>
-                                    <p class="info-value">{displayValue.title}</p>
-                                </div>
-                                <div class="info-item">
-                                    <label class="info-label">Department</label>
-                                    <p class="info-value">{displayValue.department}</p>
-                                </div>
-                                <div class="info-item">
-                                    <label class="info-label">Company</label>
-                                    <p class="info-value">{displayValue.company}</p>
-                                </div>
-                                <div class="info-item">
-                                    <label class="info-label">Birth Date</label>
-                                    <p class="info-value">{displayValue.birthdate}</p>
-                                </div>
-                            </div>
-                            <template if:true={profileData.personalInfo.aboutMe}>
-                                <div class="about-section">
-                                    <label class="info-label">About Me</label>
-                                    <p class="about-text">{profileData.personalInfo.aboutMe}</p>
-                                </div>
-                            </template>
-                        </div>
-                    </div>
+                    <c-personal-info-display personal-info={profileData.personalInfo}></c-personal-info-display>
                 </template>
 
                 <!-- Address Tab -->
                 <template if:true={isAddressTab}>
-                    <div class="content-card">
-                        <div class="card-header-section">
-                            <h2 class="card-title">Address Information</h2>
-                            <p class="card-subtitle">Your current address details</p>
-                        </div>
-                        <div class="card-body">
-                            <div class="address-display">
-                                <div class="address-icon-container">
-                                    <svg class="address-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                                    </svg>
-                                </div>
-                                <div class="address-details">
-                                    <template if:true={hasAddress}>
-                                        <p class="address-line">{profileData.address.street}</p>
-                                        <p class="address-line">
-                                            {profileData.address.city}<template if:true={profileData.address.state}>, {profileData.address.state}</template> {profileData.address.postalCode}
-                                        </p>
-                                        <p class="address-line">{profileData.address.country}</p>
-                                    </template>
-                                    <template if:false={hasAddress}>
-                                        <p class="no-data-text">No address information available</p>
-                                    </template>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <c-address-display address={profileData.address}></c-address-display>
                 </template>
 
                 <!-- Orders Tab -->
                 <template if:true={isOrdersTab}>
-                    <div class="content-card">
-                        <div class="card-header-section">
-                            <h2 class="card-title">Order History</h2>
-                            <p class="card-subtitle">View and track your recent orders</p>
-                        </div>
-                        <div class="card-body">
-                            <template if:true={hasOrders}>
-                                <div class="orders-list">
-                                    <template for:each={orders} for:item="order">
-                                        <div key={order.id} class="order-card">
-                                            <div class="order-header">
-                                                <div class="order-info">
-                                                    <span class="order-number">Order #{order.orderNumber}</span>
-                                                    <span class="order-status" data-status={order.status}>{order.status}</span>
-                                                </div>
-                                                <div class="order-amount">
-                                                    <lightning-formatted-number
-                                                        value={order.totalAmount}
-                                                        format-style="currency"
-                                                        currency-code="USD">
-                                                    </lightning-formatted-number>
-                                                </div>
-                                            </div>
-                                            <div class="order-footer">
-                                                <span class="order-date">
-                                                    <lightning-formatted-date-time
-                                                        value={order.orderDate}
-                                                        year="numeric"
-                                                        month="short"
-                                                        day="2-digit">
-                                                    </lightning-formatted-date-time>
-                                                </span>
-                                                <button class="btn-link" data-order-id={order.id} onclick={handleViewOrder}>
-                                                    View Details
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </template>
-                                </div>
-                            </template>
-                            <template if:false={hasOrders}>
-                                <div class="empty-state">
-                                    <svg class="empty-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-                                    </svg>
-                                    <h3 class="empty-title">No Orders Yet</h3>
-                                    <p class="empty-text">You haven't placed any orders yet. Start shopping to see your orders here.</p>
-                                    <button class="btn-primary" onclick={handleBrowseProducts}>Browse Products</button>
-                                </div>
-                            </template>
-                        </div>
-                    </div>
+                    <c-order-list
+                        orders={orders}
+                        onvieworder={handleViewOrder}
+                        onbrowseproducts={handleBrowseProducts}
+                        onreorder={handleReorder}
+                        ontrackorder={handleTrackOrder}>
+                    </c-order-list>
                 </template>
 
                 <!-- Cart Tab -->
                 <template if:true={isCartTab}>
-                    <div class="content-card">
-                        <div class="card-header-section">
-                            <h2 class="card-title">Shopping Cart</h2>
-                            <p class="card-subtitle">Review items in your cart ({cartData.totalItems} items)</p>
-                        </div>
-                        <div class="card-body">
-                            <template if:true={hasCartItems}>
-                                <div class="cart-items-container">
-                                    <template for:each={cartData.cartItems} for:item="item">
-                                        <div key={item.id} class="cart-item-card">
-                                            <div class="cart-item-image">
-                                                <template if:true={item.propertyImage}>
-                                                    <img src={item.propertyImage} alt={item.propertyName} class="cart-image" />
-                                                </template>
-                                                <template if:false={item.propertyImage}>
-                                                    <div class="cart-image-placeholder">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                                                        </svg>
-                                                    </div>
-                                                </template>
-                                            </div>
-                                            <div class="cart-item-details">
-                                                <h3 class="cart-item-name">{item.propertyName}</h3>
-                                                <template if:true={item.location}>
-                                                    <p class="cart-item-location">{item.location}</p>
-                                                </template>
-                                                <p class="cart-item-status">Status: {item.propertyStatus}</p>
-                                                <div class="cart-item-quantity">
-                                                    <label class="quantity-label">Quantity:</label>
-                                                    <lightning-input
-                                                        type="number"
-                                                        value={item.quantity}
-                                                        min="1"
-                                                        data-item-id={item.id}
-                                                        onchange={handleUpdateQuantity}
-                                                        class="quantity-input">
-                                                    </lightning-input>
-                                                </div>
-                                            </div>
-                                            <div class="cart-item-actions">
-                                                <div class="cart-item-pricing">
-                                                    <p class="cart-item-price">
-                                                        <lightning-formatted-number
-                                                            value={item.propertyPrice}
-                                                            format-style="currency"
-                                                            currency-code="USD">
-                                                        </lightning-formatted-number>
-                                                    </p>
-                                                    <template if:true={item.discount}>
-                                                        <p class="cart-item-discount">
-                                                            Discount: -<lightning-formatted-number
-                                                                value={item.discount}
-                                                                format-style="currency"
-                                                                currency-code="USD">
-                                                            </lightning-formatted-number>
-                                                        </p>
-                                                    </template>
-                                                    <p class="cart-item-total">
-                                                        Total: <lightning-formatted-number
-                                                            value={item.total}
-                                                            format-style="currency"
-                                                            currency-code="USD">
-                                                        </lightning-formatted-number>
-                                                    </p>
-                                                </div>
-                                                <div class="cart-item-buttons">
-                                                    <button
-                                                        class="btn-link"
-                                                        data-property-id={item.propertyId}
-                                                        onclick={handleViewCartItem}>
-                                                        View Details
-                                                    </button>
-                                                    <button
-                                                        class="btn-link btn-danger"
-                                                        data-item-id={item.id}
-                                                        onclick={handleRemoveCartItem}>
-                                                        Remove
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </template>
-
-                                    <!-- Cart Summary -->
-                                    <div class="cart-summary">
-                                        <div class="cart-summary-content">
-                                            <h3 class="cart-summary-title">Order Summary</h3>
-                                            <div class="cart-summary-row">
-                                                <span>Items ({cartData.totalItems}):</span>
-                                                <span>{cartTotalFormatted}</span>
-                                            </div>
-                                            <div class="cart-summary-row cart-summary-total">
-                                                <span>Total:</span>
-                                                <span class="total-amount">{cartTotalFormatted}</span>
-                                            </div>
-                                            <button class="btn-primary checkout-button" onclick={handleCheckout}>
-                                                Proceed to Checkout
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </template>
-
-                            <template if:false={hasCartItems}>
-                                <div class="empty-state">
-                                    <svg class="empty-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                                    </svg>
-                                    <h3 class="empty-title">Your Cart is Empty</h3>
-                                    <p class="empty-text">Add items to your cart to see them here.</p>
-                                    <button class="btn-primary" onclick={handleBrowseProducts}>Start Shopping</button>
-                                </div>
-                            </template>
-                        </div>
-                    </div>
+                    <c-cart-display
+                        cart-items={cartData.cartItems}
+                        total-items={cartData.totalItems}
+                        total-amount={cartData.totalAmount}
+                        onupdatequantity={handleUpdateQuantity}
+                        onviewcartitem={handleViewCartItem}
+                        onremovecartitem={handleRemoveCartItem}
+                        oncheckout={handleCheckout}
+                        onbrowseproducts={handleBrowseProducts}>
+                    </c-cart-display>
                 </template>
 
                 <!-- Wishlist Tab -->
                 <template if:true={isWishlistTab}>
-                    <div class="content-card">
-                        <div class="card-header-section">
-                            <h2 class="card-title">My Wishlist</h2>
-                            <p class="card-subtitle">Items you've saved for later ({wishlistData.totalItems} items)</p>
-                        </div>
-                        <div class="card-body">
-                            <template if:true={hasWishlistItems}>
-                                <div class="wishlist-grid">
-                                    <template for:each={wishlistData.wishlistItems} for:item="item">
-                                        <div key={item.id} class="wishlist-card">
-                                            <div class="wishlist-image-container">
-                                                <template if:true={item.propertyImage}>
-                                                    <img src={item.propertyImage} alt={item.propertyName} class="wishlist-image" />
-                                                </template>
-                                                <template if:false={item.propertyImage}>
-                                                    <div class="wishlist-image-placeholder">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                                                        </svg>
-                                                    </div>
-                                                </template>
-                                                <button class="wishlist-remove-icon" data-item-id={item.id} onclick={handleRemoveWishlistItem} title="Remove from wishlist">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
-                                                        <path d="M6 18L18 6M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                                    </svg>
-                                                </button>
-                                            </div>
-                                            <div class="wishlist-details">
-                                                <h3 class="wishlist-name">{item.propertyName}</h3>
-                                                <template if:true={item.location}>
-                                                    <p class="wishlist-location">
-                                                        <svg class="location-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                                                        </svg>
-                                                        {item.location}
-                                                    </p>
-                                                </template>
-                                                <div class="wishlist-property-info">
-                                                    <template if:true={item.propertyType}>
-                                                        <span class="property-badge">{item.propertyType}</span>
-                                                    </template>
-                                                    <template if:true={item.bedrooms}>
-                                                        <span class="property-feature">{item.bedrooms} Beds</span>
-                                                    </template>
-                                                    <template if:true={item.bathrooms}>
-                                                        <span class="property-feature">{item.bathrooms} Baths</span>
-                                                    </template>
-                                                </div>
-                                                <div class="wishlist-price">
-                                                    <lightning-formatted-number
-                                                        value={item.propertyPrice}
-                                                        format-style="currency"
-                                                        currency-code="USD">
-                                                    </lightning-formatted-number>
-                                                </div>
-                                                <template if:true={item.notes}>
-                                                    <div class="wishlist-notes">
-                                                        <p class="notes-label">Notes:</p>
-                                                        <p class="notes-text">{item.notes}</p>
-                                                    </div>
-                                                </template>
-                                                <div class="wishlist-added-date">
-                                                    Added: <lightning-formatted-date-time
-                                                        value={item.addedDate}
-                                                        year="numeric"
-                                                        month="short"
-                                                        day="2-digit">
-                                                    </lightning-formatted-date-time>
-                                                </div>
-                                            </div>
-                                            <div class="wishlist-actions">
-                                                <button
-                                                    class="btn-primary wishlist-btn"
-                                                    data-property-id={item.propertyId}
-                                                    onclick={handleAddToCartFromWishlist}>
-                                                    Add to Cart
-                                                </button>
-                                                <button
-                                                    class="btn-secondary wishlist-btn"
-                                                    data-property-id={item.propertyId}
-                                                    onclick={handleViewWishlistItem}>
-                                                    View Details
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </template>
-                                </div>
-                            </template>
-
-                            <template if:false={hasWishlistItems}>
-                                <div class="empty-state">
-                                    <svg class="empty-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                                    </svg>
-                                    <h3 class="empty-title">No Items in Wishlist</h3>
-                                    <p class="empty-text">Save your favorite properties to your wishlist.</p>
-                                    <button class="btn-primary" onclick={handleBrowseProducts}>Browse Properties</button>
-                                </div>
-                            </template>
-                        </div>
-                    </div>
+                    <c-wishlist-display
+                        wishlist-items={wishlistData.wishlistItems}
+                        total-items={wishlistData.totalItems}
+                        onremovewishlistitem={handleRemoveWishlistItem}
+                        onviewwishlistitem={handleViewWishlistItem}
+                        onaddtocartwishlist={handleAddToCartFromWishlist}
+                        onbrowseproducts={handleBrowseProducts}>
+                    </c-wishlist-display>
                 </template>
 
                 <!-- Settings Tab -->

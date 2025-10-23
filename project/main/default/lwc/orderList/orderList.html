@@ -1,0 +1,213 @@
+<template>
+    <div class="content-card">
+        <div class="card-header-section">
+            <h2 class="card-title">Order History</h2>
+            <p class="card-subtitle">View and track your recent orders</p>
+        </div>
+        <div class="card-body">
+            <template if:true={hasOrders}>
+                <!-- Table Header -->
+                <div class="orders-table">
+                    <div class="table-header">
+                        <div class="header-cell order-num-col">Order #</div>
+                        <div class="header-cell status-col">Status</div>
+                        <div class="header-cell account-col">Account</div>
+                        <div class="header-cell date-col">Order Date</div>
+                        <div class="header-cell po-col">PO Number</div>
+                        <div class="header-cell amount-col">Amount</div>
+                        <div class="header-cell actions-col">Actions</div>
+                    </div>
+
+                    <!-- Table Body -->
+                    <template for:each={orders} for:item="order">
+                        <div key={order.id} class="table-row">
+                            <div class="table-cell order-num-col">
+                                <span class="order-number">{order.orderNumber}</span>
+                            </div>
+                            <div class="table-cell status-col">
+                                <span class="order-status" data-status={order.status}>{order.status}</span>
+                            </div>
+                            <div class="table-cell account-col">
+                                <span class="account-name">{order.accountName}</span>
+                            </div>
+                            <div class="table-cell date-col">
+                                <lightning-formatted-date-time
+                                    value={order.orderDate}
+                                    year="numeric"
+                                    month="short"
+                                    day="2-digit">
+                                </lightning-formatted-date-time>
+                            </div>
+                            <div class="table-cell po-col">
+                                <span class="po-number">{order.poNumber}</span>
+                            </div>
+                            <div class="table-cell amount-col">
+                                <lightning-formatted-number
+                                    value={order.totalAmount}
+                                    format-style="currency"
+                                    currency-code="USD">
+                                </lightning-formatted-number>
+                            </div>
+                            <div class="table-cell actions-col">
+                                <button class="btn-action" data-order-id={order.id} onclick={handleViewOrder} title="View Details">
+                                    <svg class="action-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+
+                <!-- Old Card View (Kept for Mobile/Fallback) -->
+                <div class="orders-list-mobile">
+                    <template for:each={orders} for:item="order">
+                        <div key={order.id} class="order-card">
+                            <div class="order-header">
+                                <div class="order-info">
+                                    <span class="order-number">Order #{order.orderNumber}</span>
+                                    <span class="order-status" data-status={order.status}>{order.status}</span>
+                                </div>
+                                <div class="order-amount">
+                                    <lightning-formatted-number
+                                        value={order.totalAmount}
+                                        format-style="currency"
+                                        currency-code="USD">
+                                    </lightning-formatted-number>
+                                </div>
+                            </div>
+
+                            <!-- Enhanced Order Details Section -->
+                            <div class="order-details">
+                                <div class="order-detail-row">
+                                    <span class="detail-label">Order Date:</span>
+                                    <span class="detail-value">
+                                        <lightning-formatted-date-time
+                                            value={order.orderDate}
+                                            year="numeric"
+                                            month="short"
+                                            day="2-digit"
+                                            hour="2-digit"
+                                            minute="2-digit">
+                                        </lightning-formatted-date-time>
+                                    </span>
+                                </div>
+
+                                <template if:true={order.accountName}>
+                                    <div class="order-detail-row">
+                                        <span class="detail-label">Account Name:</span>
+                                        <span class="detail-value">{order.accountName}</span>
+                                    </div>
+                                </template>
+
+                                <template if:true={order.poNumber}>
+                                    <div class="order-detail-row">
+                                        <span class="detail-label">PO Number:</span>
+                                        <span class="detail-value po-number">{order.poNumber}</span>
+                                    </div>
+                                </template>
+
+                                <template if:true={order.items}>
+                                    <div class="order-detail-row">
+                                        <span class="detail-label">Items:</span>
+                                        <span class="detail-value">{order.itemCount} item(s)</span>
+                                    </div>
+                                </template>
+
+                                <template if:true={order.shippingAddress}>
+                                    <div class="order-detail-row">
+                                        <span class="detail-label">Ship To:</span>
+                                        <span class="detail-value">{order.shippingAddress}</span>
+                                    </div>
+                                </template>
+
+                                <template if:true={order.trackingNumber}>
+                                    <div class="order-detail-row">
+                                        <span class="detail-label">Tracking #:</span>
+                                        <span class="detail-value tracking-number">{order.trackingNumber}</span>
+                                    </div>
+                                </template>
+
+                                <template if:true={order.estimatedDelivery}>
+                                    <div class="order-detail-row">
+                                        <span class="detail-label">Estimated Delivery:</span>
+                                        <span class="detail-value">
+                                            <lightning-formatted-date-time
+                                                value={order.estimatedDelivery}
+                                                year="numeric"
+                                                month="short"
+                                                day="2-digit">
+                                            </lightning-formatted-date-time>
+                                        </span>
+                                    </div>
+                                </template>
+
+                                <template if:true={order.paymentMethod}>
+                                    <div class="order-detail-row">
+                                        <span class="detail-label">Payment:</span>
+                                        <span class="detail-value">{order.paymentMethod}</span>
+                                    </div>
+                                </template>
+                            </div>
+
+                            <!-- Order Items List -->
+                            <template if:true={order.items}>
+                                <div class="order-items-section">
+                                    <h4 class="order-items-title">Order Items:</h4>
+                                    <div class="order-items-list">
+                                        <template for:each={order.items} for:item="item">
+                                            <div key={item.id} class="order-item">
+                                                <template if:true={item.productImage}>
+                                                    <img src={item.productImage} alt={item.productName} class="order-item-image" />
+                                                </template>
+                                                <div class="order-item-details">
+                                                    <span class="order-item-name">{item.productName}</span>
+                                                    <span class="order-item-quantity">Qty: {item.quantity}</span>
+                                                    <span class="order-item-price">
+                                                        <lightning-formatted-number
+                                                            value={item.price}
+                                                            format-style="currency"
+                                                            currency-code="USD">
+                                                        </lightning-formatted-number>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </div>
+                            </template>
+
+                            <div class="order-footer">
+                                <button class="btn-link" data-order-id={order.id} onclick={handleViewOrder}>
+                                    View Full Details
+                                </button>
+                                <template if:true={order.canReorder}>
+                                    <button class="btn-link" data-order-id={order.id} onclick={handleReorder}>
+                                        Reorder
+                                    </button>
+                                </template>
+                                <template if:true={order.canTrack}>
+                                    <button class="btn-link" data-order-id={order.id} onclick={handleTrackOrder}>
+                                        Track Package
+                                    </button>
+                                </template>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </template>
+
+            <template if:false={hasOrders}>
+                <div class="empty-state">
+                    <svg class="empty-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                    </svg>
+                    <h3 class="empty-title">No Orders Yet</h3>
+                    <p class="empty-text">You haven't placed any orders yet. Start shopping to see your orders here.</p>
+                    <button class="btn-primary" onclick={handleBrowseProducts}>Browse Products</button>
+                </div>
+            </template>
+        </div>
+    </div>
+</template>

@@ -281,17 +281,40 @@ export default class MyProfile extends NavigationMixin(LightningElement) {
 
     // Handle view order details
     handleViewOrder(event) {
-        const orderId = event.currentTarget.dataset.orderId;
+        const orderId = event.detail?.orderId || event.currentTarget?.dataset?.orderId;
         this.showToast('Info', 'Navigating to order details...', 'info');
-        // Navigate to order detail page
-        // this[NavigationMixin.Navigate]({
-        //     type: 'standard__recordPage',
-        //     attributes: {
-        //         recordId: orderId,
-        //         objectApiName: 'Order',
-        //         actionName: 'view'
-        //     }
-        // });
+        this[NavigationMixin.Navigate]({
+            type: 'comm__namedPage',
+            attributes: {
+                name: 'orderDetails__c'
+            },
+            state: {
+                c__recordId: orderId
+            }
+        });
+    }
+
+    // Handle reorder
+    handleReorder(event) {
+        const orderId = event.detail?.orderId;
+        this.showToast('Info', 'Reordering items...', 'info');
+        // Implement reorder logic here
+    }
+
+    // Handle track order
+    handleTrackOrder(event) {
+        const orderId = event.detail?.orderId;
+        this.showToast('Info', 'Opening tracking information...', 'info');
+        this[NavigationMixin.Navigate]({
+            type: 'comm__namedPage',
+            attributes: {
+                name: 'orderDetails__c'
+            },
+            state: {
+                c__recordId: orderId
+            }
+        });
+        // Implement tracking logic here
     }
 
     // Handle browse products
@@ -317,7 +340,7 @@ export default class MyProfile extends NavigationMixin(LightningElement) {
 
     // Handle remove cart item
     handleRemoveCartItem(event) {
-        const cartItemId = event.currentTarget.dataset.itemId;
+        const cartItemId = event.detail?.cartItemId || event.currentTarget?.dataset?.itemId;
 
         removeFromCart({ cartItemId: cartItemId })
             .then(() => {
@@ -332,8 +355,8 @@ export default class MyProfile extends NavigationMixin(LightningElement) {
 
     // Handle update cart quantity
     handleUpdateQuantity(event) {
-        const cartItemId = event.currentTarget.dataset.itemId;
-        const quantity = parseInt(event.target.value, 10);
+        const cartItemId = event.detail?.cartItemId || event.currentTarget?.dataset?.itemId;
+        const quantity = event.detail?.quantity || parseInt(event.target?.value, 10);
 
         if (quantity <= 0) {
             this.showToast('Error', 'Quantity must be greater than 0', 'error');
@@ -353,13 +376,13 @@ export default class MyProfile extends NavigationMixin(LightningElement) {
 
     // Handle view cart item details
     handleViewCartItem(event) {
-        const propertyId = event.currentTarget.dataset.propertyId;
+        const propertyId = event.detail?.propertyId || event.currentTarget?.dataset?.propertyId;
 
         // Navigate to property details page
         this[NavigationMixin.Navigate]({
             type: 'comm__namedPage',
             attributes: {
-                name: 'property_details__c'
+                name: 'PropertyDetails__c'
             },
             state: {
                 c__recordId: propertyId
@@ -374,18 +397,21 @@ export default class MyProfile extends NavigationMixin(LightningElement) {
             return;
         }
 
-        // Navigate to checkout page
         this[NavigationMixin.Navigate]({
             type: 'comm__namedPage',
             attributes: {
-                name: 'checkout__c'
+                name: 'Checkout__c' // Update with your checkout page name
+            },
+            state: {
+                cartId: '',
+                cartUUID: ''
             }
         });
     }
 
     // Handle remove wishlist item
     handleRemoveWishlistItem(event) {
-        const wishlistItemId = event.currentTarget.dataset.itemId;
+        const wishlistItemId = event.detail?.wishlistItemId || event.currentTarget?.dataset?.itemId;
 
         removeFromWishlist({ wishlistItemId: wishlistItemId })
             .then(() => {
@@ -400,7 +426,7 @@ export default class MyProfile extends NavigationMixin(LightningElement) {
 
     // Handle view wishlist item details
     handleViewWishlistItem(event) {
-        const propertyId = event.currentTarget.dataset.propertyId;
+        const propertyId = event.detail?.propertyId || event.currentTarget?.dataset?.propertyId;
 
         // Navigate to property details page
         this[NavigationMixin.Navigate]({
@@ -416,7 +442,7 @@ export default class MyProfile extends NavigationMixin(LightningElement) {
 
     // Handle add wishlist item to cart
     handleAddToCartFromWishlist(event) {
-        const propertyId = event.currentTarget.dataset.propertyId;
+        const propertyId = event.detail?.propertyId || event.currentTarget?.dataset?.propertyId;
 
         this.showToast('Info', 'Adding property to cart...', 'info');
         // In a real scenario, call the addToCart method from CartController

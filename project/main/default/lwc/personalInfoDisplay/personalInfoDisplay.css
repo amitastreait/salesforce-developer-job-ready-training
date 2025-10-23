@@ -1,0 +1,81 @@
+/* Personal Info Display Styles */
+.content-card {
+    background: white;
+    border-radius: 1rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.card-header-section {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 1.5rem 2rem;
+}
+
+.card-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: white;
+    margin: 0 0 0.25rem 0;
+}
+
+.card-subtitle {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0;
+}
+
+.card-body {
+    padding: 2rem;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.info-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0;
+}
+
+.info-value {
+    font-size: 1rem;
+    color: #1a1a1a;
+    font-weight: 500;
+    margin: 0;
+    line-height: 1.5;
+}
+
+.about-section {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid #e5e7eb;
+}
+
+.about-text {
+    font-size: 1rem;
+    color: #4b5563;
+    line-height: 1.6;
+    margin-top: 0.75rem;
+    margin-bottom: 0;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+    .info-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+}

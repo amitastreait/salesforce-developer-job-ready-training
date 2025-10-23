@@ -88,7 +88,8 @@ public without sharing class MyProfileController {
             // Query Orders - adjust fields based on your Order object structure
             List<Order> orders = [
                 SELECT Id, OrderNumber, Status, TotalAmount,
-                       EffectiveDate, CreatedDate, Type
+                       EffectiveDate, CreatedDate, Type,
+                       Account.Name, PoNumber
                 FROM Order
                 WHERE CustomerAuthorizedById = :currentUser.ContactId
                    OR BillToContactId = :currentUser.ContactId
@@ -104,6 +105,8 @@ public without sharing class MyProfileController {
                 ow.totalAmount = ord.TotalAmount;
                 ow.orderDate = ord.EffectiveDate != null ? ord.EffectiveDate : ord.CreatedDate;
                 ow.type = ord.Type;
+                ow.accountName = ord.Account?.Name;
+                ow.poNumber = ord.PoNumber;
                 orderList.add(ow);
             }
 
@@ -606,6 +609,8 @@ public without sharing class MyProfileController {
         @AuraEnabled public Decimal totalAmount { get; set; }
         @AuraEnabled public DateTime orderDate { get; set; }
         @AuraEnabled public String type { get; set; }
+        @AuraEnabled public String accountName { get; set; }
+        @AuraEnabled public String poNumber { get; set; }
     }
 
     public class CartDataWrapper {
