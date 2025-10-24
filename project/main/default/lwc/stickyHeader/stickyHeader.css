@@ -71,6 +71,21 @@
     border-radius: 25px;
 }
 
+.logout-button {
+    --slds-c-button-neutral-color-background: rgba(255, 255, 255, 0.2);
+    --slds-c-button-neutral-color-border: rgba(255, 255, 255, 0.4);
+    --slds-c-button-text-color: white;
+    font-weight: 600;
+    padding: 0.5rem 1.5rem;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+}
+
+.logout-button:hover {
+    --slds-c-button-neutral-color-background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+}
+
 /* User Info */
 .user-info {
     display: flex;

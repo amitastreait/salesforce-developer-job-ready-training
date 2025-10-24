@@ -31,6 +31,14 @@
                         <lightning-icon icon-name="standard:user" size="small" alternative-text="User"></lightning-icon>
                         <span class="user-text">My Account</span>
                     </div>
+
+                    <!-- Logout Button -->
+                    <lightning-button
+                        label="Logout"
+                        variant="neutral"
+                        onclick={handleLogout}
+                        class="logout-button">
+                    </lightning-button>
                 </template>
 
                 <!-- Cart Icon with Badge -->

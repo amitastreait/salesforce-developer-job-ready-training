@@ -1,0 +1,8 @@
+.slds-modal__container {
+    max-width: 500px;
+}
+
+.slds-form-element__help {
+    color: #c23934;
+    margin-top: 0.25rem;
+}

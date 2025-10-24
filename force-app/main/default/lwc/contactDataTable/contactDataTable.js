@@ -150,6 +150,8 @@ export default class ContactDataTable extends LightningElement {
                 item.leadSourceOptions = this.leadSourceOptions;
 
                 if(item.AccountId){
+                    console.log(item.AccountId);
+                    console.log(item.AccountId.Name);
                     item.AccountName = item.Account.Name;
                     item.AnnualRevenue = item.Account.AnnualRevenue;
                     item.CurrencyIsoCode = item.Account.CurrencyIsoCode;

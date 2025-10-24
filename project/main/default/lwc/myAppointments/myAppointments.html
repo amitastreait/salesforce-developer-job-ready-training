@@ -1,0 +1,156 @@
+<template>
+    <div class="my-appointments-container">
+        <!-- Header Section -->
+        <div class="page-header">
+            <h1 class="page-title">My Appointments</h1>
+            <p class="page-subtitle">Manage your property viewing appointments</p>
+        </div>
+
+        <!-- Stats Section -->
+        <template if:false={hasNoAppointments}>
+            <div class="stats-container">
+                <div class="stat-card">
+                    <div class="stat-value">{appointmentStats.total}</div>
+                    <div class="stat-label">Total Appointments</div>
+                </div>
+                <div class="stat-card stat-upcoming">
+                    <div class="stat-value">{upcomingAppointments}</div>
+                    <div class="stat-label">Upcoming</div>
+                </div>
+                <div class="stat-card stat-scheduled">
+                    <div class="stat-value">{appointmentStats.scheduled}</div>
+                    <div class="stat-label">Scheduled</div>
+                </div>
+                <div class="stat-card stat-confirmed">
+                    <div class="stat-value">{appointmentStats.confirmed}</div>
+                    <div class="stat-label">Confirmed</div>
+                </div>
+            </div>
+        </template>
+
+        <!-- Filter Section -->
+        <template if:false={hasNoAppointments}>
+            <div class="filter-section">
+                <lightning-combobox
+                    name="statusFilter"
+                    label="Filter by Status"
+                    value={selectedFilter}
+                    options={filterOptions}
+                    onchange={handleFilterChange}
+                    variant="label-inline">
+                </lightning-combobox>
+            </div>
+        </template>
+
+        <!-- Loading Spinner -->
+        <template if:true={isLoading}>
+            <div class="loading-container">
+                <lightning-spinner alternative-text="Loading appointments..." size="medium"></lightning-spinner>
+            </div>
+        </template>
+
+        <!-- No Appointments Message -->
+        <template if:true={hasNoAppointments}>
+            <div class="empty-state">
+                <div class="empty-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                </div>
+                <h2 class="empty-title">No Appointments Yet</h2>
+                <p class="empty-message">You haven't scheduled any property viewings yet. Browse properties and schedule a viewing to get started!</p>
+            </div>
+        </template>
+
+        <!-- No Filtered Results -->
+        <template if:true={hasNoFilteredAppointments}>
+            <div class="empty-state">
+                <h2 class="empty-title">No Results Found</h2>
+                <p class="empty-message">No appointments match the selected filter. Try selecting a different status.</p>
+            </div>
+        </template>
+
+        <!-- Appointments List -->
+        <template if:false={isLoading}>
+            <div class="appointments-list">
+                <template for:each={filteredAppointments} for:item="item">
+                    <div key={item.appointment.Id} class="appointment-card">
+                        <!-- Property Info Section -->
+                        <div class="property-section">
+                            <template if:true={item.propertyImage}>
+                                <img src={item.propertyImage} alt={item.propertyName} class="property-image" />
+                            </template>
+                            <template if:false={item.propertyImage}>
+                                <div class="property-image-placeholder">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                                    </svg>
+                                </div>
+                            </template>
+                            <div class="property-details">
+                                <h3 class="property-name">{item.propertyName}</h3>
+                                <p class="property-address">{item.propertyAddress}</p>
+                                <div class="property-meta">
+                                    <span class="property-type">{item.propertyType}</span>
+                                    <span class="property-location">{item.propertyCity}, {item.propertyState}</span>
+                                </div>
+                                <p class="property-price">{item.propertyPrice}</p>
+                            </div>
+                        </div>
+
+                        <!-- Appointment Info Section -->
+                        <div class="appointment-section">
+                            <div class="appointment-header">
+                                <div class="appointment-id">Appointment #{item.appointment.Name}</div>
+                                <div class="badges">
+                                    <span class={item.appointment.Status__c}>{item.appointment.Status__c}</span>
+                                    <span class={item.appointment.Type__c}>{item.appointment.Type__c}</span>
+                                </div>
+                            </div>
+
+                            <div class="appointment-datetime">
+                                <div class="datetime-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                    </svg>
+                                </div>
+                                <div class="datetime-info">
+                                    <div class="datetime-label">Scheduled Date & Time</div>
+                                    <div class="datetime-value">{item.appointment.Appointment_Date_Time__c}</div>
+                                </div>
+                            </div>
+
+                            <div class="appointment-details">
+                                <div class="detail-row">
+                                    <span class="detail-label">Duration:</span>
+                                    <span class="detail-value">{item.appointment.Duration_in_Minutes__c} minutes</span>
+                                </div>
+                                <template if:true={item.appointment.Purpose__c}>
+                                    <div class="detail-row">
+                                        <span class="detail-label">Purpose:</span>
+                                        <span class="detail-value">{item.appointment.Purpose__c}</span>
+                                    </div>
+                                </template>
+                            </div>
+
+                            <div class="appointment-actions">
+                                <button
+                                    class="btn btn-secondary"
+                                    data-property-id={item.propertyId}
+                                    onclick={handleViewProperty}>
+                                    View Property
+                                </button>
+                                <button
+                                    class="btn btn-primary"
+                                    data-appointment-id={item.appointment.Id}
+                                    onclick={handleViewAppointment}>
+                                    View Details
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </template>
+    </div>
+</template>

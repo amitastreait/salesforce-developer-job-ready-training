@@ -92,7 +92,7 @@ global class LinkedInAuthHandler implements Auth.RegistrationHandler{
         u.email = data.email;
         u.lastName = data.lastName;
         u.firstName = data.firstName;
-        String alias = data.username;
+        String alias = data.email.substringBefore('@');
         if(alias.length() > 8) {
             alias = alias.substring(0, 8);
         }

@@ -7,7 +7,6 @@ import { subscribe, unsubscribe, APPLICATION_SCOPE, MessageContext } from 'light
 import CART_CHANGED_CHANNEL from '@salesforce/messageChannel/CartChanged__c';
 
 import RealityForceLogo from '@salesforce/resourceUrl/RealityForceLogo';
-// Example :- import TRAILHEAD_LOGO from '@salesforce/resourceUrl/trailhead_logo';
 
 export default class StickyHeader extends NavigationMixin(LightningElement) {
     isGuestUser = isGuest;
@@ -86,6 +85,16 @@ export default class StickyHeader extends NavigationMixin(LightningElement) {
             type: 'comm__loginPage',
             attributes: {
                 actionName: 'login'
+            }
+        });
+    }
+
+    // Handle logout
+    handleLogout() {
+        this[NavigationMixin.Navigate]({
+            type: 'comm__loginPage',
+            attributes: {
+                actionName: 'logout'
             }
         });
     }

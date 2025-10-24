@@ -4,7 +4,10 @@
       "Bash(sfdx force:source:deploy:*)",
       "Bash(sf project deploy start:*)",
       "Bash(sf apex run test:*)",
-      "Bash(mkdir:*)"
+      "Bash(mkdir:*)",
+      "Bash(git -C /Users/amitsingh/Desktop/MyProjects/sfdx/salesforce-developer-training log --oneline -20)",
+      "Bash(git -C /Users/amitsingh/Desktop/MyProjects/sfdx/salesforce-developer-training show d8f4509 --name-only)",
+      "Bash(xargs -I {} find {} -name \"*.field-meta.xml\")"
     ],
     "deny": []
   }

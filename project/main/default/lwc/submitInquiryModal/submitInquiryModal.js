@@ -4,7 +4,9 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 export default class SubmitInquiryModal extends LightningElement {
     @api propertyId;
     @api propertyName;
-    
+    @api userName;
+    @api userEmail;
+
     @track formData = {
         name: '',
         email: '',
@@ -12,9 +14,30 @@ export default class SubmitInquiryModal extends LightningElement {
         message: ''
     };
 
+    // Track if we've initialized the form with user data
+    hasInitialized = false;
+
+    renderedCallback() {
+        // Pre-populate user data on first render
+        if (!this.hasInitialized && (this.userName || this.userEmail)) {
+            this.hasInitialized = true;
+
+            // Create a new object to trigger reactivity
+            this.formData = {
+                name: this.userName || '',
+                email: this.userEmail || '',
+                phone: '',
+                message: ''
+            };
+        }
+    }
+
     handleInputChange(event) {
         const field = event.target.dataset.field;
-        this.formData[field] = event.target.value;
+        this.formData = {
+            ...this.formData,
+            [field]: event.target.value
+        };
     }
 
     handleCancel() {

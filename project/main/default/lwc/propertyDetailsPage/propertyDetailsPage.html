@@ -253,10 +253,19 @@
                 <c-submit-inquiry-modal
                     property-id={recordId}
                     property-name={propertyName}
+                    user-name={userInfo.name}
+                    user-email={userInfo.email}
                     onclose={handleCloseInquiryModal}
                     onsubmitinquiry={handleInquirySubmit}>
                 </c-submit-inquiry-modal>
             </template>
+
+            <!-- Wishlist Name Modal -->
+            <c-wishlist-name-modal
+                is-open={showWishlistNameModal}
+                onclose={handleCloseWishlistModal}
+                oncreate={handleCreateWishlist}>
+            </c-wishlist-name-modal>
         </template>
     </div>
 </template>

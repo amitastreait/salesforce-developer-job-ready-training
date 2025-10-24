@@ -432,7 +432,7 @@ export default class MyProfile extends NavigationMixin(LightningElement) {
         this[NavigationMixin.Navigate]({
             type: 'comm__namedPage',
             attributes: {
-                name: 'property_details__c'
+                name: 'PropertyDetails__c'
             },
             state: {
                 c__recordId: propertyId

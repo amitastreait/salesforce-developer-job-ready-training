@@ -19,7 +19,7 @@ export default class WishlistDisplay extends LightningElement {
 
     handleViewWishlistItem(event) {
         const propertyId = event.currentTarget.dataset.propertyId;
-
+        console.log('Property ID:', propertyId);
         const viewEvent = new CustomEvent('viewwishlistitem', {
             detail: { propertyId }
         });

@@ -1,0 +1,248 @@
+<template>
+    <div class="dashboard-container">
+        <!-- Loading Spinner -->
+        <template if:true={isLoading}>
+            <lightning-spinner alternative-text="Loading dashboard..." size="large"></lightning-spinner>
+        </template>
+
+        <!-- Dashboard Content -->
+        <template if:false={isLoading}>
+            <template if:true={metrics}>
+                <!-- Header Section -->
+                <div class="dashboard-header">
+                    <h1 class="dashboard-title">Buyer Dashboard</h1>
+                    <!-- <lightning-button
+                        label="Refresh"
+                        icon-name="utility:refresh"
+                        onclick={handleRefresh}
+                        class="refresh-button"
+                    ></lightning-button> -->
+                </div>
+
+                <!-- Key Metrics Cards -->
+                <div class="metrics-grid">
+                <!-- Total Properties Card -->
+                <div class="metric-card properties-card">
+                    <div class="metric-icon">
+                        <lightning-icon icon-name="standard:home" size="medium"></lightning-icon>
+                    </div>
+                    <div class="metric-content">
+                        <h3 class="metric-label">Total Properties</h3>
+                        <p class="metric-value">{metrics.totalProperties}</p>
+                        <p class="metric-subtext">{formattedTotalValue} total value</p>
+                    </div>
+                    <lightning-button
+                        label="View All"
+                        variant="base"
+                        onclick={handleViewAllProperties}
+                        class="metric-action"
+                    ></lightning-button>
+                </div>
+
+                <!-- Active Orders Card -->
+                <div class="metric-card orders-card">
+                    <div class="metric-icon">
+                        <lightning-icon icon-name="standard:orders" size="medium"></lightning-icon>
+                    </div>
+                    <div class="metric-content">
+                        <h3 class="metric-label">Orders</h3>
+                        <p class="metric-value">{metrics.activeOrders}</p>
+                        <p class="metric-subtext">{metrics.completedOrders} completed</p>
+                    </div>
+                    <lightning-button
+                        label="View Orders"
+                        variant="base"
+                        onclick={handleViewOrders}
+                        class="metric-action"
+                    ></lightning-button>
+                </div>
+
+                <!-- Shopping Cart Card -->
+                <div class="metric-card cart-card">
+                    <div class="metric-icon">
+                        <lightning-icon icon-name="utility:cart" size="medium"></lightning-icon>
+                    </div>
+                    <div class="metric-content">
+                        <h3 class="metric-label">Shopping Cart</h3>
+                        <p class="metric-value">{metrics.cartItemCount}</p>
+                        <p class="metric-subtext">{formattedCartTotal}</p>
+                    </div>
+                    <lightning-button
+                        label="View Cart"
+                        variant="base"
+                        onclick={handleViewCart}
+                        class="metric-action"
+                    ></lightning-button>
+                </div>
+
+                <!-- Wishlist Card -->
+                <div class="metric-card wishlist-card">
+                    <div class="metric-icon">
+                        <lightning-icon icon-name="utility:favorite" size="medium"></lightning-icon>
+                    </div>
+                    <div class="metric-content">
+                        <h3 class="metric-label">Wishlist</h3>
+                        <p class="metric-value">{metrics.wishlistCount}</p>
+                        <p class="metric-subtext">saved items</p>
+                    </div>
+                    <lightning-button
+                        label="View Wishlist"
+                        variant="base"
+                        onclick={handleViewWishlist}
+                        class="metric-action"
+                    ></lightning-button>
+                </div>
+            </div>
+
+            <!-- Main Content Grid -->
+            <div class="content-grid">
+                <!-- Recent Properties Section -->
+                <div class="section-card">
+                    <div class="section-header">
+                        <h2 class="section-title">Recent Properties</h2>
+                        <lightning-button
+                            label="View All"
+                            variant="base"
+                            onclick={handleViewAllProperties}
+                        ></lightning-button>
+                    </div>
+                    <div class="section-content">
+                        <template if:true={hasProperties}>
+                            <div class="property-list">
+                                <template for:each={recentPropertiesWithFormatting} for:item="property">
+                                    <div
+                                        key={property.propertyId}
+                                        class="property-item"
+                                        data-id={property.propertyId}
+                                        onclick={handlePropertyClick}
+                                    >
+                                        <template if:true={property.hasImage}>
+                                            <div class="property-image" style={property.imageStyle}>
+                                                <img src={property.imageUrl} alt={property.propertyName} />
+                                            </div>
+                                        </template>
+                                        <template if:false={property.hasImage}>
+                                            <div class="property-image-placeholder">
+                                                <lightning-icon icon-name="standard:home" size="large"></lightning-icon>
+                                            </div>
+                                        </template>
+                                        <div class="property-details">
+                                            <h3 class="property-name">{property.propertyName}</h3>
+                                            <p class="property-type">{property.propertyType}</p>
+                                            <p class="property-price">{property.formattedPrice}</p>
+                                            <p class="property-date">Purchased: {property.formattedDate}</p>
+                                        </div>
+                                    </div>
+                                </template>
+                            </div>
+                        </template>
+                        <template if:false={hasProperties}>
+                            <div class="empty-state">
+                                <lightning-icon icon-name="standard:home" size="large"></lightning-icon>
+                                <p>No properties purchased yet</p>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+
+                <!-- Recent Orders Section -->
+                <div class="section-card">
+                    <div class="section-header">
+                        <h2 class="section-title">Recent Orders</h2>
+                        <lightning-button
+                            label="View All"
+                            variant="base"
+                            onclick={handleViewOrders}
+                        ></lightning-button>
+                    </div>
+                    <div class="section-content">
+                        <template if:true={hasOrders}>
+                            <div class="order-list">
+                                <template for:each={recentOrdersWithFormatting} for:item="order">
+                                    <div
+                                        key={order.orderId}
+                                        class="order-item"
+                                        data-id={order.orderId}
+                                        onclick={handleOrderClick}
+                                    >
+                                        <div class="order-header">
+                                            <span class="order-number">{order.orderNumber}</span>
+                                            <lightning-badge label={order.statusLabel} class={order.statusClass}></lightning-badge>
+                                        </div>
+                                        <div class="order-details">
+                                            <p class="order-date">{order.formattedDate}</p>
+                                            <p class="order-amount">{order.formattedAmount}</p>
+                                            <p class="order-items">{order.itemCount} items</p>
+                                        </div>
+                                    </div>
+                                </template>
+                            </div>
+                        </template>
+                        <template if:false={hasOrders}>
+                            <div class="empty-state">
+                                <lightning-icon icon-name="standard:orders" size="large"></lightning-icon>
+                                <p>No orders yet</p>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+
+                <!-- Activity Timeline Section -->
+                <div class="section-card full-width">
+                    <div class="section-header">
+                        <h2 class="section-title">Recent Activity</h2>
+                    </div>
+                    <div class="section-content">
+                        <template if:true={hasActivities}>
+                            <div class="activity-timeline">
+                                <template for:each={recentActivitiesFormatted} for:item="activity">
+                                    <div key={activity.recordId} class="activity-item">
+                                        <div class="activity-icon">
+                                            <lightning-icon icon-name={activity.iconName} size="small"></lightning-icon>
+                                        </div>
+                                        <div class="activity-content">
+                                            <p class="activity-description">{activity.description}</p>
+                                            <p class="activity-date">{activity.formattedDate}</p>
+                                        </div>
+                                    </div>
+                                </template>
+                            </div>
+                        </template>
+                        <template if:false={hasActivities}>
+                            <div class="empty-state">
+                                <lightning-icon icon-name="standard:timeline" size="large"></lightning-icon>
+                                <p>No recent activity</p>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Stats Summary -->
+            <div class="stats-summary">
+                <div class="stat-item">
+                    <span class="stat-label">Average Property Value</span>
+                    <span class="stat-value">{formattedAverageValue}</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Total Investment</span>
+                    <span class="stat-value">{formattedTotalValue}</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Active Cart Value</span>
+                    <span class="stat-value">{formattedCartTotal}</span>
+                </div>
+            </div>
+            </template>
+        </template>
+
+        <!-- Error State -->
+        <template if:true={error}>
+            <div class="error-state">
+                <lightning-icon icon-name="utility:error" size="large" variant="error"></lightning-icon>
+                <p>Unable to load dashboard data</p>
+                <p class="error-message">{error.body.message}</p>
+            </div>
+        </template>
+    </div>
+</template>

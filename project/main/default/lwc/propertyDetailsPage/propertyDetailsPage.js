@@ -6,6 +6,12 @@ import CART_CHANGED_CHANNEL from '@salesforce/messageChannel/CartChanged__c';
 import getPropertyDetails from '@salesforce/apex/PropertyController.getPropertyDetails';
 import addToCart from '@salesforce/apex/CartController.addToCart';
 import getCartSummary from '@salesforce/apex/CartController.getCartSummary';
+import getUserWishlist from '@salesforce/apex/WishlistController.getUserWishlist';
+import createWishlist from '@salesforce/apex/WishlistController.createWishlist';
+import addToWishlist from '@salesforce/apex/WishlistController.addToWishlist';
+import createPropertyInquiry from '@salesforce/apex/PropertyController.createPropertyInquiry';
+import getCurrentUserInfo from '@salesforce/apex/PropertyController.getCurrentUserInfo';
+import createAppointment from '@salesforce/apex/PropertyController.createAppointment';
 
 export default class PropertyDetailsPage extends NavigationMixin(LightningElement) {
     @api recordId;
@@ -14,10 +20,17 @@ export default class PropertyDetailsPage extends NavigationMixin(LightningElemen
     showInquiryModal = false;
     showScheduleModal = false;
     isAddingToCart = false;
+    showWishlistNameModal = false;
+    isAddingToWishlist = false;
+    currentWishlistId = null;
 
     propertyData;
     propertyError;
     isLoading = true;
+
+    // User information
+    userInfo;
+    userInfoError;
 
     @wire(MessageContext)
     messageContext;
@@ -26,6 +39,19 @@ export default class PropertyDetailsPage extends NavigationMixin(LightningElemen
     setPageReference(pageRef){
         if(pageRef){
             this.recordId = pageRef?.state?.c__recordId;
+        }
+    }
+
+    // Wire adapter to fetch current user info
+    @wire(getCurrentUserInfo)
+    wiredUserInfo({ error, data }) {
+        if (data) {
+            this.userInfo = data;
+            this.userInfoError = undefined;
+        } else if (error) {
+            this.userInfoError = error;
+            this.userInfo = undefined;
+            console.error('Error fetching user info:', error);
         }
     }
 
@@ -247,7 +273,96 @@ export default class PropertyDetailsPage extends NavigationMixin(LightningElemen
     }
 
     handleSaveFavorite() {
-        this.showToast('Success', 'Property saved to favorites!', 'success');
+        if (!this.recordId) {
+            this.showToast('Error', 'Property ID not found', 'error');
+            return;
+        }
+
+        if (this.isAddingToWishlist) {
+            return; // Prevent duplicate clicks
+        }
+
+        this.isAddingToWishlist = true;
+
+        // First, check if user has a wishlist
+        getUserWishlist()
+            .then(result => {
+                if (result.exists) {
+                    // User has a wishlist, try to add property
+                    this.currentWishlistId = result.wishlistId;
+                    return this.addPropertyToWishlist(result.wishlistId);
+                } else {
+                    // No wishlist exists, show modal to create one
+                    this.showWishlistNameModal = true;
+                    this.isAddingToWishlist = false;
+                }
+            })
+            .catch(error => {
+                console.error('Error checking wishlist:', error);
+                const errorMessage = error.body?.message || error.message || 'Failed to check wishlist';
+                this.showToast('Error', errorMessage, 'error');
+                this.isAddingToWishlist = false;
+            });
+    }
+
+    addPropertyToWishlist(wishlistId) {
+        return addToWishlist({
+            propertyId: this.recordId,
+            wishlistId: wishlistId
+        })
+            .then(result => {
+                if (result.success) {
+                    this.showToast('Success', 'Property added to wishlist!', 'success');
+                } else if (result.alreadyExists) {
+                    this.showToast('Info', 'Property is already in your wishlist', 'info');
+                } else {
+                    this.showToast('Error', result.message || 'Failed to add to wishlist', 'error');
+                }
+                this.isAddingToWishlist = false;
+            })
+            .catch(error => {
+                console.error('Error adding to wishlist:', error);
+                const errorMessage = error.body?.message || error.message || 'Failed to add to wishlist';
+                this.showToast('Error', errorMessage, 'error');
+                this.isAddingToWishlist = false;
+            });
+    }
+
+    handleCloseWishlistModal() {
+        this.showWishlistNameModal = false;
+        this.isAddingToWishlist = false;
+    }
+
+    handleCreateWishlist(event) {
+        const wishlistName = event.detail.wishlistName;
+
+        createWishlist({ wishlistName: wishlistName })
+            .then(result => {
+                if (result.success) {
+                    this.showToast('Success', 'Wishlist created successfully!', 'success');
+                    this.currentWishlistId = result.wishlistId;
+                    this.showWishlistNameModal = false;
+
+                    // Now add the property to the newly created wishlist
+                    return this.addPropertyToWishlist(result.wishlistId);
+                } else {
+                    throw new Error(result.message || 'Failed to create wishlist');
+                }
+            })
+            .catch(error => {
+                console.error('Error creating wishlist:', error);
+                const errorMessage = error.body?.message || error.message || 'Failed to create wishlist';
+
+                // Show error in modal
+                const modal = this.template.querySelector('c-wishlist-name-modal');
+                if (modal) {
+                    modal.setError(errorMessage);
+                } else {
+                    this.showToast('Error', errorMessage, 'error');
+                    this.showWishlistNameModal = false;
+                    this.isAddingToWishlist = false;
+                }
+            });
     }
 
     handleAddToCart() {
@@ -298,11 +413,30 @@ export default class PropertyDetailsPage extends NavigationMixin(LightningElemen
     handleScheduleViewingSubmit(event) {
         const viewingData = event.detail;
         console.log('Viewing Data:', viewingData);
-        
-        // In real scenario: Call Apex to create Property_Viewing__c record
-        // createViewing({ viewingData: JSON.stringify(viewingData) })
-        this.showToast('Success', 'Viewing scheduled successfully!', 'success');
-        this.showScheduleModal = false;
+
+        // Combine date and time into a DateTime string
+        const dateTimeString = viewingData.date + ' ' + viewingData.time + ':00';
+
+        // Call Apex to create Appointment__c record
+        createAppointment({
+            propertyId: this.recordId,
+            appointmentDateTime: dateTimeString,
+            name: viewingData.name,
+            phone: viewingData.phone
+        })
+            .then(result => {
+                if (result.success) {
+                    this.showToast('Success', 'Viewing scheduled successfully!', 'success');
+                    this.showScheduleModal = false;
+                } else {
+                    this.showToast('Error', result.message || 'Failed to schedule viewing', 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error scheduling viewing:', error);
+                const errorMessage = error.body?.message || error.message || 'Failed to schedule viewing';
+                this.showToast('Error', errorMessage, 'error');
+            });
     }
 
     handleCloseInquiryModal() {
@@ -312,12 +446,28 @@ export default class PropertyDetailsPage extends NavigationMixin(LightningElemen
     handleInquirySubmit(event) {
         const inquiryData = event.detail;
         console.log('Inquiry Data:', inquiryData);
-        
-        // In real scenario: Call Apex to create Property_Inquiry__c record
-        // createInquiry({ inquiryData: JSON.stringify(inquiryData) })
-        this.showToast('Success', 'Inquiry submitted successfully!', 'success');
-        this.showInquiryModal = false;
-        
+
+        // Call Apex to create PropertyInquiry__c record
+        createPropertyInquiry({
+            propertyId: this.recordId,
+            name: inquiryData.name,
+            email: inquiryData.email,
+            phone: inquiryData.phone || '',
+            message: inquiryData.message
+        })
+            .then(result => {
+                if (result.success) {
+                    this.showToast('Success', 'Inquiry submitted successfully!', 'success');
+                    this.showInquiryModal = false;
+                } else {
+                    this.showToast('Error', result.message || 'Failed to submit inquiry', 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error submitting inquiry:', error);
+                const errorMessage = error.body?.message || error.message || 'Failed to submit inquiry';
+                this.showToast('Error', errorMessage, 'error');
+            });
     }
 
     /* validateViewingForm() {

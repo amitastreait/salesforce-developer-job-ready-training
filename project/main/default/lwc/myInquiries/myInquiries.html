@@ -1,0 +1,154 @@
+<template>
+    <div class="my-inquiries-container">
+        <!-- Header Section -->
+        <div class="page-header">
+            <h1 class="page-title">My Inquiries</h1>
+            <p class="page-subtitle">Track all your property inquiries in one place</p>
+        </div>
+
+        <!-- Stats Section -->
+        <template if:false={hasNoInquiries}>
+            <div class="stats-container">
+                <div class="stat-card">
+                    <div class="stat-value">{inquiryStats.total}</div>
+                    <div class="stat-label">Total Inquiries</div>
+                </div>
+                <div class="stat-card stat-new">
+                    <div class="stat-value">{inquiryStats.new}</div>
+                    <div class="stat-label">New</div>
+                </div>
+                <div class="stat-card stat-progress">
+                    <div class="stat-value">{inquiryStats.inProgress}</div>
+                    <div class="stat-label">In Progress</div>
+                </div>
+                <div class="stat-card stat-responded">
+                    <div class="stat-value">{inquiryStats.responded}</div>
+                    <div class="stat-label">Responded</div>
+                </div>
+            </div>
+        </template>
+
+        <!-- Filter Section -->
+        <template if:false={hasNoInquiries}>
+            <div class="filter-section">
+                <lightning-combobox
+                    name="statusFilter"
+                    label="Filter by Status"
+                    value={selectedFilter}
+                    options={filterOptions}
+                    onchange={handleFilterChange}
+                    variant="label-inline">
+                </lightning-combobox>
+            </div>
+        </template>
+
+        <!-- Loading Spinner -->
+        <template if:true={isLoading}>
+            <div class="loading-container">
+                <lightning-spinner alternative-text="Loading inquiries..." size="medium"></lightning-spinner>
+            </div>
+        </template>
+
+        <!-- No Inquiries Message -->
+        <template if:true={hasNoInquiries}>
+            <div class="empty-state">
+                <div class="empty-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                </div>
+                <h2 class="empty-title">No Inquiries Yet</h2>
+                <p class="empty-message">You haven't submitted any property inquiries yet. Browse properties and submit an inquiry to get started!</p>
+            </div>
+        </template>
+
+        <!-- No Filtered Results -->
+        <template if:true={hasNoFilteredInquiries}>
+            <div class="empty-state">
+                <h2 class="empty-title">No Results Found</h2>
+                <p class="empty-message">No inquiries match the selected filter. Try selecting a different status.</p>
+            </div>
+        </template>
+
+        <!-- Inquiries List -->
+        <template if:false={isLoading}>
+            <div class="inquiries-list">
+                <template for:each={filteredInquiries} for:item="item">
+                    <div key={item.inquiry.Id} class="inquiry-card">
+                        <!-- Property Info Section -->
+                        <div class="property-section">
+                            <template if:true={item.propertyImage}>
+                                <img src={item.propertyImage} alt={item.propertyName} class="property-image" />
+                            </template>
+                            <template if:false={item.propertyImage}>
+                                <div class="property-image-placeholder">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                                    </svg>
+                                </div>
+                            </template>
+                            <div class="property-details">
+                                <h3 class="property-name">{item.propertyName}</h3>
+                                <p class="property-address">{item.propertyAddress}</p>
+                                <div class="property-meta">
+                                    <span class="property-type">{item.propertyType}</span>
+                                    <span class="property-location">{item.propertyCity}, {item.propertyState}</span>
+                                </div>
+                                <p class="property-price">{item.propertyPrice}</p>
+                            </div>
+                        </div>
+
+                        <!-- Inquiry Info Section -->
+                        <div class="inquiry-section">
+                            <div class="inquiry-header">
+                                <div class="inquiry-id">Inquiry #{item.inquiry.Name}</div>
+                                <div class="badges">
+                                    <span class={item.inquiry.Status__c}>{item.inquiry.Status__c}</span>
+                                    <span class={item.inquiry.Priority__c}>{item.inquiry.Priority__c}</span>
+                                </div>
+                            </div>
+
+                            <div class="inquiry-details">
+                                <div class="detail-row">
+                                    <span class="detail-label">Type:</span>
+                                    <span class="detail-value">{item.inquiry.Inquiry_Type__c}</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label">Submitted:</span>
+                                    <span class="detail-value">{item.inquiry.Inquiry_Date__c}</span>
+                                </div>
+                            </div>
+
+                            <div class="inquiry-message">
+                                <div class="message-label">Message:</div>
+                                <div class="message-content">{item.inquiry.Message__c}</div>
+                            </div>
+
+                            <template if:true={item.inquiry.Response__c}>
+                                <div class="inquiry-response">
+                                    <div class="response-label">Response:</div>
+                                    <div class="response-content">{item.inquiry.Response__c}</div>
+                                </div>
+                            </template>
+
+                            <div class="inquiry-actions">
+                                <button
+                                    class="btn btn-secondary"
+                                    data-property-id={item.propertyId}
+                                    onclick={handleViewProperty}>
+                                    View Property
+                                </button>
+                                <button
+                                    class="btn btn-primary"
+                                    data-inquiry-id={item.inquiry.Id}
+                                    onclick={handleViewInquiry}>
+                                    View Details
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </template>
+    </div>
+</template>
