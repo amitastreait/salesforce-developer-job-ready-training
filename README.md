@@ -18,10 +18,6 @@ A comprehensive, enterprise-grade **Real Estate Property Management System** bui
 - [Custom Objects](#-custom-objects)
 - [LWC Components](#-lwc-components)
 - [Apex Controllers](#-apex-controllers)
-- [Screenshots](#-screenshots)
-- [Installation](#-installation)
-- [Future Enhancements](#-future-enhancements)
-- [Contributing](#-contributing)
 
 ---
 
@@ -31,14 +27,14 @@ This platform provides a **complete real estate ecosystem** connecting buyers, s
 
 ### Business Value
 
-- **🏢 For Property Managers**: Centralized property portfolio management with automated workflows
-- **👥 For Buyers**: Self-service portal for property browsing, appointments, and offer submissions
-- **💼 For Agents**: Streamlined lead management and commission tracking
-- **📊 For Leadership**: Real-time analytics and reporting on property performance
+- **For Property Managers**: Centralized property portfolio management with automated workflows
+- **For Buyers**: Self-service portal for property browsing, appointments, and offer submissions
+- **For Agents**: Streamlined lead management and commission tracking
+- **For Leadership**: Real-time analytics and reporting on property performance
 
 ---
 
-## 🏗 Architecture
+## Architecture
 
 ### System Architecture Diagram
 
@@ -169,9 +165,9 @@ This platform provides a **complete real estate ecosystem** connecting buyers, s
 
 ---
 
-## ✨ Key Features
+## Key Features
 
-### 1. 🏠 Property Management
+### 1. Property Management
 
 #### Property Listings
 - **Multi-criteria Search**: Filter by price, location, type, bedrooms, bathrooms
@@ -210,7 +206,7 @@ This platform provides a **complete real estate ecosystem** connecting buyers, s
 - Add notes to saved properties
 - Quick add to cart from wishlist
 
-### 3. 💰 Offer Management System
+### 3. Offer Management System
 
 #### Make Offer (Login Required)
 - **Offer Creation Modal**: Comprehensive offer submission form
@@ -249,7 +245,7 @@ This platform provides a **complete real estate ecosystem** connecting buyers, s
   - Quick filters
 - **Property Navigation**: Direct link to property details from offer card
 
-### 4. 📅 Appointment Scheduling
+### 4. Appointment Scheduling
 
 #### Schedule Viewing
 - **Interactive Calendar**: Select available date/time slots
@@ -270,7 +266,7 @@ This platform provides a **complete real estate ecosystem** connecting buyers, s
 - Quick navigation to property
 - Upcoming appointments highlighted
 
-### 5. 💬 Inquiry System
+### 5. Inquiry System
 
 #### Submit Inquiry Modal (Reusable)
 - Contact form for property questions
@@ -290,7 +286,7 @@ This platform provides a **complete real estate ecosystem** connecting buyers, s
 - Response tracking
 - Inquiry history
 
-### 6. 👤 Buyer Dashboard
+### 6. Buyer Dashboard
 
 #### My Profile
 - Personal information management
@@ -317,7 +313,7 @@ This platform provides a **complete real estate ecosystem** connecting buyers, s
 - Agent responses
 - Property context
 
-### 7. 🔐 Authentication & Authorization
+### 7. Authentication & Authorization
 
 #### Social Authentication
 - **Google OAuth**: Sign in with Google
@@ -336,7 +332,7 @@ This platform provides a **complete real estate ecosystem** connecting buyers, s
   - Submitting inquiries
   - Checkout
 
-### 8. 📊 Agent & Commission Tracking
+### 8. Agent & Commission Tracking
 
 - Agent specialization management
 - Commission calculation rules
@@ -344,7 +340,7 @@ This platform provides a **complete real estate ecosystem** connecting buyers, s
 - Performance metrics
 - Lead tracking
 
-### 9. 📄 Document Management
+### 9. Document Management
 
 - Property documents storage
 - Document categories (Brochure, Floor Plan, Disclosure, Inspection)
@@ -354,7 +350,7 @@ This platform provides a **complete real estate ecosystem** connecting buyers, s
 
 ---
 
-## 🔧 Technology Stack
+## Technology Stack
 
 ### Frontend
 - **Lightning Web Components (LWC)**: 31 custom components
@@ -386,7 +382,7 @@ This platform provides a **complete real estate ecosystem** connecting buyers, s
 
 ---
 
-## 🗃 Custom Objects
+## Custom Objects
 
 ### Core Property Objects
 | Object | API Name | Description |
@@ -441,7 +437,7 @@ This platform provides a **complete real estate ecosystem** connecting buyers, s
 
 ---
 
-## 🎨 LWC Components
+## LWC Components
 
 ### Property Browsing & Display (10 Components)
 | Component | Description | Key Features |
@@ -501,7 +497,7 @@ This platform provides a **complete real estate ecosystem** connecting buyers, s
 
 ---
 
-## 🎯 Apex Controllers
+## Apex Controllers
 
 | Controller | Methods | Purpose |
 |------------|---------|---------|
@@ -521,7 +517,7 @@ This platform provides a **complete real estate ecosystem** connecting buyers, s
 
 ---
 
-## 📸 Screenshots
+## Screenshots
 
 ### Property Listing Page
 ```
@@ -592,54 +588,6 @@ This platform provides a **complete real estate ecosystem** connecting buyers, s
 └────────────────────────────────────────────────────────┘
 ```
 
----
-
-## 🚀 Installation
-
-### Prerequisites
-- Salesforce CLI (`sf` or `sfdx`)
-- Visual Studio Code with Salesforce Extension Pack
-- Git
-- Node.js 18+ (for LWC development)
-- Valid Salesforce org (Developer, Sandbox, or Production)
-
-### Step 1: Clone Repository
-```bash
-git clone https://github.com/your-username/salesforce-property-management.git
-cd salesforce-property-management
-```
-
-### Step 2: Authenticate to Salesforce Org
-```bash
-# For production/developer org
-sf org login web --alias PropertyMgmt
-
-# For sandbox
-sf org login web --alias PropertyMgmt --instance-url https://test.salesforce.com
-```
-
-### Step 3: Deploy Metadata
-
-#### Deploy Custom Objects First
-```bash
-sf project deploy start --source-dir force-app/main/default/objects --target-org PropertyMgmt
-```
-
-#### Deploy Apex Classes
-```bash
-sf project deploy start --source-dir project/main/default/classes --target-org PropertyMgmt
-```
-
-#### Deploy LWC Components
-```bash
-sf project deploy start --source-dir project/main/default/lwc --target-org PropertyMgmt
-```
-
-#### Deploy All Metadata (Alternative)
-```bash
-sf project deploy start --source-dir force-app,project --target-org PropertyMgmt
-```
-
 ### Step 4: Configure Experience Cloud Site
 
 1. **Create Experience Site**:
@@ -673,7 +621,7 @@ sf project deploy start --source-dir force-app,project --target-org PropertyMgmt
 ### Step 5: Load Sample Data (Optional)
 ```bash
 # Import sample properties
-sf data import tree --plan data/property-sample-data-plan.json --target-org PropertyMgmt
+
 ```
 
 ### Step 6: Activate and Test
@@ -681,282 +629,6 @@ sf data import tree --plan data/property-sample-data-plan.json --target-org Prop
 1. **Activate Site**: Experience Builder → Publish
 2. **Test Guest Access**: Browse properties, add to cart
 3. **Test Authenticated Flow**: Register → Make offer → View dashboard
-4. **Verify Integrations**: OAuth login, payment processing
-
----
-
-## 🔮 Future Enhancements
-
-### Phase 1: Enhanced User Experience (Q2 2025)
-
-#### 1. Advanced Property Search
-- **AI-Powered Search**: Natural language property search
-  - "Find me a 3-bedroom house under $800K near good schools"
-  - Einstein Search integration
-- **Saved Searches**: Save and auto-notify on new matches
-- **Search History**: Track user search patterns
-- **Map-Based Search**: Draw boundaries, radius search
-- **Virtual Tours Integration**: 360° property tours
-- **AR Property Viewing**: Augmented reality walkthroughs
-
-#### 2. Enhanced Offer Management
-- **Digital Signatures**: DocuSign integration for offer acceptance
-- **Offer Templates**: Pre-fill based on previous offers
-- **Offer Comparison**: Side-by-side comparison of multiple offers
-- **Automated Counter-Offer**: AI-suggested counter-offers
-- **Offer Expiration Alerts**: Email/SMS notifications
-- **Offer Analytics**: Success rate, average time to acceptance
-
-#### 3. Improved Dashboard
-- **Personalized Recommendations**: ML-based property suggestions
-- **Market Insights**: Neighborhood trends and analytics
-- **Saved Property Comparison**: Feature-by-feature comparison tool
-- **Virtual Property Tours Schedule**: Integrated video conferencing
-- **Document Vault**: Secure document storage for buyers
-- **Activity Timeline**: Complete history of interactions
-
-### Phase 2: Mobile & Communication (Q3 2025)
-
-#### 4. Mobile Application
-- **Native Mobile App**: iOS and Android apps (Salesforce Mobile)
-- **Push Notifications**: Real-time updates on offers, appointments
-- **Offline Mode**: Browse saved properties without internet
-- **QR Code Scanning**: Scan property signs for instant details
-- **Camera Integration**: Take photos, virtual measurements
-- **Location Services**: Nearby properties, directions
-
-#### 5. Communication Hub
-- **In-App Messaging**: Chat with agents in real-time
-  - Live chat widget
-  - Message history
-  - File sharing
-  - Video chat integration
-- **SMS Notifications**: Appointment reminders, offer updates
-- **Email Marketing Integration**: Marketing Cloud integration
-- **Chatbot Assistant**: AI-powered FAQ and property queries
-- **Multi-Language Support**: Internationalization
-
-#### 6. Social Features
-- **Property Sharing**: Share on social media (Facebook, Twitter, LinkedIn)
-- **Referral Program**: Buyer referral rewards
-- **Reviews & Ratings**: Property and agent reviews
-- **Community Forums**: Buyer community discussions
-- **Property Alerts**: Follow properties, get notifications
-
-### Phase 3: Advanced Features (Q4 2025)
-
-#### 7. Financial Services Integration
-- **Mortgage Pre-Approval**: Integrated loan application
-  - Multiple lender integration
-  - Real-time approval status
-  - Rate comparison
-- **Affordability Calculator**: Advanced financial planning
-- **Escrow Management**: Track escrow accounts
-- **Insurance Quotes**: Home insurance integration
-- **Credit Score Checking**: Partner with credit bureaus
-- **Down Payment Assistance**: Find assistance programs
-
-#### 8. Smart Home Integration
-- **IoT Device Status**: View smart home features
-- **Energy Efficiency Ratings**: Utility cost estimates
-- **Smart Lock Access**: Temporary access for viewings
-- **Security System Integration**: View property security
-- **Virtual Staging**: AI-powered furniture placement
-
-#### 9. Blockchain & NFT Integration
-- **Blockchain Title Records**: Immutable ownership records
-- **NFT Property Certificates**: Digital property ownership
-- **Smart Contracts**: Automated transaction execution
-- **Cryptocurrency Payments**: Accept crypto for deposits
-- **Tokenized Properties**: Fractional ownership
-
-### Phase 4: Analytics & AI (Q1 2026)
-
-#### 10. Advanced Analytics
-- **Predictive Analytics**: Property value predictions
-  - Einstein Analytics integration
-  - Market trend forecasting
-  - Investment ROI calculator
-- **Buyer Behavior Analytics**: Purchase pattern analysis
-- **Lead Scoring**: AI-powered lead prioritization
-- **Churn Prediction**: Identify at-risk buyers
-- **Performance Dashboards**: Agent and property metrics
-- **Heatmaps**: Popular property features, locations
-
-#### 11. AI & Machine Learning
-- **Einstein Vision**: Image recognition for property features
-- **Einstein Bots**: Automated customer service
-- **Einstein Next Best Action**: Personalized recommendations
-- **Predictive Lead Scoring**: Identify high-value prospects
-- **Sentiment Analysis**: Analyze inquiry sentiment
-- **Price Optimization**: AI-suggested pricing
-
-#### 12. Gamification
-- **Buyer Achievements**: Badges for milestones
-  - First viewing
-  - First offer
-  - First purchase
-- **Leaderboards**: Most active buyers
-- **Reward Points**: Accumulate points for activities
-- **Virtual Property Tours Game**: Interactive exploration
-- **Property Hunt Challenges**: Weekly challenges
-
-### Phase 5: Enterprise Features (Q2 2026)
-
-#### 13. Multi-Tenant Architecture
-- **White-Label Solution**: Rebrand for different agencies
-- **Tenant Isolation**: Separate data per agency
-- **Centralized Admin**: Manage multiple tenants
-- **Tenant Analytics**: Per-tenant reporting
-- **Custom Branding**: Logos, colors, themes
-
-#### 14. Advanced Integrations
-- **MLS Integration**: Multiple Listing Service sync
-- **Zillow/Realtor.com**: Cross-platform listing
-- **Google Maps Premium**: Advanced mapping features
-- **Facebook Lead Ads**: Automated lead import
-- **Salesforce Marketing Cloud**: Journey Builder integration
-- **Salesforce Service Cloud**: Case management for inquiries
-
-#### 15. Compliance & Security
-- **GDPR Compliance**: Data privacy controls
-- **California Privacy Laws**: CCPA compliance
-- **Audit Trails**: Complete activity logging
-- **Data Encryption**: Field-level encryption
-- **Two-Factor Authentication**: Enhanced security
-- **Role-Based Access Control**: Granular permissions
-- **Compliance Reports**: Regulatory reporting
-
-### Technical Improvements
-
-#### Performance Optimization
-- **Lightning Web Security**: Enhanced LWC security
-- **Server-Side Caching**: Redis integration
-- **CDN Integration**: Static resource delivery
-- **Query Optimization**: Reduce SOQL queries
-- **Batch Processing**: Async operations for bulk actions
-- **Platform Events**: Real-time updates
-
-#### Testing & Quality
-- **Automated Testing**: Jest for LWC, Apex Unit Tests
-- **UI Testing**: Selenium/Playwright integration
-- **Load Testing**: JMeter performance tests
-- **Code Coverage**: 90%+ coverage target
-- **Continuous Integration**: GitHub Actions/Jenkins
-- **Continuous Deployment**: Automated deployments
-
-#### Developer Experience
-- **Component Library**: Storybook documentation
-- **API Documentation**: Swagger/OpenAPI specs
-- **Developer Sandbox**: Quick environment setup
-- **VS Code Extensions**: Custom snippets and tools
-- **CLI Tools**: Custom Salesforce CLI plugins
-- **Troubleshooting Guide**: Common issues and solutions
-
----
-
-## 📊 Technical Specifications
-
-### Performance Metrics
-- **Page Load Time**: < 2 seconds
-- **API Response Time**: < 500ms average
-- **LWC Render Time**: < 100ms
-- **Concurrent Users**: 10,000+
-- **Data Volume**: 1M+ properties
-
-### Browser Support
-- Chrome 90+
-- Firefox 88+
-- Safari 14+
-- Edge 90+
-- Mobile Safari (iOS 13+)
-- Chrome Mobile (Android 8+)
-
-### Security Standards
-- OAuth 2.0 authentication
-- CSRF protection
-- XSS prevention
-- SQL injection prevention
-- Field-level encryption (PII data)
-- Session management
-
----
-
-## 🤝 Contributing
-
-### Development Workflow
-
-1. **Fork the Repository**
-2. **Create Feature Branch**: `git checkout -b feature/amazing-feature`
-3. **Commit Changes**: `git commit -m 'Add amazing feature'`
-4. **Push to Branch**: `git push origin feature/amazing-feature`
-5. **Open Pull Request**
-
-### Coding Standards
-
-- **Apex**: Follow Salesforce best practices, 75%+ test coverage
-- **LWC**: Use ESLint, Prettier formatting
-- **Naming Conventions**: Descriptive, consistent naming
-- **Comments**: Document complex logic
-- **Error Handling**: Comprehensive try-catch blocks
-
-### Pull Request Guidelines
-
-- Clear description of changes
-- Link to related issues
-- Test coverage for new code
-- Screenshots for UI changes
-- Update documentation
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-## 👥 Authors
-
-**Development Team**
-- Salesforce Platform Architecture
-- Lightning Web Components Development
-- Apex Development
-- Experience Cloud Configuration
-
----
-
-## 🙏 Acknowledgments
-
-- Salesforce Developer Documentation
-- Lightning Web Components Community
-- Trailhead Learning Platform
-- Salesforce Stack Exchange
-
----
-
-## 📞 Support & Contact
-
-### Resources
-- **Documentation**: [Salesforce Developer Docs](https://developer.salesforce.com/)
-- **LWC Guide**: [Lightning Web Components](https://developer.salesforce.com/docs/component-library/documentation/en/lwc)
-- **Apex Guide**: [Apex Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/)
-- **Trailhead**: [Learn Salesforce](https://trailhead.salesforce.com/)
-
-### Issues & Questions
-- Report bugs via GitHub Issues
-- Feature requests welcome
-- Pull requests encouraged
-
----
-
-## 📈 Project Stats
-
-![Custom Objects](https://img.shields.io/badge/Custom%20Objects-50+-blue)
-![LWC Components](https://img.shields.io/badge/LWC%20Components-31-green)
-![Apex Classes](https://img.shields.io/badge/Apex%20Classes-13-orange)
-![Test Coverage](https://img.shields.io/badge/Test%20Coverage-85%25-brightgreen)
-
----
+4. **Verify Integrations**: OAuth login
 
 **Built with ❤️ on the Salesforce Platform**
