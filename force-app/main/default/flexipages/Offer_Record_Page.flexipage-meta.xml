@@ -223,10 +223,20 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>required</value>
+                    <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Property_Listing__c</fieldItem>
                 <identifier>RecordProperty_Listing_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Message_to_Buyer__c</fieldItem>
+                <identifier>RecordMessage_to_Buyer__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-1b85761f-6695-42ff-9053-c6d6919ea219</name>

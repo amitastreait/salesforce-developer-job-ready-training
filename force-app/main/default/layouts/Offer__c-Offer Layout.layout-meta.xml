@@ -63,12 +63,16 @@
                 <field>Discount__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>Property_Listing__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>CurrencyIsoCode</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Message_to_Buyer__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

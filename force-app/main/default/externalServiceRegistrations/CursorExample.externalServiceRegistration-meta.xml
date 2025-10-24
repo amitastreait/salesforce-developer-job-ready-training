@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ExternalServiceRegistration xmlns="http://soap.sforce.com/2006/04/metadata">
-  <description>Collection of requested @AuraEnabled Apex method APIs</description>
-  <label>CursorExample</label>
-  <schema>openapi: 3.0.1
+    <description>Collection of requested @AuraEnabled Apex method APIs</description>
+    <label>CursorExample</label>
+    <operations>
+        <active>true</active>
+        <name>pagination</name>
+    </operations>
+    <registrationProvider>CursorExample</registrationProvider>
+    <registrationProviderType>AuraEnabled</registrationProviderType>
+    <schema>openapi: 3.0.1
 info:
-  title: "@AuraEnabled Apex method APIs"
+  title: &quot;@AuraEnabled Apex method APIs&quot;
   version: 1.0.0
   description: Collection of requested @AuraEnabled Apex method APIs
   x-betaInfo: OpenAPI documents generated from Apex classes using @AuraEnabled
@@ -32,7 +38,7 @@ paths:
                   type: integer
                   format: int32
       responses:
-        "200":
+        &quot;200&quot;:
           description: Status Code 200
           content:
             application/json:
@@ -43,16 +49,10 @@ paths:
 components:
   schemas: {}
 </schema>
-  <schemaType>OpenApi3</schemaType>
-  <schemaUploadFileExtension>yaml</schemaUploadFileExtension>
-  <schemaUploadFileName>cursorexample_openapi</schemaUploadFileName>
-  <status>Complete</status>
-  <systemVersion>3</systemVersion>
-  <operations>
-    <name>pagination</name>
-    <active>true</active>
-  </operations>
-  <registrationProvider>CursorExample</registrationProvider>
-  <registrationProviderType>AuraEnabled</registrationProviderType>
-  <namedCredential>null</namedCredential>
+    <schemaType>OpenApi3</schemaType>
+    <schemaUploadFileExtension>yaml</schemaUploadFileExtension>
+    <schemaUploadFileName>cursorexample_openapi</schemaUploadFileName>
+    <serviceBinding>{&quot;host&quot;:&quot;&quot;,&quot;basePath&quot;:&quot;/services/aura-controllers/custom&quot;,&quot;allowedSchemes&quot;:[],&quot;requestMediaTypes&quot;:[],&quot;responseMediaTypes&quot;:[],&quot;compatibleMediaTypes&quot;:{},&quot;extensions&quot;:{}}</serviceBinding>
+    <status>Complete</status>
+    <systemVersion>3</systemVersion>
 </ExternalServiceRegistration>

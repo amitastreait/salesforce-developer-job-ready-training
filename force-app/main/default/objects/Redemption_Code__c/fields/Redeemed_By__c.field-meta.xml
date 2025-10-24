@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Redeemed_By__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Contact who redeemed the code.</description>
+    <inlineHelpText>Links the redemption to a Contact.</inlineHelpText>
+    <label>Redeemed By</label>
+    <referenceTo>Contact</referenceTo>
+    <relationshipLabel>Redemption Codes</relationshipLabel>
+    <relationshipName>Redemption_Codes</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

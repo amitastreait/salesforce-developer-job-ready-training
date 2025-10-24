@@ -2,9 +2,9 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Preferences__c</fullName>
     <label>Preferences</label>
-    <type>MultiselectPicklist</type>
     <required>false</required>
-    <visibleLines>4</visibleLines>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
     <valueSet>
         <restricted>true</restricted>
         <valueSetDefinition>
@@ -30,10 +30,11 @@
                 <label>Market Updates</label>
             </value>
             <value>
-                <fullName>Tips & Advice</fullName>
+                <fullName>Tips &amp; Advice</fullName>
                 <default>false</default>
-                <label>Tips & Advice</label>
+                <label>Tips &amp; Advice</label>
             </value>
         </valueSetDefinition>
     </valueSet>
+    <visibleLines>4</visibleLines>
 </CustomField>

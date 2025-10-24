@@ -1,27 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <LightningMessageChannel xmlns="http://soap.sforce.com/2006/04/metadata">
-    <masterLabel>RecordSelected</masterLabel>
-    <isExposed>true</isExposed>
     <description>This Lightning Message Channel sends information from...</description>
-
+    <isExposed>true</isExposed>
     <lightningMessageFields>
-        <fieldName>recordId</fieldName>
         <description>The selected record id</description>
+        <fieldName>recordId</fieldName>
     </lightningMessageFields>
-
     <lightningMessageFields>
-        <fieldName>source</fieldName>
         <description>The source of the publisher Component</description>
+        <fieldName>source</fieldName>
     </lightningMessageFields>
-
     <lightningMessageFields>
-        <fieldName>message</fieldName>
         <description>the simple message</description>
+        <fieldName>message</fieldName>
     </lightningMessageFields>
-
     <lightningMessageFields>
-        <fieldName>data</fieldName>
         <description>The complete information about object</description>
+        <fieldName>data</fieldName>
     </lightningMessageFields>
-
+    <masterLabel>RecordSelected</masterLabel>
 </LightningMessageChannel>

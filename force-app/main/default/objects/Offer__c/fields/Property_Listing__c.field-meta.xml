@@ -6,7 +6,7 @@
     <referenceTo>Property_Listing__c</referenceTo>
     <relationshipLabel>Offers</relationshipLabel>
     <relationshipName>Offers</relationshipName>
-    <required>true</required>
+    <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackTrending>false</trackTrending>
     <type>Lookup</type>

@@ -1,7 +1,146 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
         <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Redemption_Code_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Small</formFactor>
         <type>Default</type>
     </actionOverrides>
     <allowInChatterGroups>true</allowInChatterGroups>
@@ -17,227 +156,17 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>Private</externalSharingModel>
     <label>Redemption Code</label>
-    <pluralLabel>Redemption Codes</pluralLabel>
     <nameField>
         <displayFormat>RC-{00000}</displayFormat>
         <label>Code Number</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
         <type>AutoNumber</type>
     </nameField>
-    <household>false</household>
+    <pluralLabel>Redemption Codes</pluralLabel>
+    <searchLayouts></searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
-
-    <!-- Fields -->
-    <fields>
-        <fullName>Code__c</fullName>
-        <description>The actual redemption code token to be issued/redeemed.</description>
-        <externalId>true</externalId>
-        <inlineHelpText>Unique redemption token string. Use this to redeem a digital product.</inlineHelpText>
-        <label>Code</label>
-        <length>40</length>
-        <required>true</required>
-        <trackHistory>true</trackHistory>
-        <type>Text</type>
-        <unique>true</unique>
-        <caseSensitive>false</caseSensitive>
-    </fields>
-
-    <fields>
-        <fullName>Status__c</fullName>
-        <description>Lifecycle status of the redemption code.</description>
-        <inlineHelpText>Current state of the code.</inlineHelpText>
-        <label>Status</label>
-        <required>true</required>
-        <trackHistory>true</trackHistory>
-        <type>Picklist</type>
-        <valueSet>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>New</fullName>
-                    <default>true</default>
-                </value>
-                <value>
-                    <fullName>Issued</fullName>
-                    <default>false</default>
-                </value>
-                <value>
-                    <fullName>Redeemed</fullName>
-                    <default>false</default>
-                </value>
-                <value>
-                    <fullName>Expired</fullName>
-                    <default>false</default>
-                </value>
-                <value>
-                    <fullName>Revoked</fullName>
-                    <default>false</default>
-                </value>
-            </valueSetDefinition>
-        </valueSet>
-    </fields>
-
-    <fields>
-        <fullName>Product__c</fullName>
-        <description>Name of the digital book or product associated with this code.</description>
-        <inlineHelpText>Human-friendly product/book title.</inlineHelpText>
-        <label>Product</label>
-        <length>80</length>
-        <required>false</required>
-        <trackHistory>true</trackHistory>
-        <type>Text</type>
-    </fields>
-
-    <fields>
-        <fullName>SKU__c</fullName>
-        <description>Product SKU or internal identifier.</description>
-        <inlineHelpText>Optional SKU or internal product code.</inlineHelpText>
-        <label>SKU</label>
-        <length>50</length>
-        <required>false</required>
-        <trackHistory>true</trackHistory>
-        <type>Text</type>
-    </fields>
-
-    <fields>
-        <fullName>License_Type__c</fullName>
-        <description>Type of license granted by the code.</description>
-        <inlineHelpText>Defines usage rules for the code.</inlineHelpText>
-        <label>License Type</label>
-        <required>true</required>
-        <trackHistory>true</trackHistory>
-        <type>Picklist</type>
-        <valueSet>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>Single-Use</fullName>
-                    <default>true</default>
-                </value>
-                <value>
-                    <fullName>Multi-Use</fullName>
-                    <default>false</default>
-                </value>
-                <value>
-                    <fullName>Time-Bound</fullName>
-                    <default>false</default>
-                </value>
-            </valueSetDefinition>
-        </valueSet>
-    </fields>
-
-    <fields>
-        <fullName>Max_Redemptions__c</fullName>
-        <description>Maximum allowed redemptions for multi-use codes.</description>
-        <inlineHelpText>Leave blank for Single-Use or unlimited. Applies to Multi-Use only.</inlineHelpText>
-        <label>Max Redemptions</label>
-        <precision>3</precision>
-        <scale>0</scale>
-        <required>false</required>
-        <trackHistory>true</trackHistory>
-        <type>Number</type>
-    </fields>
-
-    <fields>
-        <fullName>Redemption_Count__c</fullName>
-        <description>How many times the code has been redeemed so far.</description>
-        <inlineHelpText>Increment when the code is redeemed.</inlineHelpText>
-        <label>Redemption Count</label>
-        <precision>3</precision>
-        <scale>0</scale>
-        <required>false</required>
-        <trackHistory>true</trackHistory>
-        <type>Number</type>
-        <defaultValue>0</defaultValue>
-    </fields>
-
-    <fields>
-        <fullName>Valid_From__c</fullName>
-        <description>Start date from which the code becomes valid.</description>
-        <inlineHelpText>Code cannot be redeemed before this date.</inlineHelpText>
-        <label>Valid From</label>
-        <required>false</required>
-        <trackHistory>true</trackHistory>
-        <type>Date</type>
-    </fields>
-
-    <fields>
-        <fullName>Valid_Until__c</fullName>
-        <description>End date after which the code expires.</description>
-        <inlineHelpText>Code cannot be redeemed after this date.</inlineHelpText>
-        <label>Valid Until</label>
-        <required>false</required>
-        <trackHistory>true</trackHistory>
-        <type>Date</type>
-    </fields>
-
-    <fields>
-        <fullName>Redeemed_By__c</fullName>
-        <description>Contact who redeemed the code.</description>
-        <inlineHelpText>Links the redemption to a Contact.</inlineHelpText>
-        <label>Redeemed By</label>
-        <referenceTo>Contact</referenceTo>
-        <relationshipLabel>Redemption Codes</relationshipLabel>
-        <relationshipName>Redemption_Codes</relationshipName>
-        <required>false</required>
-        <trackHistory>true</trackHistory>
-        <type>Lookup</type>
-    </fields>
-
-    <fields>
-        <fullName>Redeemed_Date__c</fullName>
-        <description>Date/time when the code was redeemed.</description>
-        <inlineHelpText>Populated when status becomes Redeemed.</inlineHelpText>
-        <label>Redeemed Date</label>
-        <required>false</required>
-        <trackHistory>true</trackHistory>
-        <type>DateTime</type>
-    </fields>
-
-    <fields>
-        <fullName>Order_Source__c</fullName>
-        <description>Source system or order identifier where the code was generated.</description>
-        <inlineHelpText>e.g., Order number, campaign, or system name.</inlineHelpText>
-        <label>Order/Source</label>
-        <length>80</length>
-        <required>false</required>
-        <trackHistory>true</trackHistory>
-        <type>Text</type>
-    </fields>
-
-    <fields>
-        <fullName>Notes__c</fullName>
-        <description>Additional notes about the code.</description>
-        <inlineHelpText>Optional details, terms, or troubleshooting notes.</inlineHelpText>
-        <label>Notes</label>
-        <length>32768</length>
-        <visibleLines>5</visibleLines>
-        <required>false</required>
-        <trackHistory>true</trackHistory>
-        <type>LongTextArea</type>
-    </fields>
-
-    <fields>
-        <fullName>Is_Active__c</fullName>
-        <defaultValue>true</defaultValue>
-        <description>Indicates whether the code is active and can be redeemed.</description>
-        <inlineHelpText>Uncheck to disable without changing status.</inlineHelpText>
-        <label>Is Active</label>
-        <required>false</required>
-        <trackHistory>true</trackHistory>
-        <type>Checkbox</type>
-    </fields>
-
-    <!-- Validation suggestion (commented) - add later if needed
-    <validationRules>
-        <fullName>ValidUntilAfterFrom</fullName>
-        <active>true</active>
-        <errorConditionFormula>AND(NOT(ISBLANK(Valid_Until__c)), NOT(ISBLANK(Valid_From__c)), Valid_Until__c < Valid_From__c)</errorConditionFormula>
-        <errorDisplayField>Valid_Until__c</errorDisplayField>
-        <errorMessage>Valid Until must be on or after Valid From.</errorMessage>
-    </validationRules>
-    -->
-
-    <!-- List views: keep defaults -->
-
+    <visibility>Public</visibility>
 </CustomObject>

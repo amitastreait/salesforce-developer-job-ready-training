@@ -1,0 +1,165 @@
+<template>
+    <div class="modal-backdrop">
+        <div class="modal-container modal-large">
+            <div class="modal-header">
+                <h2 class="modal-title">Make an Offer</h2>
+                <button class="modal-close-button" onclick={handleCancel}>
+                    <svg class="modal-close-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <p class="slds-m-bottom_medium slds-text-body_regular">
+                    Submit your offer for <strong>{propertyName}</strong>
+                </p>
+                <p class="slds-m-bottom_large slds-text-body_small slds-text-color_weak">
+                    Listed Price: <strong>{formattedListingPrice}</strong>
+                </p>
+
+                <div class="offer-form-grid">
+                    <!-- Offered Purchase Price -->
+                    <div class="input-container">
+                        <label class="input-label input-label-required">Offered Purchase Price</label>
+                        <input
+                            type="number"
+                            class="input-field"
+                            placeholder="Enter your offer price"
+                            data-field="offeredPrice"
+                            value={formData.offeredPrice}
+                            onchange={handleInputChange}
+                            step="1000"
+                            min="0"
+                            required>
+                        <p class="input-help-text">Your proposed purchase price for the property</p>
+                    </div>
+
+                    <!-- Deposit Amount -->
+                    <div class="input-container">
+                        <label class="input-label">Deposit Amount</label>
+                        <input
+                            type="number"
+                            class="input-field"
+                            placeholder="Enter deposit amount"
+                            data-field="depositAmount"
+                            value={formData.depositAmount}
+                            onchange={handleInputChange}
+                            step="100"
+                            min="0">
+                        <p class="input-help-text">Earnest money deposit (typically 1-3% of offer price)</p>
+                    </div>
+
+                    <!-- Offer Date -->
+                    <div class="input-container">
+                        <label class="input-label input-label-required">Offer Date</label>
+                        <input
+                            type="date"
+                            class="input-field"
+                            data-field="offerDate"
+                            value={formData.offerDate}
+                            onchange={handleInputChange}
+                            required>
+                    </div>
+
+                    <!-- Expiration Date -->
+                    <div class="input-container">
+                        <label class="input-label">Offer Expiration Date</label>
+                        <input
+                            type="date"
+                            class="input-field"
+                            data-field="expirationDate"
+                            value={formData.expirationDate}
+                            onchange={handleInputChange}
+                            min={formData.offerDate}>
+                        <p class="input-help-text">When this offer expires (typically 2-7 days)</p>
+                    </div>
+
+                    <!-- Proposed Closing Date -->
+                    <div class="input-container">
+                        <label class="input-label">Proposed Closing Date</label>
+                        <input
+                            type="date"
+                            class="input-field"
+                            data-field="proposedClosingDate"
+                            value={formData.proposedClosingDate}
+                            onchange={handleInputChange}
+                            min={formData.offerDate}>
+                        <p class="input-help-text">Desired date to close the transaction (typically 30-60 days)</p>
+                    </div>
+                </div>
+
+                <!-- Contingencies Section -->
+                <div class="contingencies-section">
+                    <h3 class="section-title">Contingencies</h3>
+
+                    <div class="checkbox-container">
+                        <label class="checkbox-label">
+                            <input
+                                type="checkbox"
+                                class="checkbox-input"
+                                data-field="financingContingency"
+                                checked={formData.financingContingency}
+                                onchange={handleCheckboxChange}>
+                            <span class="checkbox-text">Financing Contingency</span>
+                        </label>
+                        <p class="input-help-text">Offer contingent on securing financing</p>
+                    </div>
+
+                    <div class="checkbox-container">
+                        <label class="checkbox-label">
+                            <input
+                                type="checkbox"
+                                class="checkbox-input"
+                                data-field="inspectionContingency"
+                                checked={formData.inspectionContingency}
+                                onchange={handleCheckboxChange}>
+                            <span class="checkbox-text">Inspection Contingency</span>
+                        </label>
+                        <p class="input-help-text">Offer contingent on satisfactory home inspection</p>
+                    </div>
+                </div>
+
+                <!-- Special Terms -->
+                <div class="input-container">
+                    <label class="input-label">Special Terms and Conditions</label>
+                    <textarea
+                        class="input-field"
+                        rows="4"
+                        placeholder="Enter any special terms, conditions, or notes for your offer..."
+                        data-field="specialTerms"
+                        value={formData.specialTerms}
+                        onchange={handleInputChange}></textarea>
+                    <p class="input-help-text">Additional terms or conditions for your offer (optional)</p>
+                </div>
+
+                <div class="offer-summary">
+                    <div class="summary-item">
+                        <span class="summary-label">Your Offer:</span>
+                        <span class="summary-value">{formattedOfferPrice}</span>
+                    </div>
+                    <template if:true={formData.depositAmount}>
+                        <div class="summary-item">
+                            <span class="summary-label">Deposit:</span>
+                            <span class="summary-value">{formattedDeposit}</span>
+                        </div>
+                    </template>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-neutral" onclick={handleCancel}>
+                    Cancel
+                </button>
+                <button class="btn btn-brand" onclick={handleSubmit} disabled={isSubmitting}>
+                    <template if:true={isSubmitting}>
+                        Submitting Offer...
+                    </template>
+                    <template if:false={isSubmitting}>
+                        Submit Offer
+                    </template>
+                </button>
+            </div>
+        </div>
+    </div>
+</template>

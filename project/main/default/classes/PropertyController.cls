@@ -570,4 +570,186 @@ public without sharing class PropertyController {
         @AuraEnabled public String propertyCity { get; set; }
         @AuraEnabled public String propertyState { get; set; }
     }
+
+    /**
+     * Wrapper class for offer creation result
+     */
+    public class OfferResult {
+        @AuraEnabled public Boolean success { get; set; }
+        @AuraEnabled public String message { get; set; }
+        @AuraEnabled public Id offerId { get; set; }
+
+        public OfferResult() {
+            this.success = false;
+            this.message = '';
+            this.offerId = null;
+        }
+    }
+
+    /**
+     * Creates an Offer record for a property
+     * @param propertyId - The Id of the Property__c record
+     * @param offeredPrice - The offered purchase price
+     * @param depositAmount - The deposit amount
+     * @param offerDate - The offer date
+     * @param expirationDate - The expiration date
+     * @param proposedClosingDate - The proposed closing date
+     * @param financingContingency - Whether financing contingency is included
+     * @param inspectionContingency - Whether inspection contingency is included
+     * @param specialTerms - Special terms and conditions
+     * @return OfferResult wrapper with success status and message
+     */
+    @AuraEnabled
+    public static OfferResult createOffer(
+        Id propertyId,
+        Decimal offeredPrice,
+        Decimal depositAmount,
+        Date offerDate,
+        Date expirationDate,
+        Date proposedClosingDate,
+        Boolean financingContingency,
+        Boolean inspectionContingency,
+        String specialTerms
+    ) {
+        OfferResult result = new OfferResult();
+
+        try {
+            // Validate required fields
+            if (propertyId == null) {
+                result.success = false;
+                result.message = 'Property ID is required';
+                return result;
+            }
+
+            if (offeredPrice == null || offeredPrice <= 0) {
+                result.success = false;
+                result.message = 'Please provide a valid offer price';
+                return result;
+            }
+
+            // Check if property exists
+            List<Property__c> properties = [SELECT Id FROM Property__c WHERE Id = :propertyId LIMIT 1];
+            if (properties.isEmpty()) {
+                result.success = false;
+                result.message = 'Property not found';
+                return result;
+            }
+
+            // Get current user's Account (Buyer) if exists
+            Id buyerId = null;
+            List<User> currentUser = [SELECT ContactId FROM User WHERE Id = :UserInfo.getUserId() LIMIT 1];
+            if (!currentUser.isEmpty() && currentUser[0].ContactId != null) {
+                List<Contact> contacts = [SELECT AccountId FROM Contact WHERE Id = :currentUser[0].ContactId LIMIT 1];
+                if (!contacts.isEmpty()) {
+                    buyerId = contacts[0].AccountId;
+                }
+            }
+
+            // Create Offer__c record
+            Offer__c offer = new Offer__c();
+            offer.Property__c = propertyId;
+            offer.Buyer__c = buyerId;
+            offer.Offered_purchase_price__c = offeredPrice;
+            offer.Deposit_Amount__c = depositAmount;
+            offer.Offer_Date__c = offerDate != null ? offerDate : System.today();
+            offer.Expiration_date__c = expirationDate;
+            offer.Proposed_date_for_closing__c = proposedClosingDate;
+            offer.Financing_contingency_included__c = financingContingency != null ? financingContingency : false;
+            offer.Inspection_contingency_included__c = inspectionContingency != null ? inspectionContingency : false;
+            offer.Special_terms_and_conditions__c = specialTerms;
+            offer.Status__c = 'Draft'; // Set status as Draft
+
+            insert offer;
+
+            result.success = true;
+            result.message = 'Offer created successfully as Draft';
+            result.offerId = offer.Id;
+
+        } catch (DmlException dmlEx) {
+            result.success = false;
+            result.message = 'Error creating offer: ' + dmlEx.getDmlMessage(0);
+            System.debug('DML Exception: ' + dmlEx.getMessage());
+        } catch (Exception e) {
+            result.success = false;
+            result.message = 'An unexpected error occurred: ' + e.getMessage();
+            System.debug('Exception: ' + e.getMessage() + ' - Stack Trace: ' + e.getStackTraceString());
+        }
+
+        return result;
+    }
+
+    /**
+     * Gets offers for the current logged-in user
+     * @return List of OfferWrapper with related property information
+     */
+    @AuraEnabled(cacheable=true)
+    public static List<OfferWrapper> getUserOffers() {
+        List<OfferWrapper> offers = new List<OfferWrapper>();
+
+        try {
+            // Get current user's Account (Buyer) if exists
+            Id buyerId = null;
+            List<User> currentUser = [SELECT ContactId FROM User WHERE Id = :UserInfo.getUserId() LIMIT 1];
+            if (!currentUser.isEmpty() && currentUser[0].ContactId != null) {
+                List<Contact> contacts = [SELECT AccountId FROM Contact WHERE Id = :currentUser[0].ContactId LIMIT 1];
+                if (!contacts.isEmpty()) {
+                    buyerId = contacts[0].AccountId;
+                }
+            }
+
+            // Query offers for the current user
+            List<Offer__c> offerList = [
+                SELECT Id, Name, Offered_purchase_price__c, Status__c, Offer_Date__c,
+                       Expiration_date__c, Proposed_date_for_closing__c, Deposit_Amount__c,
+                       Financing_contingency_included__c, Inspection_contingency_included__c,
+                       Special_terms_and_conditions__c, Counter_Offer_Amount__c,
+                       Message_to_Buyer__c,
+                       Property__c, Property__r.Name, Property__r.Address__c,
+                       Property__r.Listing_price__c, Property__r.Property_Type__c,
+                       Property__r.Image_URL__c, Property__r.Location_Site__r.City__c,
+                       Property__r.Location_Site__r.State__c,
+                       CreatedDate, LastModifiedDate
+                FROM Offer__c
+                WHERE Buyer__c = :buyerId
+                ORDER BY CreatedDate DESC
+                LIMIT 100
+            ];
+
+            // Convert to wrapper objects
+            for (Offer__c offer : offerList) {
+                OfferWrapper wrapper = new OfferWrapper();
+                wrapper.offer = offer;
+                wrapper.propertyId = offer.Property__c;
+                wrapper.propertyName = offer.Property__r.Name;
+                wrapper.propertyAddress = offer.Property__r.Address__c;
+                wrapper.propertyPrice = offer.Property__r.Listing_price__c;
+                wrapper.propertyType = offer.Property__r.Property_Type__c;
+                wrapper.propertyImage = offer.Property__r.Image_URL__c;
+                wrapper.propertyCity = offer.Property__r.Location_Site__r.City__c;
+                wrapper.propertyState = offer.Property__r.Location_Site__r.State__c;
+                offers.add(wrapper);
+            }
+
+        } catch (Exception e) {
+            System.debug('Error fetching user offers: ' + e.getMessage());
+            throw new AuraHandledException('Error fetching offers: ' + e.getMessage());
+        }
+
+        return offers;
+    }
+
+    /**
+     * Wrapper class for offer with related property information
+     */
+    public class OfferWrapper {
+        @AuraEnabled public Offer__c offer { get; set; }
+        @AuraEnabled public Id propertyId { get; set; }
+        @AuraEnabled public String propertyName { get; set; }
+        @AuraEnabled public String propertyAddress { get; set; }
+        @AuraEnabled public Decimal propertyPrice { get; set; }
+        @AuraEnabled public String propertyType { get; set; }
+        @AuraEnabled public String propertyImage { get; set; }
+        @AuraEnabled public String propertyCity { get; set; }
+        @AuraEnabled public String propertyState { get; set; }
+    }
 }

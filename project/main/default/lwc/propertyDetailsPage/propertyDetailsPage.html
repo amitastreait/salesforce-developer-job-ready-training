@@ -106,9 +106,9 @@
 
         <!-- Quick Actions -->
         <div class="slds-m-top_medium slds-text-align_center">
-            <button class="btn btn-outline btn-small slds-m-right_small" onclick={handleShareProperty}>
+            <!-- <button class="btn btn-outline btn-small slds-m-right_small" onclick={handleShareProperty}>
                 Share
-            </button>
+            </button> -->
             <button class="btn btn-outline btn-small" onclick={handleSaveFavorite}>
                 Save to Favorites
             </button>
@@ -266,6 +266,18 @@
                 onclose={handleCloseWishlistModal}
                 oncreate={handleCreateWishlist}>
             </c-wishlist-name-modal>
+
+            <!-- Make Offer Modal -->
+            <template if:true={showOfferModal}>
+                <c-make-offer-modal
+                    property-id={recordId}
+                    property-name={propertyName}
+                    listing-price={property.Listing_price__c}
+                    onclose={handleCloseOfferModal}
+                    onsubmitoffer={handleOfferSubmit}
+                    onshowerror={handleOfferError}>
+                </c-make-offer-modal>
+            </template>
         </template>
     </div>
 </template>

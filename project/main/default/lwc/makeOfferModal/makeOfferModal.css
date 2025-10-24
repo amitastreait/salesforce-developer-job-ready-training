@@ -1,0 +1,91 @@
+@import 'c/genericStyles';
+
+.input-help-text {
+    font-size: 0.75rem;
+    color: #706e6b;
+    margin-top: 0.25rem;
+}
+
+.offer-form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+@media (max-width: 768px) {
+    .offer-form-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.contingencies-section {
+    margin: 1.5rem 0;
+    padding: 1rem;
+    background-color: #f3f3f3;
+    border-radius: 0.5rem;
+}
+
+.section-title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #080707;
+}
+
+.checkbox-container {
+    margin-bottom: 1rem;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: flex-start;
+    cursor: pointer;
+    font-size: 0.875rem;
+}
+
+.checkbox-input {
+    margin-right: 0.5rem;
+    margin-top: 0.125rem;
+    cursor: pointer;
+}
+
+.checkbox-text {
+    font-weight: 500;
+    color: #080707;
+}
+
+.offer-summary {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background-color: #e8f4f8;
+    border-left: 4px solid #0176d3;
+    border-radius: 0.25rem;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+}
+
+.summary-label {
+    font-size: 0.875rem;
+    color: #3e3e3c;
+}
+
+.summary-value {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #0176d3;
+}
+
+textarea.input-field {
+    resize: vertical;
+    font-family: inherit;
+}
+
+.modal-large {
+    max-width: 800px;
+}

@@ -9,10 +9,6 @@ export default class CursorPagination extends LightningElement {
     @track loading = false;
     @track disablePreviousButton = true;
     @track disableNextButton = false;
-
-    title = 'All Contacts';
-
-    @api records;
     
     // Default batch size
     @api batchSize = 10;

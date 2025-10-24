@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>License_Type__c</fullName>
+    <description>Type of license granted by the code.</description>
+    <inlineHelpText>Defines usage rules for the code.</inlineHelpText>
+    <label>License Type</label>
+    <required>true</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Single-Use</fullName>
+                <default>true</default>
+                <label>Single-Use</label>
+            </value>
+            <value>
+                <fullName>Multi-Use</fullName>
+                <default>false</default>
+                <label>Multi-Use</label>
+            </value>
+            <value>
+                <fullName>Time-Bound</fullName>
+                <default>false</default>
+                <label>Time-Bound</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

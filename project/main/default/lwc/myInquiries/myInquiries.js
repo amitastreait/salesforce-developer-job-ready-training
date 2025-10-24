@@ -98,11 +98,12 @@ export default class MyInquiries extends NavigationMixin(LightningElement) {
     handleViewProperty(event) {
         const propertyId = event.currentTarget.dataset.propertyId;
         this[NavigationMixin.Navigate]({
-            type: 'standard__recordPage',
+            type: 'comm__namedPage',
             attributes: {
-                recordId: propertyId,
-                objectApiName: 'Property__c',
-                actionName: 'view'
+                name: 'PropertyDetails__c'
+            },
+            state: {
+                c__recordId: propertyId
             }
         });
     }

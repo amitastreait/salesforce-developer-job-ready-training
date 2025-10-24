@@ -152,6 +152,9 @@
     <tabs>Application_Log__c</tabs>
     <tabs>Amenities__c</tabs>
     <tabs>Feature__c</tabs>
+    <tabs>Cart__c</tabs>
+    <tabs>Wishlist__c</tabs>
+    <tabs>Newsletter_Subscription__c</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>Property_Management_UtilityBar</utilityBar>
     <workspaceConfig>
@@ -172,6 +175,9 @@
             <tab>Bulk_Contact_Creator</tab>
         </mappings>
         <mappings>
+            <tab>Cart__c</tab>
+        </mappings>
+        <mappings>
             <fieldName>Agent__c</fieldName>
             <tab>Commission__c</tab>
         </mappings>
@@ -180,6 +186,9 @@
         </mappings>
         <mappings>
             <tab>LocationSite__c</tab>
+        </mappings>
+        <mappings>
+            <tab>Newsletter_Subscription__c</tab>
         </mappings>
         <mappings>
             <fieldName>Property_Listing__c</fieldName>
@@ -204,6 +213,9 @@
         </mappings>
         <mappings>
             <tab>System_Log__c</tab>
+        </mappings>
+        <mappings>
+            <tab>Wishlist__c</tab>
         </mappings>
         <mappings>
             <tab>standard-Account</tab>

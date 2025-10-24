@@ -12,6 +12,7 @@ import addToWishlist from '@salesforce/apex/WishlistController.addToWishlist';
 import createPropertyInquiry from '@salesforce/apex/PropertyController.createPropertyInquiry';
 import getCurrentUserInfo from '@salesforce/apex/PropertyController.getCurrentUserInfo';
 import createAppointment from '@salesforce/apex/PropertyController.createAppointment';
+import createOffer from '@salesforce/apex/PropertyController.createOffer';
 
 export default class PropertyDetailsPage extends NavigationMixin(LightningElement) {
     @api recordId;
@@ -19,6 +20,7 @@ export default class PropertyDetailsPage extends NavigationMixin(LightningElemen
     currentImageIndex = 0;
     showInquiryModal = false;
     showScheduleModal = false;
+    showOfferModal = false;
     isAddingToCart = false;
     showWishlistNameModal = false;
     isAddingToWishlist = false;
@@ -251,16 +253,31 @@ export default class PropertyDetailsPage extends NavigationMixin(LightningElemen
     }
 
     handleMakeOffer() {
-        this.showToast('Info', 'Navigating to offer form...', 'info');
+        // Check if user is logged in
+        if (!this.userInfo || this.userInfo.isGuest) {
+            // Redirect to login page
+            this.showToast('Info', 'Please login to make an offer', 'info');
+            this.navigateToLogin();
+            return;
+        }
+
+        // User is logged in, show the offer modal
+        this.showOfferModal = true;
+    }
+
+    navigateToLogin() {
+        // Navigate to the login page
+        this[NavigationMixin.Navigate]({
+            type: 'comm__loginPage',
+            attributes: {
+                actionName: 'login'
+            }
+        });
     }
 
     handleContactAgent() {
-        if (this.property?.PrimaryAgent__c) {
-            this.showToast('Info', 'Contacting agent...', 'info');
-            // In real scenario: Navigate to agent detail or initiate contact
-        } else {
-            this.showToast('Info', 'No agent assigned to this property', 'info');
-        }
+        // Open the inquiry modal to contact the agent
+        this.showInquiryModal = true;
     }
 
     handleShareProperty() {
@@ -468,6 +485,53 @@ export default class PropertyDetailsPage extends NavigationMixin(LightningElemen
                 const errorMessage = error.body?.message || error.message || 'Failed to submit inquiry';
                 this.showToast('Error', errorMessage, 'error');
             });
+    }
+
+    handleCloseOfferModal() {
+        this.showOfferModal = false;
+    }
+
+    handleOfferSubmit(event) {
+        const offerData = event.detail;
+        console.log('Offer Data:', offerData);
+
+        // Call Apex to create Offer__c record
+        createOffer({
+            propertyId: offerData.propertyId,
+            offeredPrice: offerData.offeredPrice,
+            depositAmount: offerData.depositAmount,
+            offerDate: offerData.offerDate,
+            expirationDate: offerData.expirationDate,
+            proposedClosingDate: offerData.proposedClosingDate,
+            financingContingency: offerData.financingContingency,
+            inspectionContingency: offerData.inspectionContingency,
+            specialTerms: offerData.specialTerms
+        })
+            .then(result => {
+                if (result.success) {
+                    this.showToast('Success', 'Offer created successfully as Draft!', 'success');
+                    this.showOfferModal = false;
+                } else {
+                    this.showToast('Error', result.message || 'Failed to create offer', 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error creating offer:', error);
+                const errorMessage = error.body?.message || error.message || 'Failed to create offer';
+                this.showToast('Error', errorMessage, 'error');
+            })
+            .finally(() => {
+                // Reset the modal's submitting state
+                const modal = this.template.querySelector('c-make-offer-modal');
+                if (modal) {
+                    modal.isSubmitting = false;
+                }
+            });
+    }
+
+    handleOfferError(event) {
+        const errorMessage = event.detail.message;
+        this.showToast('Error', errorMessage, 'error');
     }
 
     /* validateViewingForm() {

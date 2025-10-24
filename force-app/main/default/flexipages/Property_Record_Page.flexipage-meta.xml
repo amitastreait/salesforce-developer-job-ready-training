@@ -258,6 +258,12 @@
                 <identifier>RecordImage_URL__cField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.Product__c</fieldItem>
+                <identifier>RecordProduct__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-f140dafc-b24c-4629-905e-e0c6e9141f85</name>
         <type>Facet</type>
     </flexiPageRegions>

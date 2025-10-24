@@ -1,0 +1,200 @@
+<template>
+    <div class="my-offers-container">
+        <!-- Header Section -->
+        <div class="page-header">
+            <h1 class="page-title">My Offers</h1>
+            <p class="page-subtitle">Track and manage your property offers</p>
+        </div>
+
+        <!-- Stats Section -->
+        <template if:false={hasNoOffers}>
+            <div class="stats-container">
+                <div class="stat-card">
+                    <div class="stat-value">{offerStats.total}</div>
+                    <div class="stat-label">Total Offers</div>
+                </div>
+                <div class="stat-card stat-draft">
+                    <div class="stat-value">{offerStats.draft}</div>
+                    <div class="stat-label">Draft</div>
+                </div>
+                <div class="stat-card stat-pending">
+                    <div class="stat-value">{offerStats.pending}</div>
+                    <div class="stat-label">Pending</div>
+                </div>
+                <div class="stat-card stat-accepted">
+                    <div class="stat-value">{offerStats.accepted}</div>
+                    <div class="stat-label">Accepted</div>
+                </div>
+            </div>
+        </template>
+
+        <!-- Filter Section -->
+        <template if:false={hasNoOffers}>
+            <div class="filter-section">
+                <lightning-combobox
+                    name="statusFilter"
+                    label="Filter by Status"
+                    value={selectedFilter}
+                    options={filterOptions}
+                    onchange={handleFilterChange}
+                    variant="label-inline">
+                </lightning-combobox>
+            </div>
+        </template>
+
+        <!-- Loading Spinner -->
+        <template if:true={isLoading}>
+            <div class="loading-container">
+                <lightning-spinner alternative-text="Loading offers..." size="medium"></lightning-spinner>
+            </div>
+        </template>
+
+        <!-- No Offers Message -->
+        <template if:true={hasNoOffers}>
+            <div class="empty-state">
+                <div class="empty-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </div>
+                <h2 class="empty-title">No Offers Yet</h2>
+                <p class="empty-message">You haven't made any offers yet. Browse properties and make an offer to get started!</p>
+            </div>
+        </template>
+
+        <!-- No Filtered Results -->
+        <template if:true={hasNoFilteredOffers}>
+            <div class="empty-state">
+                <h2 class="empty-title">No Results Found</h2>
+                <p class="empty-message">No offers match the selected filter. Try selecting a different status.</p>
+            </div>
+        </template>
+
+        <!-- Offers List -->
+        <template if:false={isLoading}>
+            <div class="offers-list">
+                <template for:each={filteredOffers} for:item="item">
+                    <div key={item.offer.Id} class="offer-card">
+                        <!-- Property Info Section -->
+                        <div class="property-section">
+                            <template if:true={item.propertyImage}>
+                                <img src={item.propertyImage} alt={item.propertyName} class="property-image" />
+                            </template>
+                            <template if:false={item.propertyImage}>
+                                <div class="property-image-placeholder">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                                    </svg>
+                                </div>
+                            </template>
+                            <div class="property-details">
+                                <h3 class="property-name">{item.propertyName}</h3>
+                                <p class="property-address">{item.propertyAddress}</p>
+                                <div class="property-meta">
+                                    <span class="property-type">{item.propertyType}</span>
+                                    <span class="property-location">{item.propertyCity}, {item.propertyState}</span>
+                                </div>
+                                <div class="property-pricing">
+                                    <div class="price-item">
+                                        <span class="price-label">Listed Price:</span>
+                                        <span class="price-value listing-price">{item.formattedPropertyPrice}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Offer Info Section -->
+                        <div class="offer-section">
+                            <div class="offer-header">
+                                <div class="offer-id">Offer #{item.offer.Name}</div>
+                                <div class="badges">
+                                    <span class={item.statusClass}>{item.offer.Status__c}</span>
+                                </div>
+                            </div>
+
+                            <div class="offer-price-section">
+                                <div class="offer-price-main">
+                                    <div class="price-label">Your Offer</div>
+                                    <div class="price-value-large">{item.formattedOfferPrice}</div>
+                                </div>
+                                <template if:true={item.hasCounterOffer}>
+                                    <div class="counter-offer">
+                                        <div class="price-label">Counter Offer</div>
+                                        <div class="price-value-large counter-price">{item.formattedCounterOffer}</div>
+                                    </div>
+                                </template>
+                            </div>
+
+                            <div class="offer-details">
+                                <div class="detail-row">
+                                    <span class="detail-label">Offer Date:</span>
+                                    <span class="detail-value">{item.formattedOfferDate}</span>
+                                </div>
+                                <template if:true={item.offer.Expiration_date__c}>
+                                    <div class="detail-row">
+                                        <span class="detail-label">Expires On:</span>
+                                        <span class="detail-value">{item.formattedExpirationDate}</span>
+                                    </div>
+                                </template>
+                                <template if:true={item.offer.Proposed_date_for_closing__c}>
+                                    <div class="detail-row">
+                                        <span class="detail-label">Proposed Closing:</span>
+                                        <span class="detail-value">{item.formattedClosingDate}</span>
+                                    </div>
+                                </template>
+                                <template if:true={item.offer.Deposit_Amount__c}>
+                                    <div class="detail-row">
+                                        <span class="detail-label">Deposit Amount:</span>
+                                        <span class="detail-value">{item.formattedDeposit}</span>
+                                    </div>
+                                </template>
+                            </div>
+
+                            <template if:true={item.hasContingencies}>
+                                <div class="contingencies-section">
+                                    <div class="contingency-label">Contingencies:</div>
+                                    <div class="contingency-list">
+                                        <template if:true={item.offer.Financing_contingency_included__c}>
+                                            <span class="contingency-badge">Financing</span>
+                                        </template>
+                                        <template if:true={item.offer.Inspection_contingency_included__c}>
+                                            <span class="contingency-badge">Inspection</span>
+                                        </template>
+                                    </div>
+                                </div>
+                            </template>
+
+                            <template if:true={item.offer.Message_to_Buyer__c}>
+                                <div class="message-to-buyer-section">
+                                    <div class="message-header">
+                                        <svg class="message-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                        </svg>
+                                        <div class="message-label">Message from Seller:</div>
+                                    </div>
+                                    <div class="message-content">{item.offer.Message_to_Buyer__c}</div>
+                                </div>
+                            </template>
+
+                            <template if:true={item.offer.Special_terms_and_conditions__c}>
+                                <div class="special-terms-section">
+                                    <div class="terms-label">Special Terms:</div>
+                                    <div class="terms-content">{item.offer.Special_terms_and_conditions__c}</div>
+                                </div>
+                            </template>
+
+                            <div class="offer-actions">
+                                <button
+                                    class="btn btn-secondary"
+                                    data-property-id={item.propertyId}
+                                    onclick={handleViewProperty}>
+                                    View Property
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </template>
+    </div>
+</template>
